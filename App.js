@@ -41,11 +41,11 @@ export default function App() {
         }}
       >
         <Tab.Screen
-          name="Inicio"
-          component={HomeScreen}
+          name="Buscar"
+          component={SearchScreen}
           options={{
             tabBarIcon: ({ color }) => (
-              <TabIcon iconName="home" color={color} />
+              <TabIcon iconName="search" color={color} />
             ),
           }}
         />
@@ -59,14 +59,15 @@ export default function App() {
           }}
         />
         <Tab.Screen
-          name="Buscar"
-          component={SearchScreen}
+          name="Inicio"
+          component={HomeScreen}
           options={{
             tabBarIcon: ({ color }) => (
-              <TabIcon iconName="search" color={color} />
+              <TabIcon iconName="home" color={color} />
             ),
           }}
         />
+
         <Tab.Screen
           name="Mapa"
           component={MapScreen}
