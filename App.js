@@ -2,8 +2,8 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
-import { Text } from 'react-native';
 import { colors } from './theme';
+import { MaterialIcons } from '@expo/vector-icons';
 
 // Import screens
 import HomeScreen from './screens/HomeScreen';
@@ -28,14 +28,15 @@ export default function App() {
             paddingTop: 8,
             height: 80,
           },
-          tabBarActiveTintColor: colors.primary,
+          tabBarActiveTintColor: colors.brown, // Saddle Brown for active tab
           tabBarInactiveTintColor: colors.textSecondary,
           tabBarLabelStyle: {
             fontSize: 10,
-            fontWeight: '500',
+            fontWeight: '600',
+            marginTop: 4,
           },
           tabBarIconStyle: {
-            fontSize: 24,
+            marginTop: 4,
           },
         }}
       >
@@ -43,35 +44,43 @@ export default function App() {
           name="Inicio"
           component={HomeScreen}
           options={{
-            tabBarIcon: ({ color }) => <TabIcon icon="🏠" color={color} />,
+            tabBarIcon: ({ color }) => (
+              <TabIcon iconName="home" color={color} />
+            ),
           }}
         />
         <Tab.Screen
           name="Albergue"
           component={ShelterScreen}
           options={{
-            tabBarIcon: ({ color }) => <TabIcon icon="🐕" color={color} />,
+            tabBarIcon: ({ color }) => (
+              <TabIcon iconName="pets" color={color} />
+            ),
           }}
         />
         <Tab.Screen
           name="Buscar"
           component={SearchScreen}
           options={{
-            tabBarIcon: ({ color }) => <TabIcon icon="🔍" color={color} />,
+            tabBarIcon: ({ color }) => (
+              <TabIcon iconName="search" color={color} />
+            ),
           }}
         />
         <Tab.Screen
           name="Mapa"
           component={MapScreen}
           options={{
-            tabBarIcon: ({ color }) => <TabIcon icon="📍" color={color} />,
+            tabBarIcon: ({ color }) => <TabIcon iconName="map" color={color} />,
           }}
         />
         <Tab.Screen
           name="Cuenta"
           component={AccountScreen}
           options={{
-            tabBarIcon: ({ color }) => <TabIcon icon="🐱" color={color} />,
+            tabBarIcon: ({ color }) => (
+              <TabIcon iconName="person" color={color} />
+            ),
           }}
         />
       </Tab.Navigator>
@@ -80,7 +89,7 @@ export default function App() {
   );
 }
 
-// Simple tab icon component
-const TabIcon = ({ icon, color }) => (
-  <Text style={{ color, fontSize: 24 }}>{icon}</Text>
+// Tab icon component using MaterialIcons
+const TabIcon = ({ iconName, color, size = 24 }) => (
+  <MaterialIcons name={iconName} size={size} color={color} />
 );
