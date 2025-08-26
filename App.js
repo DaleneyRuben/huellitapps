@@ -1,123 +1,95 @@
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import InformationCard from './components/InformationCard';
-import { colors, semanticColors } from './theme';
+import { View, StyleSheet, Text } from 'react-native';
+import { colors } from './theme';
 
-const catData = [
-  {
-    id: 1,
-    description: 'Gatito blanco con negro',
-    place: 'Av Arce. V centenario',
-    details: 'Gatito blanco con negro, tienen 3 meses, se encontraba asustado.',
-    imageUrl:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1200px-Cat_August_2010-4.jpg',
-  },
-  {
-    id: 2,
-    description: 'Gatito blanco con manchas plomas',
-    place: 'Prado av 16 de Julio cerca a Dumbo',
-    details:
-      'Gato blanco con manchas plomas, asustado, tiene un collar morado pero no tiene datos.',
-    imageUrl:
-      'https://images.squarespace-cdn.com/content/v1/607f89e638219e13eee71b1e/1684821560422-SD5V37BAG28BURTLIXUQ/michael-sum-LEpfefQf4rU-unsplash.jpg',
-  },
-  {
-    id: 3,
-    description: 'Gatito plomo atigrado con ojos verdes',
-    place: 'calacoto calle 15 cerca del ketal',
-    details:
-      'Gato plomo atigrado, esta asutado, no sabe andar por la calle, se encuentra lastimando, cicatriz cerca del hocico.',
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBfRaIl1GKY743VUdBOrL04K4gbgqvDZp3iw&s',
-  },
-  {
-    id: 4,
-    description: 'Tiene collar con su nombre, Katia, no tiene numero',
-    place: 'Bella Vista',
-    details:
-      'Gatito con collar, nombre Katia, viejito, es malo con las personas, malas cerca de las patitas.',
-    imageUrl: 'https://d2zp5xs5cp8zlg.cloudfront.net/image-79322-800.jpg',
-  },
-  {
-    id: 5,
-    description: 'Gatito atigrado con ojos azules brillantes',
-    place: 'Zona Sur, Calle 21',
-    details:
-      'Gatito atigrado joven, ojos azules muy llamativos, muy cariñoso y sociable.',
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX4EbLlkmCJhmk4LI_PxiTc7OrHEkFE_wjeA&s',
-  },
-  {
-    id: 6,
-    description: 'Gatito plomo atigrado con ojos verdes',
-    place: 'calacoto calle 15 cerca del ketal',
-    details:
-      'Gato plomo atigrado, esta asutado, no sabe andar por la calle, se encuentra lastimando, cicatriz cerca del hocico.',
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBfRaIl1GKY743VUdBOrL04K4gbgqvDZp3iw&s',
-  },
-  {
-    id: 7,
-    description: 'Gatito blanco con manchas plomas',
-    place: 'Prado av 16 de Julio cerca a Dumbo',
-    details:
-      'Gato blanco con manchas plomas, asustado, tiene un collar morado pero no tiene datos.',
-    imageUrl:
-      'https://images.squarespace-cdn.com/content/v1/607f89e638219e13eee71b1e/1684821560422-SD5V37BAG28BURTLIXUQ/michael-sum-LEpfefQf4rU-unsplash.jpg',
-  },
-  {
-    id: 8,
-    description: 'Gatito blanco con manchas plomas',
-    place: 'Zona Sur, Calle 21',
-    details:
-      'Gatito atigrado joven, ojos azules muy llamativos, muy cariñoso y sociable.',
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX4EbLlkmCJhmk4LI_PxiTc7OrHEkFE_wjeA&s',
-  },
-];
+// Import screens
+import HomeScreen from './screens/HomeScreen';
+import ShelterScreen from './screens/ShelterScreen';
+import SearchScreen from './screens/SearchScreen';
+import MapScreen from './screens/MapScreen';
+import AccountScreen from './screens/AccountScreen';
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Mascotas Encontradas</Text>
-      <ScrollView
-        style={styles.scrollView}
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
-        {catData.map(cat => (
-          <InformationCard
-            key={cat.id}
-            description={cat.description}
-            place={cat.place}
-            details={cat.details}
-            imageUrl={cat.imageUrl}
+    <NavigationContainer>
+      <View style={styles.container}>
+        <Tab.Navigator
+          screenOptions={{
+            headerShown: false,
+            tabBarStyle: {
+              backgroundColor: colors.surface,
+              borderTopColor: colors.border,
+              borderTopWidth: 1,
+              paddingBottom: 20,
+              paddingTop: 8,
+              height: 80,
+            },
+            tabBarActiveTintColor: colors.primary,
+            tabBarInactiveTintColor: colors.textSecondary,
+            tabBarLabelStyle: {
+              fontSize: 10,
+              fontWeight: '500',
+            },
+            tabBarIconStyle: {
+              fontSize: 24,
+            },
+          }}
+        >
+          <Tab.Screen
+            name="Inicio"
+            component={HomeScreen}
+            options={{
+              tabBarIcon: ({ color }) => <TabIcon icon="🏠" color={color} />,
+            }}
           />
-        ))}
-      </ScrollView>
-      <StatusBar style="auto" />
-    </View>
+          <Tab.Screen
+            name="Albergue"
+            component={ShelterScreen}
+            options={{
+              tabBarIcon: ({ color }) => <TabIcon icon="🐕" color={color} />,
+            }}
+          />
+          <Tab.Screen
+            name="Buscar"
+            component={SearchScreen}
+            options={{
+              tabBarIcon: ({ color }) => <TabIcon icon="🔍" color={color} />,
+            }}
+          />
+          <Tab.Screen
+            name="Mapa"
+            component={MapScreen}
+            options={{
+              tabBarIcon: ({ color }) => <TabIcon icon="📍" color={color} />,
+            }}
+          />
+          <Tab.Screen
+            name="Cuenta"
+            component={AccountScreen}
+            options={{
+              tabBarIcon: ({ color }) => <TabIcon icon="🐱" color={color} />,
+            }}
+          />
+        </Tab.Navigator>
+        <StatusBar style="auto" />
+      </View>
+    </NavigationContainer>
   );
 }
+
+// Simple tab icon component
+const TabIcon = ({ icon, color }) => (
+  <Text style={{ color, fontSize: 24 }}>{icon}</Text>
+);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
-    paddingTop: 50,
-  },
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: semanticColors.headerText,
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  scrollView: {
-    flex: 1,
-  },
-  scrollContent: {
-    paddingHorizontal: 20,
-    paddingBottom: 20,
   },
 });
