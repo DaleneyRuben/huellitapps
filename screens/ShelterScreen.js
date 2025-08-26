@@ -1,7 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native';
+import styled from 'styled-components/native';
 import InformationCard from '../components/InformationCard';
-import { colors, semanticColors } from '../theme';
 
 const catData = [
   {
@@ -78,13 +78,8 @@ const catData = [
 
 const ShelterScreen = () => {
   return (
-    <>
-      <Text style={styles.header}>Albergue de Mascotas</Text>
-      <ScrollView
-        style={styles.scrollView}
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
+    <SafeAreaView style={{ flex: 1 }}>
+      <StyledScrollView showsVerticalScrollIndicator={false}>
         {catData.map(cat => (
           <InformationCard
             key={cat.id}
@@ -94,27 +89,17 @@ const ShelterScreen = () => {
             imageUrl={cat.imageUrl}
           />
         ))}
-      </ScrollView>
-    </>
+      </StyledScrollView>
+    </SafeAreaView>
   );
 };
 
-const styles = StyleSheet.create({
-  header: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: semanticColors.headerText,
-    textAlign: 'center',
-    marginBottom: 20,
-    marginTop: 20,
-  },
-  scrollView: {
-    flex: 1,
-  },
-  scrollContent: {
-    paddingHorizontal: 20,
-    paddingBottom: 100,
-  },
-});
+const StyledScrollView = styled.ScrollView`
+  flex: 1;
+
+  /* contentContainerStyle equivalent */
+  padding-horizontal: 20px;
+  padding-bottom: 100px;
+`;
 
 export default ShelterScreen;

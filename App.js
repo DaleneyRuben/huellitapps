@@ -2,7 +2,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
-import { View, StyleSheet, Text } from 'react-native';
+import { Text } from 'react-native';
 import { colors } from './theme';
 
 // Import screens
@@ -17,67 +17,65 @@ const Tab = createBottomTabNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <View style={styles.container}>
-        <Tab.Navigator
-          screenOptions={{
-            headerShown: false,
-            tabBarStyle: {
-              backgroundColor: colors.surface,
-              borderTopColor: colors.border,
-              borderTopWidth: 1,
-              paddingBottom: 20,
-              paddingTop: 8,
-              height: 80,
-            },
-            tabBarActiveTintColor: colors.primary,
-            tabBarInactiveTintColor: colors.textSecondary,
-            tabBarLabelStyle: {
-              fontSize: 10,
-              fontWeight: '500',
-            },
-            tabBarIconStyle: {
-              fontSize: 24,
-            },
+      <Tab.Navigator
+        screenOptions={{
+          headerShown: false,
+          tabBarStyle: {
+            backgroundColor: colors.surface,
+            borderTopColor: colors.border,
+            borderTopWidth: 1,
+            paddingBottom: 20,
+            paddingTop: 8,
+            height: 80,
+          },
+          tabBarActiveTintColor: colors.primary,
+          tabBarInactiveTintColor: colors.textSecondary,
+          tabBarLabelStyle: {
+            fontSize: 10,
+            fontWeight: '500',
+          },
+          tabBarIconStyle: {
+            fontSize: 24,
+          },
+        }}
+      >
+        <Tab.Screen
+          name="Inicio"
+          component={HomeScreen}
+          options={{
+            tabBarIcon: ({ color }) => <TabIcon icon="🏠" color={color} />,
           }}
-        >
-          <Tab.Screen
-            name="Inicio"
-            component={HomeScreen}
-            options={{
-              tabBarIcon: ({ color }) => <TabIcon icon="🏠" color={color} />,
-            }}
-          />
-          <Tab.Screen
-            name="Albergue"
-            component={ShelterScreen}
-            options={{
-              tabBarIcon: ({ color }) => <TabIcon icon="🐕" color={color} />,
-            }}
-          />
-          <Tab.Screen
-            name="Buscar"
-            component={SearchScreen}
-            options={{
-              tabBarIcon: ({ color }) => <TabIcon icon="🔍" color={color} />,
-            }}
-          />
-          <Tab.Screen
-            name="Mapa"
-            component={MapScreen}
-            options={{
-              tabBarIcon: ({ color }) => <TabIcon icon="📍" color={color} />,
-            }}
-          />
-          <Tab.Screen
-            name="Cuenta"
-            component={AccountScreen}
-            options={{
-              tabBarIcon: ({ color }) => <TabIcon icon="🐱" color={color} />,
-            }}
-          />
-        </Tab.Navigator>
-        <StatusBar style="auto" />
-      </View>
+        />
+        <Tab.Screen
+          name="Albergue"
+          component={ShelterScreen}
+          options={{
+            tabBarIcon: ({ color }) => <TabIcon icon="🐕" color={color} />,
+          }}
+        />
+        <Tab.Screen
+          name="Buscar"
+          component={SearchScreen}
+          options={{
+            tabBarIcon: ({ color }) => <TabIcon icon="🔍" color={color} />,
+          }}
+        />
+        <Tab.Screen
+          name="Mapa"
+          component={MapScreen}
+          options={{
+            tabBarIcon: ({ color }) => <TabIcon icon="📍" color={color} />,
+          }}
+        />
+        <Tab.Screen
+          name="Cuenta"
+          component={AccountScreen}
+          options={{
+            tabBarIcon: ({ color }) => <TabIcon icon="🐱" color={color} />,
+          }}
+        />
+      </Tab.Navigator>
+      <StatusBar style="auto" />
     </NavigationContainer>
   );
 }
@@ -86,10 +84,3 @@ export default function App() {
 const TabIcon = ({ icon, color }) => (
   <Text style={{ color, fontSize: 24 }}>{icon}</Text>
 );
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: colors.background,
-  },
-});
