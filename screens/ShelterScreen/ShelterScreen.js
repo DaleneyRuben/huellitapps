@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
-import InformationCard from '../../components/InformationCard';
+import FoundPetCard from '../../components/FoundPetCard';
 
 const catData = [
   {
@@ -81,7 +81,7 @@ const ShelterScreen = () => {
     <SafeAreaView style={{ flex: 1 }}>
       <StyledScrollView showsVerticalScrollIndicator={false}>
         {catData.map(cat => (
-          <InformationCard
+          <FoundPetCard
             key={cat.id}
             description={cat.description}
             place={cat.place}
