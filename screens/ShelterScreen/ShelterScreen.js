@@ -1,7 +1,7 @@
 import React from 'react';
 import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
-import InformationCard from '../components/InformationCard';
+import InformationCard from '../../components/InformationCard';
 
 const catData = [
   {

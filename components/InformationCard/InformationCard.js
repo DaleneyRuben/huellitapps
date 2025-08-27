@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import { colors, semanticColors } from '../theme';
+import { colors, semanticColors } from '../../theme';
 
 const InformationCard = ({ description, place, details, imageUrl }) => {
   return (
