@@ -2,6 +2,7 @@ import React from 'react';
 import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
 import FoundPetCard from '../../components/FoundPetCard';
+import { colors } from '../../theme';
 
 const catData = [
   {
@@ -78,7 +79,14 @@ const catData = [
 
 const ShelterScreen = () => {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <Container>
+      <Header>
+        <Title>Mascotas Encontradas</Title>
+        <Subtitle>
+          Estas mascotas han sido encontradas y están en el albergue
+        </Subtitle>
+      </Header>
+
       <StyledScrollView showsVerticalScrollIndicator={false}>
         {catData.map(cat => (
           <FoundPetCard
@@ -90,15 +98,37 @@ const ShelterScreen = () => {
           />
         ))}
       </StyledScrollView>
-    </SafeAreaView>
+    </Container>
   );
 };
 
+const Container = styled(SafeAreaView)`
+  flex: 1;
+  background-color: ${colors.background};
+`;
+
+const Header = styled.View`
+  padding: 20px;
+  padding-bottom: 16px;
+  border-bottom-width: 1px;
+  border-bottom-color: ${colors.border};
+`;
+
+const Title = styled.Text`
+  font-size: 24px;
+  font-weight: bold;
+  color: ${colors.textPrimary};
+  margin-bottom: 4px;
+`;
+
+const Subtitle = styled.Text`
+  font-size: 16px;
+  color: ${colors.textSecondary};
+`;
+
 const StyledScrollView = styled.ScrollView`
   flex: 1;
-
-  /* contentContainerStyle equivalent */
-  padding-horizontal: 20px;
+  padding: 16px;
   padding-bottom: 100px;
 `;
 
