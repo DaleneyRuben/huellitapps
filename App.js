@@ -18,6 +18,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator
+        initialRouteName="Inicio"
         screenOptions={{
           headerShown: false,
           tabBarStyle: {
@@ -67,7 +68,6 @@ export default function App() {
             ),
           }}
         />
-
         <Tab.Screen
           name="Mapa"
           component={MapScreen}
