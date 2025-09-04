@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { SafeAreaView } from 'react-native';
 import styled from 'styled-components/native';
 import FoundPetCard from '../../components/FoundPetCard';
+import Search from '../../components/Search';
+import Toggle from '../../components/Toggle';
 import { colors } from '../../theme';
 
 const catData = [
@@ -78,6 +80,21 @@ const catData = [
 ];
 
 const ShelterScreen = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedPetType, setSelectedPetType] = useState(0);
+
+  const petTypeOptions = [{ icon: 'pets' }, { icon: 'pets' }];
+
+  const handleSearch = query => {
+    setSearchQuery(query);
+    // TODO: Implement search functionality
+  };
+
+  const handlePetTypeChange = index => {
+    setSelectedPetType(index);
+    // TODO: Filter pets by type
+  };
+
   return (
     <Container>
       <Header>
@@ -86,6 +103,22 @@ const ShelterScreen = () => {
           Estas mascotas han sido encontradas y están en el albergue
         </Subtitle>
       </Header>
+
+      <Row>
+        <Search
+          style={{ flex: '0.9 0' }}
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          onSubmit={() => handleSearch(searchQuery)}
+        />
+
+        <Toggle
+          style={{ flex: '0.4' }}
+          options={petTypeOptions}
+          selectedIndex={selectedPetType}
+          onSelect={handlePetTypeChange}
+        />
+      </Row>
 
       <StyledScrollView showsVerticalScrollIndicator={false}>
         {catData.map(cat => (
@@ -130,6 +163,13 @@ const StyledScrollView = styled.ScrollView`
   flex: 1;
   padding: 16px;
   padding-bottom: 100px;
+`;
+
+const Row = styled.View`
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  padding: 0 16px;
 `;
 
 export default ShelterScreen;
