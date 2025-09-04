@@ -1,11 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 import LostPetCard from '../../components/LostPetCard';
+import Search from '../../components/Search';
+import Toggle from '../../components/Toggle';
 import { colors } from '../../theme';
 
 const SearchScreen = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedPetType, setSelectedPetType] = useState(0);
+
+  const petTypeOptions = [{ icon: 'pets' }, { icon: 'pets' }];
+
+  const handleSearch = query => {
+    setSearchQuery(query);
+    // TODO: Implement search functionality
+  };
+
+  const handlePetTypeChange = index => {
+    setSelectedPetType(index);
+    // TODO: Filter pets by type
+  };
+
   const lostPets = [
     {
       id: 1,
@@ -66,6 +83,22 @@ const SearchScreen = () => {
         <Subtitle>Ayuda a encontrar a estas mascotas</Subtitle>
       </Header>
 
+      <Row>
+        <Search
+          style={{ flex: '0.9 0' }}
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          onSubmit={() => handleSearch(searchQuery)}
+        />
+
+        <Toggle
+          style={{ flex: '0.4' }}
+          options={petTypeOptions}
+          selectedIndex={selectedPetType}
+          onSelect={handlePetTypeChange}
+        />
+      </Row>
+
       <StyledScrollView showsVerticalScrollIndicator={false}>
         {lostPets.map(pet => (
           <LostPetCard
@@ -109,6 +142,13 @@ const Subtitle = styled.Text`
 const StyledScrollView = styled(ScrollView)`
   flex: 1;
   padding: 16px;
+`;
+
+const Row = styled.View`
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  padding: 0 16px;
 `;
 
 export default SearchScreen;
