@@ -4,6 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StatusBar } from 'expo-status-bar';
 import { colors } from './theme';
 import { MaterialIcons } from '@expo/vector-icons';
+import { Platform } from 'react-native';
 
 // Import screens
 import HomeScreen from './screens/HomeScreen';
@@ -14,9 +15,23 @@ import AccountScreen from './screens/AccountScreen';
 
 const Tab = createBottomTabNavigator();
 
+// Linking configuration for web URL support
+const linking = {
+  prefixes: ['/'],
+  config: {
+    screens: {
+      Inicio: '/',
+      Buscar: '/buscar',
+      Albergue: '/albergue',
+      Mapa: '/mapa',
+      Cuenta: '/cuenta',
+    },
+  },
+};
+
 export default function App() {
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={Platform.OS === 'web' ? linking : undefined}>
       <Tab.Navigator
         initialRouteName="Inicio"
         screenOptions={{
