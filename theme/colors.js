@@ -14,10 +14,10 @@ export const colors = {
   accentLight: '#F2C9B8', // Lighter dusty rose
   accentDark: '#D19A82', // Darker dusty rose
 
-  // Brown Colors
-  brown: '#8B4513', // Saddle Brown - Active states, highlights
-  brownLight: '#A0522D', // Lighter brown
-  brownDark: '#654321', // Darker brown
+  // Orange Colors
+  orange: '#FAA35F', // Orange - Active states, highlights
+  orangeLight: '#FFC99A', // Lighter orange
+  orangeDark: '#D8893F', // Darker orange
 
   // Green Colors
   green: '#6E8B3D', // Dark Olive Green - Labels, accents

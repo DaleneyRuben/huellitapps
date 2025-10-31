@@ -44,7 +44,7 @@ export default function App() {
             paddingTop: 8,
             height: 80,
           },
-          tabBarActiveTintColor: colors.brown, // Saddle Brown for active tab
+          tabBarActiveTintColor: colors.orange,
           tabBarInactiveTintColor: colors.textSecondary,
           tabBarLabelStyle: {
             fontSize: 10,
