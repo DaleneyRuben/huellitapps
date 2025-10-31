@@ -1,8 +1,12 @@
 import React from 'react';
-import InProgressMessage from '../../components/InProgressMessage';
+import Map from '../../components/Map';
 
 const MapScreen = () => {
-  return <InProgressMessage tabName="Mapa" />;
+  return (
+    <>
+      <Map />
+    </>
+  );
 };
 
 export default MapScreen;
