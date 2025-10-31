@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
 import styled from 'styled-components/native';
 import LostPetCard from '../../components/LostPetCard';
 import Search from '../../components/Search';
@@ -10,6 +14,7 @@ import { colors } from '../../theme';
 const SearchScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPetType, setSelectedPetType] = useState(0);
+  const insets = useSafeAreaInsets();
 
   const petTypeOptions = [{ icon: 'pets' }, { icon: 'pets' }];
 
@@ -77,43 +82,57 @@ const SearchScreen = () => {
   ];
 
   return (
-    <Container>
-      <Header>
-        <Title>Mascotas Perdidas</Title>
-        <Subtitle>Ayuda a encontrar a estas mascotas</Subtitle>
-      </Header>
+    <>
+      <StatusBar style="light" />
+      <StatusBarBackground topInset={insets.top} />
+      <Container edges={['left', 'right', 'bottom']}>
+        <Header topInset={insets.top}>
+          <Title>Mascotas Perdidas</Title>
+          <Subtitle>Ayuda a encontrar a estas mascotas</Subtitle>
+        </Header>
 
-      <Row>
-        <Search
-          style={{ flex: '0.9 0' }}
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-          onSubmit={() => handleSearch(searchQuery)}
-        />
-
-        <Toggle
-          style={{ flex: '0.4' }}
-          options={petTypeOptions}
-          selectedIndex={selectedPetType}
-          onSelect={handlePetTypeChange}
-        />
-      </Row>
-
-      <StyledScrollView showsVerticalScrollIndicator={false}>
-        {lostPets.map(pet => (
-          <LostPetCard
-            key={pet.id}
-            petName={pet.petName}
-            timeLost={pet.timeLost}
-            zone={pet.zone}
-            characteristics={pet.characteristics}
-            imageUrl={pet.imageUrl}
+        <Row>
+          <Search
+            style={{ flex: '0.9 0' }}
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            onSubmit={() => handleSearch(searchQuery)}
           />
-        ))}
-      </StyledScrollView>
-    </Container>
+
+          <Toggle
+            style={{ flex: '0.4' }}
+            options={petTypeOptions}
+            selectedIndex={selectedPetType}
+            onSelect={handlePetTypeChange}
+          />
+        </Row>
+
+        <StyledScrollView showsVerticalScrollIndicator={false}>
+          {lostPets.map(pet => (
+            <LostPetCard
+              key={pet.id}
+              petName={pet.petName}
+              timeLost={pet.timeLost}
+              zone={pet.zone}
+              characteristics={pet.characteristics}
+              imageUrl={pet.imageUrl}
+            />
+          ))}
+        </StyledScrollView>
+      </Container>
+    </>
   );
 };
+
+const StatusBarBackground = styled.View`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: ${props => props.topInset || 0}px;
+  background-color: ${colors.orangeDark};
+  z-index: 0;
+`;
 
 const Container = styled(SafeAreaView)`
   flex: 1;
@@ -121,22 +140,30 @@ const Container = styled(SafeAreaView)`
 `;
 
 const Header = styled.View`
-  padding: 20px;
+  position: relative;
+  z-index: 1;
+  padding-top: ${props => (props.topInset || 0) + 5}px;
+  padding-left: 20px;
+  padding-right: 20px;
   padding-bottom: 16px;
   border-bottom-width: 1px;
   border-bottom-color: ${colors.border};
+  background-color: ${colors.orangeDark};
 `;
 
 const Title = styled.Text`
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
-  color: ${colors.textPrimary};
+  color: #ffffff;
   margin-bottom: 4px;
+  text-align: center;
 `;
 
 const Subtitle = styled.Text`
-  font-size: 16px;
-  color: ${colors.textSecondary};
+  font-size: 14px;
+  color: #ffffff;
+  font-weight: 400;
+  text-align: center;
 `;
 
 const StyledScrollView = styled(ScrollView)`
