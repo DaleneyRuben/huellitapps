@@ -107,9 +107,7 @@ const ShelterScreen = () => {
       <Container edges={['left', 'right', 'bottom']}>
         <Header topInset={insets.top}>
           <Title>Mascotas Encontradas</Title>
-          <Subtitle>
-            Estas mascotas han sido encontradas y están en el albergue
-          </Subtitle>
+          <Subtitle>Estas mascotas están en nuestro albergue</Subtitle>
         </Header>
 
         <Row>
