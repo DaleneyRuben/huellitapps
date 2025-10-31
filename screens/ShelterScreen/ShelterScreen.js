@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { SafeAreaView } from 'react-native';
+import {
+  SafeAreaView,
+  useSafeAreaInsets,
+} from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
 import styled from 'styled-components/native';
 import FoundPetCard from '../../components/FoundPetCard';
 import Search from '../../components/Search';
@@ -82,6 +86,7 @@ const catData = [
 const ShelterScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPetType, setSelectedPetType] = useState(0);
+  const insets = useSafeAreaInsets();
 
   const petTypeOptions = [{ icon: 'pets' }, { icon: 'pets' }];
 
@@ -96,44 +101,58 @@ const ShelterScreen = () => {
   };
 
   return (
-    <Container>
-      <Header>
-        <Title>Mascotas Encontradas</Title>
-        <Subtitle>
-          Estas mascotas han sido encontradas y están en el albergue
-        </Subtitle>
-      </Header>
+    <>
+      <StatusBar style="light" />
+      <StatusBarBackground topInset={insets.top} />
+      <Container edges={['left', 'right', 'bottom']}>
+        <Header topInset={insets.top}>
+          <Title>Mascotas Encontradas</Title>
+          <Subtitle>
+            Estas mascotas han sido encontradas y están en el albergue
+          </Subtitle>
+        </Header>
 
-      <Row>
-        <Search
-          style={{ flex: '0.9 0' }}
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-          onSubmit={() => handleSearch(searchQuery)}
-        />
-
-        <Toggle
-          style={{ flex: '0.4' }}
-          options={petTypeOptions}
-          selectedIndex={selectedPetType}
-          onSelect={handlePetTypeChange}
-        />
-      </Row>
-
-      <StyledScrollView showsVerticalScrollIndicator={false}>
-        {catData.map(cat => (
-          <FoundPetCard
-            key={cat.id}
-            description={cat.description}
-            place={cat.place}
-            details={cat.details}
-            imageUrl={cat.imageUrl}
+        <Row>
+          <Search
+            style={{ flex: '0.9 0' }}
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            onSubmit={() => handleSearch(searchQuery)}
           />
-        ))}
-      </StyledScrollView>
-    </Container>
+
+          <Toggle
+            style={{ flex: '0.4' }}
+            options={petTypeOptions}
+            selectedIndex={selectedPetType}
+            onSelect={handlePetTypeChange}
+          />
+        </Row>
+
+        <StyledScrollView showsVerticalScrollIndicator={false}>
+          {catData.map(cat => (
+            <FoundPetCard
+              key={cat.id}
+              description={cat.description}
+              place={cat.place}
+              details={cat.details}
+              imageUrl={cat.imageUrl}
+            />
+          ))}
+        </StyledScrollView>
+      </Container>
+    </>
   );
 };
+
+const StatusBarBackground = styled.View`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: ${props => props.topInset || 0}px;
+  background-color: ${colors.orangeDark};
+  z-index: 0;
+`;
 
 const Container = styled(SafeAreaView)`
   flex: 1;
@@ -141,22 +160,30 @@ const Container = styled(SafeAreaView)`
 `;
 
 const Header = styled.View`
-  padding: 20px;
+  position: relative;
+  z-index: 1;
+  padding-top: ${props => (props.topInset || 0) + 5}px;
+  padding-left: 20px;
+  padding-right: 20px;
   padding-bottom: 16px;
   border-bottom-width: 1px;
   border-bottom-color: ${colors.border};
+  background-color: ${colors.orangeDark};
 `;
 
 const Title = styled.Text`
-  font-size: 24px;
+  font-size: 20px;
   font-weight: bold;
-  color: ${colors.textPrimary};
+  color: #ffffff;
   margin-bottom: 4px;
+  text-align: center;
 `;
 
 const Subtitle = styled.Text`
-  font-size: 16px;
-  color: ${colors.textSecondary};
+  font-size: 14px;
+  color: #ffffff;
+  font-weight: 400;
+  text-align: center;
 `;
 
 const StyledScrollView = styled.ScrollView`
