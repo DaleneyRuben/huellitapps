@@ -1,10 +1,10 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { StatusBar } from 'expo-status-bar';
 import { colors } from './theme';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Platform } from 'react-native';
+import ScreenWrapper from './components/ScreenWrapper';
 
 // Import screens
 import HomeScreen from './screens/HomeScreen';
@@ -58,49 +58,73 @@ export default function App() {
       >
         <Tab.Screen
           name="Buscar"
-          component={SearchScreen}
           options={{
             tabBarIcon: ({ color }) => (
               <TabIcon iconName="search" color={color} />
             ),
           }}
-        />
+        >
+          {() => (
+            <ScreenWrapper>
+              <SearchScreen />
+            </ScreenWrapper>
+          )}
+        </Tab.Screen>
         <Tab.Screen
           name="Albergue"
-          component={ShelterScreen}
           options={{
             tabBarIcon: ({ color }) => (
               <TabIcon iconName="pets" color={color} />
             ),
           }}
-        />
+        >
+          {() => (
+            <ScreenWrapper>
+              <ShelterScreen />
+            </ScreenWrapper>
+          )}
+        </Tab.Screen>
         <Tab.Screen
           name="Inicio"
-          component={HomeScreen}
           options={{
             tabBarIcon: ({ color }) => (
               <TabIcon iconName="home" color={color} />
             ),
           }}
-        />
+        >
+          {() => (
+            <ScreenWrapper>
+              <HomeScreen />
+            </ScreenWrapper>
+          )}
+        </Tab.Screen>
         <Tab.Screen
           name="Mapa"
-          component={MapScreen}
           options={{
             tabBarIcon: ({ color }) => <TabIcon iconName="map" color={color} />,
           }}
-        />
+        >
+          {() => (
+            <ScreenWrapper>
+              <MapScreen />
+            </ScreenWrapper>
+          )}
+        </Tab.Screen>
         <Tab.Screen
           name="Cuenta"
-          component={AccountScreen}
           options={{
             tabBarIcon: ({ color }) => (
               <TabIcon iconName="person" color={color} />
             ),
           }}
-        />
+        >
+          {() => (
+            <ScreenWrapper>
+              <AccountScreen />
+            </ScreenWrapper>
+          )}
+        </Tab.Screen>
       </Tab.Navigator>
-      <StatusBar style="auto" />
     </NavigationContainer>
   );
 }
