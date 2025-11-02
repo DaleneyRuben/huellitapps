@@ -41,7 +41,7 @@ export default function App() {
             borderTopColor: colors.border,
             borderTopWidth: 1,
             paddingBottom: 20,
-            paddingTop: 8,
+            paddingTop: 2,
             height: 80,
           },
           tabBarActiveTintColor: colors.orange,
