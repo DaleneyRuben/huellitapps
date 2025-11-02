@@ -45,6 +45,7 @@ const ToggleContainer = styled.View`
   padding: 0px;
   margin-horizontal: 2px;
   margin-vertical: 6px;
+  min-width: 100px;
   shadow-color: ${colors.shadow};
   shadow-offset: 0px 2px;
   shadow-opacity: 0.1;
@@ -58,7 +59,7 @@ const ToggleSegment = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   padding-vertical: 5px;
-  padding-horizontal: 6px;
+  padding-horizontal: 12px;
   background-color: ${props =>
     props.isActive ? colors.primary : 'transparent'};
   border-radius: ${props => {
