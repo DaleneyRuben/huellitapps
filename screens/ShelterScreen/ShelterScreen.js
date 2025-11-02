@@ -111,19 +111,21 @@ const ShelterScreen = () => {
         </Header>
 
         <Row>
-          <Search
-            style={{ flex: '0.9 0' }}
-            value={searchQuery}
-            onChangeText={setSearchQuery}
-            onSubmit={() => handleSearch(searchQuery)}
-          />
+          <SearchWrapper>
+            <Search
+              value={searchQuery}
+              onChangeText={setSearchQuery}
+              onSubmit={() => handleSearch(searchQuery)}
+            />
+          </SearchWrapper>
 
-          <Toggle
-            style={{ flex: '0.4' }}
-            options={petTypeOptions}
-            selectedIndex={selectedPetType}
-            onSelect={handlePetTypeChange}
-          />
+          <ToggleWrapper>
+            <Toggle
+              options={petTypeOptions}
+              selectedIndex={selectedPetType}
+              onSelect={handlePetTypeChange}
+            />
+          </ToggleWrapper>
         </Row>
 
         <StyledScrollView showsVerticalScrollIndicator={false}>
@@ -193,8 +195,16 @@ const StyledScrollView = styled.ScrollView`
 const Row = styled.View`
   flex-direction: row;
   align-items: center;
-  gap: 5px;
   padding: 0 16px;
+`;
+
+const SearchWrapper = styled.View`
+  flex: 1;
+  margin-right: 8px;
+`;
+
+const ToggleWrapper = styled.View`
+  flex-shrink: 0;
 `;
 
 export default ShelterScreen;
