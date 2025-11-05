@@ -11,25 +11,22 @@ const Header = ({ topInset = 0 }) => {
       <MainContentRow>
         {/* Left: Film Strip Icon */}
         <LeftIconContainer>
-          <MaterialIcons name="movie" size={24} color={colors.surface} />
+          <MaterialIcons name="movie" size={24} color={colors.orange} />
         </LeftIconContainer>
 
         {/* Center: Logo and Text */}
         <LogoContainer>
-          <LogoImage
-            source={require('../../assets/logo.png')}
-            resizeMode="contain"
-            style={{ width: 100, height: 'auto' }}
-          />
+          <LogoWrapper>
+            <LogoImage
+              source={require('../../assets/logo.png')}
+              resizeMode="cover"
+            />
+          </LogoWrapper>
         </LogoContainer>
 
         {/* Right: Bell Icon */}
         <RightIconContainer>
-          <MaterialIcons
-            name="notifications"
-            size={24}
-            color={colors.surface}
-          />
+          <MaterialIcons name="notifications" size={24} color={colors.orange} />
         </RightIconContainer>
       </MainContentRow>
     </HeaderContainer>
@@ -39,13 +36,13 @@ const Header = ({ topInset = 0 }) => {
 const HeaderContainer = styled.View`
   position: relative;
   z-index: 1;
-  padding-top: ${props => (props.topInset || 0) + 5}px;
+  padding-top: ${props => props.topInset || 0}px;
   padding-left: 20px;
   padding-right: 20px;
-  padding-bottom: 16px;
+  padding-bottom: 2px;
   border-bottom-width: 1px;
   border-bottom-color: ${colors.border};
-  background-color: ${colors.orangeDark};
+  background-color: ${colors.surface};
 `;
 
 const MainContentRow = styled.View`
@@ -66,20 +63,18 @@ const LogoContainer = styled.View`
   flex: 1;
 `;
 
+const LogoWrapper = styled.View`
+  overflow: hidden;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+`;
+
 const LogoImage = styled.Image`
-  width: 32px;
-  height: 32px;
-`;
-
-const LogoTextContainer = styled.View`
-  margin-left: 8px;
-`;
-
-const LogoText = styled.Text`
-  font-size: 18px;
-  font-weight: 700;
-  color: ${colors.info};
-  letter-spacing: 1px;
+  width: 120px;
+  height: 120px;
+  margin-top: -15px;
+  margin-bottom: -15px;
 `;
 
 const RightIconContainer = styled.View`

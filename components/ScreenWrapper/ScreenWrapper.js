@@ -11,7 +11,7 @@ const ScreenWrapper = ({ children }) => {
 
   return (
     <>
-      <StatusBar style="light" />
+      <StatusBar style="dark" />
       <SafeAreaView edges={['left', 'right', 'bottom']} style={{ flex: 1 }}>
         <Header topInset={insets.top} />
         {children}
