@@ -1,8 +1,8 @@
 import React from 'react';
-import InProgressMessage from '../../components/InProgressMessage';
+import Account from '../../components/Account';
 
 const AccountScreen = () => {
-  return <InProgressMessage tabName="Cuenta" />;
+  return <Account />;
 };
 
 export default AccountScreen;
