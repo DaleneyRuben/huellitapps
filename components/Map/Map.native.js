@@ -9,8 +9,8 @@ const Map = ({ pets = [], height }) => {
   const defaultRegion = {
     latitude: -16.5,
     longitude: -68.15,
-    latitudeDelta: 0.0922,
-    longitudeDelta: 0.0421,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.015,
   };
 
   // Generate mock coordinates for pets if not provided
