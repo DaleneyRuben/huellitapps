@@ -1,7 +1,7 @@
 import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
 import { colors } from '../../theme';
 
 const Toggle = ({
@@ -22,13 +22,23 @@ const Toggle = ({
           onPress={() => !disabled && onSelect(index)}
           disabled={disabled}
         >
-          <SegmentIcon
-            name={option.icon}
-            size={20}
-            color={
-              index === selectedIndex ? colors.surface : colors.textSecondary
-            }
-          />
+          {option.iconLibrary === 'FontAwesome5' ? (
+            <SegmentIconFA5
+              name={option.icon}
+              size={20}
+              color={
+                index === selectedIndex ? colors.surface : colors.textSecondary
+              }
+            />
+          ) : (
+            <SegmentIcon
+              name={option.icon}
+              size={20}
+              color={
+                index === selectedIndex ? colors.surface : colors.textSecondary
+              }
+            />
+          )}
           <SegmentLabel isActive={index === selectedIndex}>
             {option.label}
           </SegmentLabel>
@@ -72,6 +82,10 @@ const ToggleSegment = styled.TouchableOpacity`
 `;
 
 const SegmentIcon = styled(MaterialIcons)`
+  margin-right: 1px;
+`;
+
+const SegmentIconFA5 = styled(FontAwesome5)`
   margin-right: 1px;
 `;
 
