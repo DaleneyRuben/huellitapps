@@ -23,7 +23,6 @@ const SearchScreen = () => {
 
   const handleSearch = query => {
     setSearchQuery(query);
-    // TODO: Implement search functionality
   };
 
   const handlePetTypeChange = index => {
@@ -298,10 +297,20 @@ const SearchScreen = () => {
       <StyledScrollView showsVerticalScrollIndicator={false}>
         {lostPets
           .filter(pet => {
+            // Filter by pet type
             // Index 0 = Dogs, Index 1 = Cats
             const targetType =
               selectedPetType === 0 ? ANIMAL_TYPES.DOG : ANIMAL_TYPES.CAT;
-            return pet.type === targetType;
+            const matchesType = pet.type === targetType;
+
+            // Filter by pet name (case-insensitive partial match)
+            const matchesSearch =
+              !searchQuery.trim() ||
+              pet.petName
+                .toLowerCase()
+                .includes(searchQuery.toLowerCase().trim());
+
+            return matchesType && matchesSearch;
           })
           .map(pet => (
             <LostPetCard
