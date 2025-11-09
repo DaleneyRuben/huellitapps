@@ -77,7 +77,7 @@ const SearchScreen = () => {
   ];
 
   return (
-    <Container edges={['left', 'right', 'bottom']}>
+    <Container edges={['left', 'right']}>
       <Row>
         <SearchWrapper>
           <Search

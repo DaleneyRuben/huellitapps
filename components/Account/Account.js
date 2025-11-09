@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../theme';
@@ -11,8 +12,10 @@ const Account = () => {
   const [email, setEmail] = useState('');
 
   return (
-    <Container>
-      <ScrollView contentContainerStyle={{ paddingBottom: 20 }}>
+    <Container edges={['left', 'right']}>
+      <StyledScrollView
+        contentContainerStyle={{ paddingBottom: 20, paddingHorizontal: 20 }}
+      >
         {/* Profile Picture Section */}
         <ProfilePictureContainer>
           <ProfilePicture>
@@ -129,15 +132,18 @@ const Account = () => {
             <ConfigTextLogout>Cerrar Sesión</ConfigTextLogout>
           </ConfigItem>
         </Section>
-      </ScrollView>
+      </StyledScrollView>
     </Container>
   );
 };
 
-const Container = styled.View`
+const Container = styled(SafeAreaView)`
   flex: 1;
   background-color: ${colors.background};
-  padding: 20px;
+`;
+
+const StyledScrollView = styled(ScrollView)`
+  flex: 1;
 `;
 
 const ProfilePictureContainer = styled.View`
