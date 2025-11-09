@@ -168,7 +168,6 @@ const ShelterScreen = () => {
 
   const handleSearch = query => {
     setSearchQuery(query);
-    // TODO: Implement search functionality
   };
 
   const handlePetTypeChange = index => {
@@ -198,10 +197,20 @@ const ShelterScreen = () => {
       <StyledScrollView showsVerticalScrollIndicator={false}>
         {allPets
           .filter(pet => {
+            // Filter by pet type
             // Index 0 = Dogs, Index 1 = Cats
             const targetType =
               selectedPetType === 0 ? ANIMAL_TYPES.DOG : ANIMAL_TYPES.CAT;
-            return pet.type === targetType;
+            const matchesType = pet.type === targetType;
+
+            // Filter by description or place (case-insensitive partial match)
+            const searchTerm = searchQuery.toLowerCase().trim();
+            const matchesSearch =
+              !searchTerm ||
+              pet.description.toLowerCase().includes(searchTerm) ||
+              pet.place.toLowerCase().includes(searchTerm);
+
+            return matchesType && matchesSearch;
           })
           .map(pet => (
             <FoundPetCard
