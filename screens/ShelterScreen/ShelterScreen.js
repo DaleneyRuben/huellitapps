@@ -6,6 +6,11 @@ import Search from '../../components/Search';
 import Toggle from '../../components/Toggle';
 import { colors } from '../../theme';
 
+const ANIMAL_TYPES = {
+  DOG: 'dog',
+  CAT: 'cat',
+};
+
 const catData = [
   {
     id: 1,
@@ -14,6 +19,7 @@ const catData = [
     details: 'Gatito blanco con negro, tienen 3 meses, se encontraba asustado.',
     imageUrl:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1200px-Cat_August_2010-4.jpg',
+    type: ANIMAL_TYPES.CAT,
   },
   {
     id: 2,
@@ -23,6 +29,7 @@ const catData = [
       'Gato blanco con manchas plomas, asustado, tiene un collar morado pero no tiene datos.',
     imageUrl:
       'https://images.squarespace-cdn.com/content/v1/607f89e638219e13eee71b1e/1684821560422-SD5V37BAG28BURTLIXUQ/michael-sum-LEpfefQf4rU-unsplash.jpg',
+    type: ANIMAL_TYPES.CAT,
   },
   {
     id: 3,
@@ -32,6 +39,7 @@ const catData = [
       'Gato plomo atigrado, esta asutado, no sabe andar por la calle, se encuentra lastimando, cicatriz cerca del hocico.',
     imageUrl:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBfRaIl1GKY743VUdBOrL04K4gbgqvDZp3iw&s',
+    type: ANIMAL_TYPES.CAT,
   },
   {
     id: 4,
@@ -40,6 +48,7 @@ const catData = [
     details:
       'Gatito con collar, nombre Katia, viejito, es malo con las personas, malas cerca de las patitas.',
     imageUrl: 'https://d2zp5xs5cp8zlg.cloudfront.net/image-79322-800.jpg',
+    type: ANIMAL_TYPES.CAT,
   },
   {
     id: 5,
@@ -49,6 +58,7 @@ const catData = [
       'Gatito atigrado joven, ojos azules muy llamativos, muy cariñoso y sociable.',
     imageUrl:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX4EbLlkmCJhmk4LI_PxiTc7OrHEkFE_wjeA&s',
+    type: ANIMAL_TYPES.CAT,
   },
   {
     id: 6,
@@ -58,6 +68,7 @@ const catData = [
       'Gato plomo atigrado, esta asutado, no sabe andar por la calle, se encuentra lastimando, cicatriz cerca del hocico.',
     imageUrl:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBfRaIl1GKY743VUdBOrL04K4gbgqvDZp3iw&s',
+    type: ANIMAL_TYPES.CAT,
   },
   {
     id: 7,
@@ -67,6 +78,7 @@ const catData = [
       'Gato blanco con manchas plomas, asustado, tiene un collar morado pero no tiene datos.',
     imageUrl:
       'https://images.squarespace-cdn.com/content/v1/607f89e638219e13eee71b1e/1684821560422-SD5V37BAG28BURTLIXUQ/michael-sum-LEpfefQf4rU-unsplash.jpg',
+    type: ANIMAL_TYPES.CAT,
   },
   {
     id: 8,
@@ -76,14 +88,83 @@ const catData = [
       'Gatito atigrado joven, ojos azules muy llamativos, muy cariñoso y sociable.',
     imageUrl:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX4EbLlkmCJhmk4LI_PxiTc7OrHEkFE_wjeA&s',
+    type: ANIMAL_TYPES.CAT,
   },
 ];
+
+const dogData = [
+  {
+    id: 9,
+    description: 'Perrito labrador encontrado',
+    place: 'Miraflores, Calle 21 de Calacoto',
+    details:
+      'Perro labrador dorado, muy amigable, tiene collar pero sin placa. Responde al nombre Max.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1552053831-71594a27632d?w=400&h=400&fit=crop&crop=face',
+    type: ANIMAL_TYPES.DOG,
+  },
+  {
+    id: 10,
+    description: 'Perrito pequeño encontrado',
+    place: 'San Pedro, Plaza España',
+    details:
+      'Perro pequeño, color marrón, muy asustado. Tiene una pata lastimada.',
+    imageUrl:
+      'https://content.dogagingproject.org/wp-content/uploads/2020/11/helena-lopes-S3TPJCOIRoo-unsplash-scaled.jpg',
+    type: ANIMAL_TYPES.DOG,
+  },
+  {
+    id: 11,
+    description: 'Perro mestizo encontrado',
+    place: 'Centro, Plaza Murillo',
+    details:
+      'Perro mestizo mediano, color negro con manchas blancas. Muy tranquilo y amigable.',
+    imageUrl:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWAeQh3LdidSVcYwyfS7CikxDkGekmKwV-ew&s',
+    type: ANIMAL_TYPES.DOG,
+  },
+  {
+    id: 12,
+    description: 'Perrito beagle encontrado',
+    place: 'Zona Sur, Calacoto',
+    details:
+      'Perro beagle, tricolor, muy juguetón. Tiene collar azul con cascabel.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1551717743-49959800b1f6?w=400&h=400&fit=crop&q=60',
+    type: ANIMAL_TYPES.DOG,
+  },
+  {
+    id: 13,
+    description: 'Perro pastor alemán encontrado',
+    place: 'Obrajes, Av. 14 de Septiembre',
+    details:
+      'Perro pastor alemán, color negro y marrón. Muy inteligente, responde a comandos básicos.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=400&h=400&fit=crop&q=60',
+    type: ANIMAL_TYPES.DOG,
+  },
+  {
+    id: 14,
+    description: 'Perrito pequeño blanco encontrado',
+    place: 'Irpavi, Calle 1',
+    details:
+      'Perro pequeño, completamente blanco, muy dulce. Parece perdido, busca a su dueño.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1517849845537-4d257902454a?w=400&h=400&fit=crop&q=60',
+    type: ANIMAL_TYPES.DOG,
+  },
+];
+
+const allPets = [...catData, ...dogData];
 
 const ShelterScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPetType, setSelectedPetType] = useState(0);
 
-  const petTypeOptions = [{ icon: 'pets' }, { icon: 'pets' }];
+  const petTypeOptions = [
+    { icon: 'pets', iconLibrary: 'MaterialIcons' },
+    { icon: 'cat', iconLibrary: 'FontAwesome5' },
+  ];
 
   const handleSearch = query => {
     setSearchQuery(query);
@@ -92,7 +173,6 @@ const ShelterScreen = () => {
 
   const handlePetTypeChange = index => {
     setSelectedPetType(index);
-    // TODO: Filter pets by type
   };
 
   return (
@@ -116,15 +196,22 @@ const ShelterScreen = () => {
       </Row>
 
       <StyledScrollView showsVerticalScrollIndicator={false}>
-        {catData.map(cat => (
-          <FoundPetCard
-            key={cat.id}
-            description={cat.description}
-            place={cat.place}
-            details={cat.details}
-            imageUrl={cat.imageUrl}
-          />
-        ))}
+        {allPets
+          .filter(pet => {
+            // Index 0 = Dogs, Index 1 = Cats
+            const targetType =
+              selectedPetType === 0 ? ANIMAL_TYPES.DOG : ANIMAL_TYPES.CAT;
+            return pet.type === targetType;
+          })
+          .map(pet => (
+            <FoundPetCard
+              key={pet.id}
+              description={pet.description}
+              place={pet.place}
+              details={pet.details}
+              imageUrl={pet.imageUrl}
+            />
+          ))}
       </StyledScrollView>
     </Container>
   );
