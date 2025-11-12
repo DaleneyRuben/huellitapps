@@ -1,5 +1,6 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../theme';
@@ -7,6 +8,7 @@ import Map from '../../components/Map';
 import LostPetCarousel from '../../components/LostPetCarousel';
 
 const HomeScreen = () => {
+  const navigation = useNavigation();
   const lostPets = [
     {
       id: 1,
@@ -67,8 +69,7 @@ const HomeScreen = () => {
   ];
 
   const handleRegisterPet = () => {
-    // TODO: Navigate to pet registration screen
-    console.log('Register pet pressed');
+    navigation.navigate('LostPetFlow');
   };
 
   return (
