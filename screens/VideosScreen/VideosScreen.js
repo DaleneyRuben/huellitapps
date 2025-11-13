@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -13,6 +13,12 @@ const VideosScreen = () => {
 
   const educativeVideoRef = useRef(null);
   const testimonioRefs = [useRef(null), useRef(null), useRef(null)];
+  const [fullscreenOpened, setFullscreenOpened] = useState({
+    educative: false,
+    testimonio0: false,
+    testimonio1: false,
+    testimonio2: false,
+  });
 
   const educativeVideo = require('../../assets/educative.mov');
   const testimoniosVideos = [
@@ -32,6 +38,31 @@ const VideosScreen = () => {
         }
       } catch (error) {
         console.log('Error setting video position:', error);
+      }
+    }
+  };
+
+  const handlePlaybackStatusUpdate = async (status, videoKey) => {
+    if (status.isLoaded) {
+      // Open fullscreen when video starts playing
+      if (status.isPlaying && !fullscreenOpened[videoKey]) {
+        try {
+          const ref =
+            videoKey === 'educative'
+              ? educativeVideoRef
+              : testimonioRefs[parseInt(videoKey.replace('testimonio', ''))];
+
+          if (ref && ref.current) {
+            await ref.current.presentFullscreenPlayer();
+            setFullscreenOpened(prev => ({ ...prev, [videoKey]: true }));
+          }
+        } catch (error) {
+          console.log('Error presenting fullscreen:', error);
+        }
+      }
+      // Reset flag when video is paused/stopped so it can open fullscreen again
+      if (!status.isPlaying && fullscreenOpened[videoKey]) {
+        setFullscreenOpened(prev => ({ ...prev, [videoKey]: false }));
       }
     }
   };
@@ -60,6 +91,9 @@ const VideosScreen = () => {
               resizeMode="contain"
               isLooping={false}
               onLoad={() => handleVideoLoad(educativeVideoRef)}
+              onPlaybackStatusUpdate={status =>
+                handlePlaybackStatusUpdate(status, 'educative')
+              }
             />
           </VideoContainer>
         </SectionContainer>
@@ -77,6 +111,9 @@ const VideosScreen = () => {
                 resizeMode="contain"
                 isLooping={false}
                 onLoad={() => handleVideoLoad(testimonioRefs[index])}
+                onPlaybackStatusUpdate={status =>
+                  handlePlaybackStatusUpdate(status, `testimonio${index}`)
+                }
               />
             </VideoContainer>
           ))}
