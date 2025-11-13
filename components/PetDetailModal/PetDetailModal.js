@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Modal,
   ScrollView,
@@ -10,13 +10,19 @@ import styled from 'styled-components/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../theme';
 import Map from '../Map';
+import FoundPetFormModal from '../FoundPetFormModal';
 
 const PetDetailModal = ({ visible, onClose, pet }) => {
+  const [foundFormVisible, setFoundFormVisible] = useState(false);
+
   if (!pet) return null;
 
   const handleFound = () => {
-    Alert.alert('¡Gracias!', 'Has marcado esta mascota como encontrada.');
-    onClose();
+    setFoundFormVisible(true);
+  };
+
+  const handleCloseFoundForm = () => {
+    setFoundFormVisible(false);
   };
 
   const handleSeen = () => {
@@ -106,6 +112,12 @@ const PetDetailModal = ({ visible, onClose, pet }) => {
           </ScrollView>
         </ModalContent>
       </ModalOverlay>
+
+      <FoundPetFormModal
+        visible={foundFormVisible}
+        onClose={handleCloseFoundForm}
+        pet={pet}
+      />
     </Modal>
   );
 };
