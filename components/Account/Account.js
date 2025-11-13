@@ -6,10 +6,10 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../theme';
 
 const Account = () => {
-  const [name, setName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState('Abigail');
+  const [lastName, setLastName] = useState('Daleney');
+  const [phone, setPhone] = useState('77788899');
+  const [email, setEmail] = useState('abigail.daleney@gmail.com');
 
   return (
     <Container edges={['left', 'right']}>
