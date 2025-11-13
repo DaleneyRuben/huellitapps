@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, Alert } from 'react-native';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -37,6 +37,81 @@ const LostPetFlowScreen = () => {
     setFormData(newData);
   };
 
+  // Validation functions for each step
+  const validateStep1 = () => {
+    if (!formData.name || !formData.name.trim()) {
+      Alert.alert(
+        'Campo requerido',
+        'Por favor, ingresa el nombre de tu compañerito.'
+      );
+      return false;
+    }
+    if (!formData.breed || !formData.breed.trim()) {
+      Alert.alert(
+        'Campo requerido',
+        'Por favor, ingresa la raza de tu compañerito.'
+      );
+      return false;
+    }
+    if (!formData.characteristics || !formData.characteristics.trim()) {
+      Alert.alert(
+        'Campo requerido',
+        'Por favor, describe las características de tu compañerito.'
+      );
+      return false;
+    }
+    return true;
+  };
+
+  const validateStep2 = () => {
+    if (!formData.latitude || !formData.longitude) {
+      Alert.alert(
+        'Ubicación requerida',
+        'Por favor, selecciona la ubicación en el mapa donde se perdió tu compañerito.'
+      );
+      return false;
+    }
+    return true;
+  };
+
+  const validateStep3 = () => {
+    if (!formData.date) {
+      Alert.alert(
+        'Campo requerido',
+        'Por favor, selecciona la fecha cuando se perdió tu compañerito.'
+      );
+      return false;
+    }
+    // Date, hour, minute, and period should always have values (they have defaults)
+    return true;
+  };
+
+  const validateStep4 = () => {
+    if (!formData.imageUri) {
+      Alert.alert(
+        'Foto requerida',
+        'Por favor, sube una foto de tu compañerito.'
+      );
+      return false;
+    }
+    return true;
+  };
+
+  const validateCurrentStep = () => {
+    switch (currentStep) {
+      case 1:
+        return validateStep1();
+      case 2:
+        return validateStep2();
+      case 3:
+        return validateStep3();
+      case 4:
+        return validateStep4();
+      default:
+        return true;
+    }
+  };
+
   const handleBack = () => {
     if (currentStep > 1) {
       setCurrentStep(currentStep - 1);
@@ -44,10 +119,15 @@ const LostPetFlowScreen = () => {
   };
 
   const handleNext = () => {
+    // Validate current step before proceeding
+    if (!validateCurrentStep()) {
+      return;
+    }
+
     if (currentStep < 4) {
       setCurrentStep(currentStep + 1);
     } else {
-      // Submit form
+      // Submit form (already validated in step 4)
       handleSubmit();
     }
   };
