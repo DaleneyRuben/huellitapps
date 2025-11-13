@@ -35,10 +35,18 @@ const PetDetailModal = ({ visible, onClose, pet }) => {
     setSeenFormVisible(false);
   };
 
-  // Generate coordinates for the map (mock data for now)
+  // Use pet's actual lost location coordinates if available, otherwise use default
   const petCoordinates = {
-    latitude: -16.5,
-    longitude: -68.12,
+    latitude: pet.latitude || -16.5,
+    longitude: pet.longitude || -68.15,
+  };
+
+  // Create region to center map on pet's lost location
+  const mapRegion = {
+    latitude: petCoordinates.latitude,
+    longitude: petCoordinates.longitude,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.015,
   };
 
   // Use pet image as main photo, duplicate for gallery
@@ -89,6 +97,7 @@ const PetDetailModal = ({ visible, onClose, pet }) => {
                     },
                   ]}
                   height={250}
+                  initialRegion={mapRegion}
                 />
               </MapSection>
 

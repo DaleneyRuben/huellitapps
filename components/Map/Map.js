@@ -3,7 +3,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import { colors } from '../../theme';
 
 // Web version of Map component - shows placeholder since react-native-maps doesn't work on web
-const Map = ({ pets = [], height }) => {
+const Map = ({ pets = [], height, initialRegion }) => {
   return (
     <View style={[styles.container, { height }]}>
       <View style={styles.webPlaceholder}>

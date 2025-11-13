@@ -4,7 +4,7 @@ import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../theme';
 
-const Map = ({ pets = [], height }) => {
+const Map = ({ pets = [], height, initialRegion }) => {
   // La Paz, Bolivia coordinates
   const defaultRegion = {
     latitude: -16.5,
@@ -12,6 +12,9 @@ const Map = ({ pets = [], height }) => {
     latitudeDelta: 0.01,
     longitudeDelta: 0.015,
   };
+
+  // Use provided initialRegion or default
+  const mapRegion = initialRegion || defaultRegion;
 
   // Generate mock coordinates for pets if not provided
   const getPetCoordinates = (pet, index) => {
@@ -29,9 +32,14 @@ const Map = ({ pets = [], height }) => {
   return (
     <View style={[styles.container, { height }]}>
       <MapView
+        key={
+          initialRegion
+            ? `${initialRegion.latitude}-${initialRegion.longitude}`
+            : 'default'
+        }
         style={styles.map}
         provider={PROVIDER_GOOGLE}
-        initialRegion={defaultRegion}
+        initialRegion={mapRegion}
         showsUserLocation={true}
         showsMyLocationButton={true}
         showsCompass={true}
