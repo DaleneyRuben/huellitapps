@@ -1,10 +1,10 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../theme';
 
-const Map = ({ pets = [], height, initialRegion }) => {
+const Map = ({ pets = [], height, initialRegion, onAddPetPress }) => {
   // La Paz, Bolivia coordinates
   const defaultRegion = {
     latitude: -16.5,
@@ -66,6 +66,15 @@ const Map = ({ pets = [], height, initialRegion }) => {
           );
         })}
       </MapView>
+      {onAddPetPress && (
+        <TouchableOpacity
+          style={styles.addButton}
+          onPress={onAddPetPress}
+          activeOpacity={0.8}
+        >
+          <MaterialIcons name="add" size={32} color={colors.surface} />
+        </TouchableOpacity>
+      )}
     </View>
   );
 };
@@ -74,6 +83,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     marginBottom: 24,
+    position: 'relative',
   },
   map: {
     width: '100%',
@@ -90,6 +100,25 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 2,
     right: 2,
+  },
+  addButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    backgroundColor: colors.info,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: colors.shadow,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 });
 
