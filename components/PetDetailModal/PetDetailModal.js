@@ -11,9 +11,11 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../theme';
 import Map from '../Map';
 import FoundPetFormModal from '../FoundPetFormModal';
+import SeenPetFormModal from '../SeenPetFormModal';
 
 const PetDetailModal = ({ visible, onClose, pet }) => {
   const [foundFormVisible, setFoundFormVisible] = useState(false);
+  const [seenFormVisible, setSeenFormVisible] = useState(false);
 
   if (!pet) return null;
 
@@ -26,8 +28,11 @@ const PetDetailModal = ({ visible, onClose, pet }) => {
   };
 
   const handleSeen = () => {
-    Alert.alert('¡Gracias!', 'Has reportado que viste esta mascota.');
-    onClose();
+    setSeenFormVisible(true);
+  };
+
+  const handleCloseSeenForm = () => {
+    setSeenFormVisible(false);
   };
 
   // Generate coordinates for the map (mock data for now)
@@ -116,6 +121,12 @@ const PetDetailModal = ({ visible, onClose, pet }) => {
       <FoundPetFormModal
         visible={foundFormVisible}
         onClose={handleCloseFoundForm}
+        pet={pet}
+      />
+
+      <SeenPetFormModal
+        visible={seenFormVisible}
+        onClose={handleCloseSeenForm}
         pet={pet}
       />
     </Modal>
