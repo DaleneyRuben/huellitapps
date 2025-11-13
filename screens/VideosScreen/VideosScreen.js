@@ -20,11 +20,11 @@ const VideosScreen = () => {
     testimonio2: false,
   });
 
-  const educativeVideo = require('../../assets/educative.mov');
+  const educativeVideo = require('../../videos/educative.mov');
   const testimoniosVideos = [
-    require('../../assets/case_1.mov'),
-    require('../../assets/case_2.mov'),
-    require('../../assets/case_3.mov'),
+    require('../../videos/case_1.mov'),
+    require('../../videos/case_2.mov'),
+    require('../../videos/case_3.mov'),
   ];
 
   const handleVideoLoad = async ref => {
