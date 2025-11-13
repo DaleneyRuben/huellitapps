@@ -20,7 +20,7 @@ import VideosScreen from './screens/VideosScreen';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-// Stack Navigator for Home tab (includes LostPetFlow)
+// Stack Navigator for Home tab
 function HomeStackNavigator() {
   return (
     <Stack.Navigator
@@ -32,13 +32,6 @@ function HomeStackNavigator() {
         {() => (
           <ScreenWrapper>
             <HomeScreen />
-          </ScreenWrapper>
-        )}
-      </Stack.Screen>
-      <Stack.Screen name="LostPetFlow">
-        {() => (
-          <ScreenWrapper>
-            <LostPetFlowScreen />
           </ScreenWrapper>
         )}
       </Stack.Screen>
@@ -146,9 +139,9 @@ const linking = {
           Inicio: {
             screens: {
               HomeMain: '/',
-              LostPetFlow: '/lost-pet-flow',
             },
           },
+          LostPetFlow: '/lost-pet-flow',
           Buscar: '/buscar',
           Albergue: '/albergue',
           Mapa: '/mapa',
@@ -176,6 +169,15 @@ function RootStackNavigator() {
         }}
       >
         {() => <VideosScreen />}
+      </Stack.Screen>
+      <Stack.Screen
+        name="LostPetFlow"
+        options={{
+          presentation: 'transparentModal',
+          animation: 'fade',
+        }}
+      >
+        {() => <LostPetFlowScreen />}
       </Stack.Screen>
     </Stack.Navigator>
   );

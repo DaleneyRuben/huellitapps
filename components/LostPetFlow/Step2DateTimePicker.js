@@ -256,7 +256,7 @@ const Step2DateTimePicker = ({ formData, onFormDataChange, petType }) => {
 
 const Container = styled.View`
   flex: 1;
-  padding: 16px;
+  padding: 0;
 `;
 
 const QuestionText = styled.Text`

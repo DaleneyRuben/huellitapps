@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { ScrollView } from 'react-native';
 import styled from 'styled-components/native';
 import { useNavigation } from '@react-navigation/native';
+import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../theme';
 import ProgressIndicator from '../../components/ProgressIndicator';
 import Step1PetInfoForm from '../../components/LostPetFlow/Step1PetInfoForm';
@@ -35,6 +37,12 @@ const LostPetFlowScreen = () => {
     setFormData(newData);
   };
 
+  const handleBack = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
   const handleNext = () => {
     if (currentStep < 4) {
       setCurrentStep(currentStep + 1);
@@ -45,9 +53,7 @@ const LostPetFlowScreen = () => {
   };
 
   const handleCancel = () => {
-    // if (navigation?.goBack) {
     navigation.goBack();
-    // }
   };
 
   const handleSubmit = async () => {
@@ -128,23 +134,67 @@ const LostPetFlowScreen = () => {
 
   return (
     <Container>
-      <ProgressIndicator currentStep={currentStep} totalSteps={4} />
-      <StepContainer>{renderStep()}</StepContainer>
-      <ButtonContainer>
-        <CancelButton onPress={handleCancel}>
-          <ButtonText>Cancelar</ButtonText>
-        </CancelButton>
-        <NextButton onPress={handleNext}>
-          <ButtonText>Siguiente</ButtonText>
-        </NextButton>
-      </ButtonContainer>
+      <ModalCard>
+        <HeaderRow>
+          <ProgressIndicator currentStep={currentStep} totalSteps={4} />
+          <CloseButton onPress={handleCancel}>
+            <MaterialIcons name="close" size={24} color={colors.info} />
+          </CloseButton>
+        </HeaderRow>
+        <ScrollView
+          style={{ flex: 1 }}
+          contentContainerStyle={{ flexGrow: 1 }}
+          showsVerticalScrollIndicator={false}
+        >
+          <StepContainer>{renderStep()}</StepContainer>
+        </ScrollView>
+        <ButtonContainer>
+          {currentStep > 1 && (
+            <BackButton onPress={handleBack}>
+              <BackButtonText>Regresar</BackButtonText>
+            </BackButton>
+          )}
+          <NextButton hasBack={currentStep > 1} onPress={handleNext}>
+            <ButtonText>
+              {currentStep === 4 ? 'Enviar' : 'Siguiente'}
+            </ButtonText>
+          </NextButton>
+        </ButtonContainer>
+      </ModalCard>
     </Container>
   );
 };
 
 const Container = styled.View`
   flex: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+`;
+
+const ModalCard = styled.View`
+  width: 90%;
+  height: 85%;
   background-color: ${colors.background};
+  border-radius: 16px;
+  padding: 20px;
+  shadow-color: ${colors.shadow};
+  shadow-offset: 0px 4px;
+  shadow-opacity: 0.3;
+  shadow-radius: 8px;
+  elevation: 8;
+`;
+
+const HeaderRow = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+`;
+
+const CloseButton = styled.TouchableOpacity`
+  padding: 4px;
 `;
 
 const StepContainer = styled.View`
@@ -153,37 +203,34 @@ const StepContainer = styled.View`
 
 const ButtonContainer = styled.View`
   flex-direction: row;
-  padding: 16px;
+  padding-top: 16px;
   gap: 12px;
   border-top-width: 1px;
   border-top-color: ${colors.border};
+  margin-top: 16px;
+`;
+
+const BackButton = styled.TouchableOpacity`
+  flex: 1;
   background-color: ${colors.surface};
+  border-radius: 12px;
+  padding: 16px;
+  align-items: center;
+  justify-content: center;
+  border-width: 1.5px;
+  border-color: ${colors.orange};
 `;
 
 const NextButton = styled.TouchableOpacity`
-  flex: 1;
+  flex: ${props => (props.hasBack ? 2 : 1)};
   background-color: ${colors.orange};
   border-radius: 12px;
-  padding: 14px;
+  padding: 16px;
   align-items: center;
   justify-content: center;
   shadow-color: ${colors.shadow};
   shadow-offset: 0px 2px;
-  shadow-opacity: 0.15;
-  shadow-radius: 4px;
-  elevation: 4;
-`;
-
-const CancelButton = styled.TouchableOpacity`
-  flex: 1;
-  background-color: ${colors.orangeLight};
-  border-radius: 12px;
-  padding: 14px;
-  align-items: center;
-  justify-content: center;
-  shadow-color: ${colors.shadow};
-  shadow-offset: 0px 2px;
-  shadow-opacity: 0.15;
+  shadow-opacity: 0.2;
   shadow-radius: 4px;
   elevation: 4;
 `;
@@ -192,6 +239,12 @@ const ButtonText = styled.Text`
   font-size: 16px;
   font-weight: 600;
   color: ${colors.surface};
+`;
+
+const BackButtonText = styled.Text`
+  font-size: 16px;
+  font-weight: 600;
+  color: ${colors.orange};
 `;
 
 export default LostPetFlowScreen;

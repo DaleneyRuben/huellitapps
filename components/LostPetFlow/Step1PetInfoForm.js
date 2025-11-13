@@ -127,7 +127,7 @@ const Step1PetInfoForm = ({
 
 const Container = styled.View`
   flex: 1;
-  padding: 16px;
+  padding: 0;
 `;
 
 const QuestionRow = styled.View`
