@@ -1,82 +1,143 @@
-import React from 'react';
-import { ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { ScrollView, ActivityIndicator, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import { MaterialIcons } from '@expo/vector-icons';
+import * as Location from 'expo-location';
 import { colors } from '../../theme';
 import Map from '../../components/Map';
 import LostPetCarousel from '../../components/LostPetCarousel';
+import { loadLostPets, convertPetToDisplayFormat } from '../../utils/storage';
+
+// Calculate distance between two coordinates using Haversine formula (in kilometers)
+const calculateDistance = (lat1, lon1, lat2, lon2) => {
+  const R = 6371; // Earth's radius in kilometers
+  const dLat = ((lat2 - lat1) * Math.PI) / 180;
+  const dLon = ((lon2 - lon1) * Math.PI) / 180;
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos((lat1 * Math.PI) / 180) *
+      Math.cos((lat2 * Math.PI) / 180) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+};
+
+// Maximum distance in kilometers to consider a pet "nearby"
+const MAX_DISTANCE_KM = 10;
 
 const HomeScreen = () => {
   const navigation = useNavigation();
-  const lostPets = [
-    {
-      id: 1,
-      petName: 'Tokio',
-      timeLost: '3 dias',
-      zone: 'Puente de las Américas',
-      characteristics:
-        'Gato blanco con manchita negra en la cabeza, sin collar.',
-      imageUrl:
-        'https://images.unsplash.com/photo-1574158622682-e40e69881006?w=400&h=400&fit=crop',
-      latitude: -16.497,
-      longitude: -68.148,
-    },
-    {
-      id: 2,
-      petName: 'Canelo',
-      timeLost: '2 semanas',
-      zone: 'Sopocachi',
-      characteristics: 'Gato blanco con plomo, Jovial, sin ropa.',
-      imageUrl:
-        'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400&h=400&fit=crop',
-      latitude: -16.503,
-      longitude: -68.152,
-    },
-    {
-      id: 3,
-      petName: 'Chin Chin',
-      timeLost: '1 semana',
-      zone: 'Miraflores',
-      characteristics: 'Perrito pequeño, color claro, muy cariñoso.',
-      imageUrl:
-        'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=400&fit=crop',
-      latitude: -16.499,
-      longitude: -68.153,
-    },
-    {
-      id: 4,
-      petName: 'Simon',
-      timeLost: '5 dias',
-      zone: 'San Pedro',
-      characteristics: 'Perrito mediano, pelo rizado, collar azul.',
-      imageUrl:
-        'https://images.unsplash.com/photo-1552053831-71594a27632d?w=400&h=400&fit=crop',
-      latitude: -16.501,
-      longitude: -68.147,
-    },
-    {
-      id: 5,
-      petName: 'Michito',
-      timeLost: '4 dias',
-      zone: 'Centro',
-      characteristics: 'Gato naranja, muy juguetón, con collar.',
-      imageUrl:
-        'https://images.unsplash.com/photo-1513245543132-31f507417b26?w=400&h=400&fit=crop',
-      latitude: -16.5,
-      longitude: -68.15,
-    },
-  ];
+  const [lostPets, setLostPets] = useState([]);
+  const [userLocation, setUserLocation] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadPetsNearUser();
+  }, []);
+
+  const loadPetsNearUser = async () => {
+    try {
+      setLoading(true);
+
+      // Get user location first
+      let currentLocation = null;
+      let { status } = await Location.requestForegroundPermissionsAsync();
+
+      if (status === 'granted') {
+        try {
+          const location = await Location.getCurrentPositionAsync({});
+          currentLocation = {
+            latitude: location.coords.latitude,
+            longitude: location.coords.longitude,
+          };
+          setUserLocation(currentLocation);
+        } catch (locationError) {
+          console.error('Error getting location:', locationError);
+          // Use default location if getting position fails
+          currentLocation = {
+            latitude: -16.5,
+            longitude: -68.15,
+          };
+        }
+      } else {
+        // Use default location (La Paz, Bolivia) if permission denied
+        currentLocation = {
+          latitude: -16.5,
+          longitude: -68.15,
+        };
+        Alert.alert(
+          'Permisos de ubicación',
+          'Se necesitan permisos de ubicación para mostrar mascotas cercanas.'
+        );
+      }
+
+      // Load pets from storage
+      const pets = await loadLostPets();
+
+      // Convert to display format
+      const displayPets = pets.map(convertPetToDisplayFormat);
+
+      // Filter and sort by proximity
+      const petsWithDistance = displayPets
+        .filter(pet => pet.latitude && pet.longitude)
+        .map(pet => ({
+          ...pet,
+          distance: calculateDistance(
+            currentLocation.latitude,
+            currentLocation.longitude,
+            pet.latitude,
+            pet.longitude
+          ),
+        }))
+        .filter(pet => pet.distance <= MAX_DISTANCE_KM)
+        .sort((a, b) => a.distance - b.distance);
+
+      setLostPets(petsWithDistance);
+    } catch (error) {
+      console.error('Error loading pets:', error);
+      Alert.alert('Error', 'No se pudieron cargar las mascotas perdidas.');
+      setLostPets([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleRegisterPet = () => {
     navigation.navigate('LostPetFlow');
   };
 
+  if (loading) {
+    return (
+      <Container>
+        <LoadingContainer>
+          <ActivityIndicator size="large" color={colors.orange} />
+        </LoadingContainer>
+      </Container>
+    );
+  }
+
+  // Prepare initial region for map (center on user location or default)
+  const mapInitialRegion = userLocation
+    ? {
+        latitude: userLocation.latitude,
+        longitude: userLocation.longitude,
+        latitudeDelta: 0.05,
+        longitudeDelta: 0.05,
+      }
+    : {
+        latitude: -16.5,
+        longitude: -68.15,
+        latitudeDelta: 0.05,
+        longitudeDelta: 0.05,
+      };
+
   return (
     <Container>
       <StyledScrollView showsVerticalScrollIndicator={false}>
         <MapTitle>Mapa</MapTitle>
-        <Map pets={lostPets} height={300} />
+        <Map pets={lostPets} height={300} initialRegion={mapInitialRegion} />
         <LostPetCarousel pets={lostPets} />
         <RegisterButton onPress={handleRegisterPet}>
           <MaterialIcons name="pets" size={20} color={colors.surface} />
@@ -126,6 +187,12 @@ const ButtonText = styled.Text`
   font-weight: 600;
   color: ${colors.surface};
   margin-left: 8px;
+`;
+
+const LoadingContainer = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 `;
 
 export default HomeScreen;
