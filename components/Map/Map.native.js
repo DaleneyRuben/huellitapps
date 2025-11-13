@@ -41,7 +41,7 @@ const Map = ({ pets = [], height, initialRegion }) => {
         provider={PROVIDER_GOOGLE}
         initialRegion={mapRegion}
         showsUserLocation={true}
-        showsMyLocationButton={true}
+        showsMyLocationButton={false}
         showsCompass={true}
         showsScale={true}
       >
