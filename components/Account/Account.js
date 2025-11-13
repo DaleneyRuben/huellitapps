@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../theme';
 
 const Account = () => {
+  const navigation = useNavigation();
   const [name, setName] = useState('Abigail');
   const [lastName, setLastName] = useState('Daleney');
   const [phone, setPhone] = useState('77788899');
@@ -113,7 +115,7 @@ const Account = () => {
           </ConfigItem>
           <Separator />
 
-          <ConfigItem>
+          <ConfigItem onPress={() => navigation.navigate('Videos')}>
             <ConfigIcon>
               <MaterialIcons
                 name="info"
