@@ -1,4 +1,5 @@
 import React from 'react';
+import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import { colors, semanticColors } from '../../theme';
 import Card from '../Card';
@@ -9,26 +10,32 @@ const LostPetCard = ({
   zone,
   characteristics,
   imageUrl,
+  onPress,
 }) => {
+  const CardWrapper = onPress ? TouchableOpacity : React.Fragment;
+  const wrapperProps = onPress ? { onPress, activeOpacity: 0.7 } : {};
+
   return (
-    <Card>
-      <LeftSection>
-        <PetImage source={{ uri: imageUrl }} />
-      </LeftSection>
+    <CardWrapper {...wrapperProps}>
+      <Card>
+        <LeftSection>
+          <PetImage source={{ uri: imageUrl }} />
+        </LeftSection>
 
-      <RightSection>
-        <PetName>{petName}</PetName>
+        <RightSection>
+          <PetName>{petName}</PetName>
 
-        <Label>Tiempo perdido:</Label>
-        <Value>{timeLost}</Value>
+          <Label>Tiempo perdido:</Label>
+          <Value>{timeLost}</Value>
 
-        <Label>Zona o lugar:</Label>
-        <Value>{zone}</Value>
+          <Label>Zona o lugar:</Label>
+          <Value>{zone}</Value>
 
-        <Label>Características:</Label>
-        <Value>{characteristics}</Value>
-      </RightSection>
-    </Card>
+          <Label>Características:</Label>
+          <Value>{characteristics}</Value>
+        </RightSection>
+      </Card>
+    </CardWrapper>
   );
 };
 
@@ -52,7 +59,7 @@ const RightSection = styled.View`
 
 const PetName = styled.Text`
   font-size: 12px;
-  color: ${colors.blue};
+  color: ${colors.info};
   margin-bottom: 4px;
 `;
 

@@ -5,6 +5,7 @@ import styled from 'styled-components/native';
 import LostPetCard from '../../components/LostPetCard';
 import Search from '../../components/Search';
 import Toggle from '../../components/Toggle';
+import PetDetailModal from '../../components/PetDetailModal';
 import { colors } from '../../theme';
 
 const ANIMAL_TYPES = {
@@ -15,6 +16,8 @@ const ANIMAL_TYPES = {
 const SearchScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPetType, setSelectedPetType] = useState(0);
+  const [selectedPet, setSelectedPet] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
   const petTypeOptions = [
     { icon: 'pets', iconLibrary: 'MaterialIcons' },
@@ -27,6 +30,16 @@ const SearchScreen = () => {
 
   const handlePetTypeChange = index => {
     setSelectedPetType(index);
+  };
+
+  const handlePetCardPress = pet => {
+    setSelectedPet(pet);
+    setModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+    setSelectedPet(null);
   };
 
   const lostPets = [
@@ -320,9 +333,16 @@ const SearchScreen = () => {
               zone={pet.zone}
               characteristics={pet.characteristics}
               imageUrl={pet.imageUrl}
+              onPress={() => handlePetCardPress(pet)}
             />
           ))}
       </StyledScrollView>
+
+      <PetDetailModal
+        visible={modalVisible}
+        onClose={handleCloseModal}
+        pet={selectedPet}
+      />
     </Container>
   );
 };
