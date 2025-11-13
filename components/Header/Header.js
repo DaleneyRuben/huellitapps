@@ -1,17 +1,26 @@
 import React from 'react';
 import { Platform } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../theme';
 
 const Header = ({ topInset = 0 }) => {
+  const navigation = useNavigation();
+
+  const handleVideoIconPress = () => {
+    navigation.navigate('Videos');
+  };
+
   return (
     <HeaderContainer topInset={topInset}>
       {/* Main Content Row */}
       <MainContentRow>
         {/* Left: Film Strip Icon */}
         <LeftIconContainer>
-          <MaterialIcons name="movie" size={24} color={colors.orange} />
+          <IconButton onPress={handleVideoIconPress}>
+            <MaterialIcons name="movie" size={24} color={colors.orange} />
+          </IconButton>
         </LeftIconContainer>
 
         {/* Center: Logo and Text */}
@@ -54,6 +63,10 @@ const MainContentRow = styled.View`
 
 const LeftIconContainer = styled.View`
   align-items: flex-start;
+`;
+
+const IconButton = styled.TouchableOpacity`
+  padding: 4px;
 `;
 
 const LogoContainer = styled.View`

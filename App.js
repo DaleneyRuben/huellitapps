@@ -14,6 +14,7 @@ import SearchScreen from './screens/SearchScreen';
 import MapScreen from './screens/MapScreen';
 import AccountScreen from './screens/AccountScreen';
 import LostPetFlowScreen from './screens/LostPetFlowScreen';
+import VideosScreen from './screens/VideosScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -139,24 +140,50 @@ const linking = {
   prefixes: ['/'],
   config: {
     screens: {
-      Inicio: {
+      Tabs: {
         screens: {
-          HomeMain: '/',
-          LostPetFlow: '/lost-pet-flow',
+          Inicio: {
+            screens: {
+              HomeMain: '/',
+              LostPetFlow: '/lost-pet-flow',
+            },
+          },
+          Buscar: '/buscar',
+          Albergue: '/albergue',
+          Mapa: '/mapa',
+          Cuenta: '/cuenta',
         },
       },
-      Buscar: '/buscar',
-      Albergue: '/albergue',
-      Mapa: '/mapa',
-      Cuenta: '/cuenta',
+      Videos: '/videos',
     },
   },
 };
 
+// Root Stack Navigator (contains Tab Navigator and modal screens)
+function RootStackNavigator() {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Stack.Screen name="Tabs" component={TabNavigator} />
+      <Stack.Screen
+        name="Videos"
+        options={{
+          presentation: 'card',
+        }}
+      >
+        {() => <VideosScreen />}
+      </Stack.Screen>
+    </Stack.Navigator>
+  );
+}
+
 export default function App() {
   return (
     <NavigationContainer linking={Platform.OS === 'web' ? linking : undefined}>
-      <TabNavigator />
+      <RootStackNavigator />
     </NavigationContainer>
   );
 }
