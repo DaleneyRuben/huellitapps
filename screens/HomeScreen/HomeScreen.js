@@ -7,6 +7,7 @@ import * as Location from 'expo-location';
 import { colors } from '../../theme';
 import Map from '../../components/Map';
 import LostPetCarousel from '../../components/LostPetCarousel';
+import PetDetailModal from '../../components/PetDetailModal';
 import { loadLostPets, convertPetToDisplayFormat } from '../../utils/storage';
 
 // Calculate distance between two coordinates using Haversine formula (in kilometers)
@@ -32,6 +33,8 @@ const HomeScreen = () => {
   const [lostPets, setLostPets] = useState([]);
   const [userLocation, setUserLocation] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [selectedPet, setSelectedPet] = useState(null);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     loadPetsNearUser();
@@ -108,6 +111,16 @@ const HomeScreen = () => {
     navigation.navigate('LostPetFlow');
   };
 
+  const handlePetPress = pet => {
+    setSelectedPet(pet);
+    setModalVisible(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalVisible(false);
+    setSelectedPet(null);
+  };
+
   if (loading) {
     return (
       <Container>
@@ -138,12 +151,17 @@ const HomeScreen = () => {
       <StyledScrollView showsVerticalScrollIndicator={false}>
         <MapTitle>Mapa</MapTitle>
         <Map pets={lostPets} height={300} initialRegion={mapInitialRegion} />
-        <LostPetCarousel pets={lostPets} />
+        <LostPetCarousel pets={lostPets} onPetPress={handlePetPress} />
         <RegisterButton onPress={handleRegisterPet}>
           <MaterialIcons name="pets" size={20} color={colors.surface} />
           <ButtonText>Registro de Perrito/Gatito Perdido</ButtonText>
         </RegisterButton>
       </StyledScrollView>
+      <PetDetailModal
+        visible={modalVisible}
+        onClose={handleCloseModal}
+        pet={selectedPet}
+      />
     </Container>
   );
 };

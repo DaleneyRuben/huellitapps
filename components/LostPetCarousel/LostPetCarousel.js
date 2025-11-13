@@ -8,7 +8,7 @@ const CARD_WIDTH = 120;
 const CARD_MARGIN = 8;
 const CARD_TOTAL_WIDTH = CARD_WIDTH + CARD_MARGIN;
 
-const LostPetCarousel = ({ pets = [] }) => {
+const LostPetCarousel = ({ pets = [], onPetPress }) => {
   const scrollViewRef = useRef(null);
   const [scrollOffset, setScrollOffset] = useState(0);
   const [contentWidth, setContentWidth] = useState(0);
@@ -67,7 +67,11 @@ const LostPetCarousel = ({ pets = [] }) => {
           contentContainerStyle={{ paddingHorizontal: 16 }}
         >
           {pets.map((pet, index) => (
-            <PetCard key={pet.id || index}>
+            <PetCard
+              key={pet.id || index}
+              onPress={() => onPetPress && onPetPress(pet)}
+              activeOpacity={0.7}
+            >
               <PetName>{pet.petName}</PetName>
               <PetImage source={{ uri: pet.imageUrl }} />
               <DetailsContainer>
@@ -122,7 +126,7 @@ const StyledScrollView = styled.ScrollView`
   flex-direction: row;
 `;
 
-const PetCard = styled.View`
+const PetCard = styled.TouchableOpacity`
   width: ${CARD_WIDTH}px;
   background-color: ${colors.background};
   border: 2px solid ${colors.border};
