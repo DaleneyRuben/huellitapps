@@ -6,6 +6,7 @@ import ProgressIndicator from '../../components/ProgressIndicator';
 import Step1PetInfoForm from '../../components/LostPetFlow/Step1PetInfoForm';
 import Step2DateTimePicker from '../../components/LostPetFlow/Step2DateTimePicker';
 import Step3PhotoUpload from '../../components/LostPetFlow/Step3PhotoUpload';
+import { addLostPet } from '../../utils/storage';
 
 const PET_TYPES = {
   DOG: 'dog',
@@ -47,11 +48,40 @@ const LostPetFlowScreen = () => {
     // }
   };
 
-  const handleSubmit = () => {
-    // TODO: Submit form data
-    console.log('Form submitted:', { petType, ...formData });
-    if (navigation?.goBack) {
-      navigation.goBack();
+  const handleSubmit = async () => {
+    try {
+      // Convert date to ISO string if it's a Date object
+      const petData = {
+        petType,
+        name: formData.name,
+        location: formData.location,
+        breed: formData.breed,
+        characteristics: formData.characteristics,
+        date:
+          formData.date instanceof Date
+            ? formData.date.toISOString()
+            : formData.date,
+        hour: formData.hour,
+        minute: formData.minute,
+        period: formData.period,
+        imageUri: formData.imageUri,
+        // Add default coordinates if not provided (can be updated later)
+        latitude: null,
+        longitude: null,
+      };
+
+      await addLostPet(petData);
+      console.log('Pet saved to storage:', petData);
+
+      if (navigation?.goBack) {
+        navigation.goBack();
+      }
+    } catch (error) {
+      console.error('Error saving pet:', error);
+      // Still navigate back even if there's an error
+      if (navigation?.goBack) {
+        navigation.goBack();
+      }
     }
   };
 
