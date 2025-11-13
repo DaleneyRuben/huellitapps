@@ -160,15 +160,35 @@ const LostPetFlowScreen = () => {
       await addLostPet(petData);
       console.log('Pet saved to storage:', petData);
 
-      if (navigation?.goBack) {
-        navigation.goBack();
-      }
+      // Show confirmation message
+      Alert.alert(
+        '¡Éxito!',
+        `Se ha registrado correctamente la información de ${formData.name}. Tu reporte ha sido guardado y estará visible en la aplicación.`,
+        [
+          {
+            text: 'OK',
+            onPress: () => {
+              if (navigation?.goBack) {
+                navigation.goBack();
+              }
+            },
+          },
+        ]
+      );
     } catch (error) {
       console.error('Error saving pet:', error);
-      // Still navigate back even if there's an error
-      if (navigation?.goBack) {
-        navigation.goBack();
-      }
+      Alert.alert(
+        'Error',
+        'Hubo un problema al guardar la información. Por favor, intenta nuevamente.',
+        [
+          {
+            text: 'OK',
+            onPress: () => {
+              // Don't navigate back on error, let user try again
+            },
+          },
+        ]
+      );
     }
   };
 
@@ -236,7 +256,7 @@ const LostPetFlowScreen = () => {
           )}
           <NextButton hasBack={currentStep > 1} onPress={handleNext}>
             <ButtonText>
-              {currentStep === 4 ? 'Enviar' : 'Siguiente'}
+              {currentStep === 4 ? 'Guardar' : 'Siguiente'}
             </ButtonText>
           </NextButton>
         </ButtonContainer>
