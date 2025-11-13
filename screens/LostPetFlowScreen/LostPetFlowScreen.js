@@ -4,8 +4,9 @@ import { useNavigation } from '@react-navigation/native';
 import { colors } from '../../theme';
 import ProgressIndicator from '../../components/ProgressIndicator';
 import Step1PetInfoForm from '../../components/LostPetFlow/Step1PetInfoForm';
-import Step2DateTimePicker from '../../components/LostPetFlow/Step2DateTimePicker';
-import Step3PhotoUpload from '../../components/LostPetFlow/Step3PhotoUpload';
+import Step2MapPicker from '../../components/LostPetFlow/Step2MapPicker';
+import Step3DateTimePicker from '../../components/LostPetFlow/Step2DateTimePicker';
+import Step4PhotoUpload from '../../components/LostPetFlow/Step3PhotoUpload';
 import { addLostPet } from '../../utils/storage';
 
 const PET_TYPES = {
@@ -19,9 +20,10 @@ const LostPetFlowScreen = () => {
   const [petType, setPetType] = useState(PET_TYPES.CAT);
   const [formData, setFormData] = useState({
     name: '',
-    location: '',
     breed: '',
     characteristics: '',
+    latitude: null,
+    longitude: null,
     date: new Date(),
     hour: 1,
     minute: 30,
@@ -34,7 +36,7 @@ const LostPetFlowScreen = () => {
   };
 
   const handleNext = () => {
-    if (currentStep < 3) {
+    if (currentStep < 4) {
       setCurrentStep(currentStep + 1);
     } else {
       // Submit form
@@ -54,9 +56,11 @@ const LostPetFlowScreen = () => {
       const petData = {
         petType,
         name: formData.name,
-        location: formData.location,
         breed: formData.breed,
         characteristics: formData.characteristics,
+        latitude: formData.latitude,
+        longitude: formData.longitude,
+        address: formData.location || null, // Save address from reverse geocoding
         date:
           formData.date instanceof Date
             ? formData.date.toISOString()
@@ -65,9 +69,6 @@ const LostPetFlowScreen = () => {
         minute: formData.minute,
         period: formData.period,
         imageUri: formData.imageUri,
-        // Add default coordinates if not provided (can be updated later)
-        latitude: null,
-        longitude: null,
       };
 
       await addLostPet(petData);
@@ -98,7 +99,7 @@ const LostPetFlowScreen = () => {
         );
       case 2:
         return (
-          <Step2DateTimePicker
+          <Step2MapPicker
             formData={formData}
             onFormDataChange={handleFormDataChange}
             petType={petType}
@@ -106,7 +107,15 @@ const LostPetFlowScreen = () => {
         );
       case 3:
         return (
-          <Step3PhotoUpload
+          <Step3DateTimePicker
+            formData={formData}
+            onFormDataChange={handleFormDataChange}
+            petType={petType}
+          />
+        );
+      case 4:
+        return (
+          <Step4PhotoUpload
             formData={formData}
             onFormDataChange={handleFormDataChange}
             petType={petType}
@@ -119,7 +128,7 @@ const LostPetFlowScreen = () => {
 
   return (
     <Container>
-      <ProgressIndicator currentStep={currentStep} totalSteps={3} />
+      <ProgressIndicator currentStep={currentStep} totalSteps={4} />
       <StepContainer>{renderStep()}</StepContainer>
       <ButtonContainer>
         <CancelButton onPress={handleCancel}>

@@ -79,25 +79,6 @@ const Step1PetInfoForm = ({
         </InputField>
 
         <InputField>
-          <InputLabel>Zona y lugar donde se perdió</InputLabel>
-          <InputContainer>
-            <StyledTextInput
-              value={formData.location}
-              onChangeText={value => handleInputChange('location', value)}
-              placeholder="Ingresa la zona y lugar"
-              placeholderTextColor={colors.textLight}
-            />
-            <EditIcon>
-              <MaterialIcons
-                name="edit"
-                size={20}
-                color={colors.textSecondary}
-              />
-            </EditIcon>
-          </InputContainer>
-        </InputField>
-
-        <InputField>
           <InputLabel>Raza</InputLabel>
           <InputContainer>
             <StyledTextInput

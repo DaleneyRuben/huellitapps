@@ -67,7 +67,7 @@ const convertPetToStorageFormat = pet => {
     id: pet.id,
     petType: pet.type,
     name: pet.petName,
-    location: pet.zone,
+    address: pet.zone, // Convert zone to address
     breed: '', // Not in hardcoded data
     characteristics: pet.characteristics,
     date: lostDate.toISOString(),
@@ -433,17 +433,35 @@ export const addLostPet = async petData => {
   }
 };
 
+// Generate address text from coordinates (simple version)
+// In a real app, you'd use reverse geocoding API
+const generateAddressFromCoordinates = (latitude, longitude) => {
+  if (!latitude || !longitude) {
+    return 'Ubicación no especificada';
+  }
+  // For now, return coordinates as address text
+  // In production, you'd use a reverse geocoding service
+  return `Lat: ${latitude.toFixed(4)}, Lng: ${longitude.toFixed(4)}`;
+};
+
 // Convert storage format back to display format (for SearchScreen)
 export const convertPetToDisplayFormat = pet => {
   const lostDate = new Date(pet.date);
   const timeLost = calculateTimeLost(lostDate);
+
+  // Use existing address if available, otherwise generate from coordinates
+  // Support both "address" and "location" for backward compatibility
+  const address =
+    pet.address ||
+    pet.location ||
+    generateAddressFromCoordinates(pet.latitude, pet.longitude);
 
   return {
     id: pet.id,
     petName: pet.name,
     timeLost: timeLost,
     type: pet.petType,
-    zone: pet.location,
+    zone: address, // Keep "zone" for SearchScreen compatibility
     characteristics: pet.characteristics,
     imageUrl: pet.imageUri,
     latitude: pet.latitude,
