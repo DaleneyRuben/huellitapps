@@ -4,6 +4,7 @@ import styled from 'styled-components/native';
 import { MaterialIcons, FontAwesome5 } from '@expo/vector-icons';
 import { colors } from '../../theme';
 import * as ImagePicker from 'expo-image-picker';
+import QRCodeAsset from '../../assets/QR.png';
 
 const Step3PhotoUpload = ({ formData, onFormDataChange, petType }) => {
   const [imageUri, setImageUri] = useState(formData.imageUri || null);
@@ -76,13 +77,7 @@ const Step3PhotoUpload = ({ formData, onFormDataChange, petType }) => {
           </DonationText>
 
           <QRCodeContainer>
-            <QRCodePlaceholder>
-              <QRCodeGrid>
-                {Array.from({ length: 64 }, (_, i) => (
-                  <QRCodeSquare key={i} filled={Math.random() > 0.5} />
-                ))}
-              </QRCodeGrid>
-            </QRCodePlaceholder>
+            <QRCodeImage source={QRCodeAsset} resizeMode="contain" />
           </QRCodeContainer>
         </DonationSection>
       </ScrollView>
@@ -194,36 +189,10 @@ const QRCodeContainer = styled.View`
   margin-top: 16px;
 `;
 
-const QRCodePlaceholder = styled.View`
+const QRCodeImage = styled.Image`
   width: 200px;
   height: 200px;
-  background-color: ${colors.primaryLight};
   border-radius: 16px;
-  padding: 16px;
-  justify-content: center;
-  align-items: center;
-  shadow-color: ${colors.shadow};
-  shadow-offset: 0px 2px;
-  shadow-opacity: 0.1;
-  shadow-radius: 4px;
-  elevation: 2;
-`;
-
-const QRCodeGrid = styled.View`
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%;
-  height: 100%;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const QRCodeSquare = styled.View`
-  width: 20px;
-  height: 20px;
-  background-color: ${props =>
-    props.filled ? colors.textSecondary : 'transparent'};
-  border: 1px solid ${colors.border};
 `;
 
 export default Step3PhotoUpload;
