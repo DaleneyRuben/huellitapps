@@ -87,10 +87,15 @@ const LostPetFlowScreen = () => {
   };
 
   const validateStep4 = () => {
-    if (!formData.imageUri) {
+    // Check for imageUris array (new format) or imageUri (old format)
+    const hasImages =
+      (formData.imageUris && formData.imageUris.length > 0) ||
+      formData.imageUri;
+
+    if (!hasImages) {
       Alert.alert(
         'Foto requerida',
-        'Por favor, sube una foto de tu compañerito.'
+        'Por favor, sube al menos una foto de tu compañerito.'
       );
       return false;
     }
@@ -154,7 +159,14 @@ const LostPetFlowScreen = () => {
         hour: formData.hour,
         minute: formData.minute,
         period: formData.period,
-        imageUri: formData.imageUri,
+        // Support both new format (imageUris array) and old format (imageUri)
+        imageUris:
+          formData.imageUris || (formData.imageUri ? [formData.imageUri] : []),
+        imageUri:
+          formData.imageUri ||
+          (formData.imageUris && formData.imageUris.length > 0
+            ? formData.imageUris[0]
+            : null),
       };
 
       await addLostPet(petData);
