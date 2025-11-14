@@ -1,71 +1,25 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Video } from 'expo-av';
+import YoutubeIframe from 'react-native-youtube-iframe';
 import { colors } from '../../theme';
 
 const VideosScreen = () => {
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
 
-  const educativeVideoRef = useRef(null);
-  const testimonioRefs = [useRef(null), useRef(null), useRef(null)];
-  const [fullscreenOpened, setFullscreenOpened] = useState({
-    educative: false,
-    testimonio0: false,
-    testimonio1: false,
-    testimonio2: false,
+  const educativeVideoId = 'pvWoB4XNZMo';
+  const testimoniosVideoIds = ['ZgQWyiZMDj8', 'Xspaw5KVYFk', 'Bw9Dnqw0fPI'];
+
+  const [educativeLoaded, setEducativeLoaded] = useState(false);
+  const [testimoniosLoaded, setTestimoniosLoaded] = useState({
+    0: false,
+    1: false,
+    2: false,
   });
-
-  const educativeVideo = require('../../videos/educative.mov');
-  const testimoniosVideos = [
-    require('../../videos/case_1.mov'),
-    require('../../videos/case_2.mov'),
-    require('../../videos/case_3.mov'),
-  ];
-
-  const handleVideoLoad = async ref => {
-    if (ref && ref.current) {
-      try {
-        const status = await ref.current.getStatusAsync();
-        if (status.isLoaded) {
-          // Seek to 2 seconds (2000ms) and pause to show that frame as poster
-          await ref.current.setPositionAsync(800);
-          await ref.current.pauseAsync();
-        }
-      } catch (error) {
-        console.log('Error setting video position:', error);
-      }
-    }
-  };
-
-  const handlePlaybackStatusUpdate = async (status, videoKey) => {
-    if (status.isLoaded) {
-      // Open fullscreen when video starts playing
-      if (status.isPlaying && !fullscreenOpened[videoKey]) {
-        try {
-          const ref =
-            videoKey === 'educative'
-              ? educativeVideoRef
-              : testimonioRefs[parseInt(videoKey.replace('testimonio', ''))];
-
-          if (ref && ref.current) {
-            await ref.current.presentFullscreenPlayer();
-            setFullscreenOpened(prev => ({ ...prev, [videoKey]: true }));
-          }
-        } catch (error) {
-          console.log('Error presenting fullscreen:', error);
-        }
-      }
-      // Reset flag when video is paused/stopped so it can open fullscreen again
-      if (!status.isPlaying && fullscreenOpened[videoKey]) {
-        setFullscreenOpened(prev => ({ ...prev, [videoKey]: false }));
-      }
-    }
-  };
 
   return (
     <Container>
@@ -83,17 +37,23 @@ const VideosScreen = () => {
         <SectionContainer>
           <SectionTitle>Educativos</SectionTitle>
           <VideoContainer>
-            <Video
-              ref={educativeVideoRef}
-              source={educativeVideo}
-              style={styles.video}
-              useNativeControls
-              resizeMode="contain"
-              isLooping={false}
-              onLoad={() => handleVideoLoad(educativeVideoRef)}
-              onPlaybackStatusUpdate={status =>
-                handlePlaybackStatusUpdate(status, 'educative')
-              }
+            {!educativeLoaded && (
+              <LoadingOverlay>
+                <LoadingText>Cargando video...</LoadingText>
+              </LoadingOverlay>
+            )}
+            <YoutubeIframe
+              videoId={educativeVideoId}
+              height={200}
+              webViewStyle={{ backgroundColor: colors.surfaceLight }}
+              onReady={() => setEducativeLoaded(true)}
+              initialPlayerParams={{
+                modestbranding: true,
+                rel: false,
+                controls: true,
+                iv_load_policy: 3,
+                showClosedCaptions: false,
+              }}
             />
           </VideoContainer>
         </SectionContainer>
@@ -101,19 +61,27 @@ const VideosScreen = () => {
         {/* Testimonios Section */}
         <SectionContainer>
           <SectionTitle>Testimonios</SectionTitle>
-          {testimoniosVideos.map((video, index) => (
+          {testimoniosVideoIds.map((videoId, index) => (
             <VideoContainer key={index}>
-              <Video
-                ref={testimonioRefs[index]}
-                source={video}
-                style={styles.video}
-                useNativeControls
-                resizeMode="contain"
-                isLooping={false}
-                onLoad={() => handleVideoLoad(testimonioRefs[index])}
-                onPlaybackStatusUpdate={status =>
-                  handlePlaybackStatusUpdate(status, `testimonio${index}`)
+              {!testimoniosLoaded[index] && (
+                <LoadingOverlay>
+                  <LoadingText>Cargando video...</LoadingText>
+                </LoadingOverlay>
+              )}
+              <YoutubeIframe
+                videoId={videoId}
+                height={200}
+                webViewStyle={{ backgroundColor: colors.surfaceLight }}
+                onReady={() =>
+                  setTestimoniosLoaded(prev => ({ ...prev, [index]: true }))
                 }
+                initialPlayerParams={{
+                  modestbranding: true,
+                  rel: false,
+                  controls: true,
+                  iv_load_policy: 3,
+                  showClosedCaptions: false,
+                }}
               />
             </VideoContainer>
           ))}
@@ -121,14 +89,6 @@ const VideosScreen = () => {
       </StyledScrollView>
     </Container>
   );
-};
-
-const styles = {
-  video: {
-    width: '100%',
-    height: 200,
-    backgroundColor: colors.surfaceLight,
-  },
 };
 
 const Container = styled.View`
@@ -198,6 +158,26 @@ const VideoContainer = styled.View`
   shadow-opacity: 0.15;
   shadow-radius: 4px;
   elevation: 4;
+  position: relative;
+`;
+
+const LoadingOverlay = styled.View`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: ${colors.surfaceLight};
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  border-radius: 12px;
+`;
+
+const LoadingText = styled.Text`
+  font-size: 16px;
+  color: ${colors.textSecondary || colors.textPrimary};
+  font-weight: 500;
 `;
 
 export default VideosScreen;
