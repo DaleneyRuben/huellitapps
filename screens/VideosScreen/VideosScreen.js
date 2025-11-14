@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, ActivityIndicator, Animated } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
@@ -32,13 +32,22 @@ const VideosScreen = () => {
           <PlaceholderView />
         </MainContentRow>
       </HeaderContainer>
-      <StyledScrollView showsVerticalScrollIndicator={false}>
+      <StyledScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 24 }}
+      >
         {/* Videos Educativo Section */}
         <SectionContainer>
-          <SectionTitle>Educativos</SectionTitle>
+          <SectionHeader>
+            <SectionTitle>Educativos</SectionTitle>
+            <SectionDescription>
+              Aprende sobre el cuidado y bienestar de las mascotas
+            </SectionDescription>
+          </SectionHeader>
           <VideoContainer>
             {!educativeLoaded && (
               <LoadingOverlay>
+                <ActivityIndicator size="large" color={colors.primary} />
                 <LoadingText>Cargando video...</LoadingText>
               </LoadingOverlay>
             )}
@@ -60,11 +69,17 @@ const VideosScreen = () => {
 
         {/* Testimonios Section */}
         <SectionContainer>
-          <SectionTitle>Testimonios</SectionTitle>
+          <SectionHeader>
+            <SectionTitle>Testimonios</SectionTitle>
+            <SectionDescription>
+              Historias reales de mascotas encontradas
+            </SectionDescription>
+          </SectionHeader>
           {testimoniosVideoIds.map((videoId, index) => (
             <VideoContainer key={index}>
               {!testimoniosLoaded[index] && (
                 <LoadingOverlay>
+                  <ActivityIndicator size="large" color={colors.primary} />
                   <LoadingText>Cargando video...</LoadingText>
                 </LoadingOverlay>
               )}
@@ -102,7 +117,7 @@ const HeaderContainer = styled.View`
   padding-top: ${props => props.topInset || 0}px;
   padding-left: 20px;
   padding-right: 20px;
-  padding-bottom: 2px;
+  padding-bottom: 12px;
   border-bottom-width: 1px;
   border-bottom-color: ${colors.border};
   background-color: ${colors.surface};
@@ -133,31 +148,42 @@ const PlaceholderView = styled.View`
 
 const StyledScrollView = styled.ScrollView`
   flex: 1;
-  padding: 16px;
+  padding: 20px;
 `;
 
 const SectionContainer = styled.View`
-  margin-bottom: 12px;
+  margin-bottom: 32px;
+`;
+
+const SectionHeader = styled.View`
+  margin-bottom: 16px;
 `;
 
 const SectionTitle = styled.Text`
-  font-size: 22px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 700;
   color: ${colors.primary};
-  margin-bottom: 16px;
+  margin-bottom: 6px;
+`;
+
+const SectionDescription = styled.Text`
+  font-size: 14px;
+  color: ${colors.textSecondary || colors.textPrimary};
+  opacity: 0.7;
+  line-height: 20px;
 `;
 
 const VideoContainer = styled.View`
   width: 100%;
-  margin-bottom: 16px;
-  border-radius: 12px;
+  margin-bottom: 20px;
+  border-radius: 16px;
   overflow: hidden;
   background-color: ${colors.surface};
   shadow-color: ${colors.shadow};
-  shadow-offset: 0px 2px;
-  shadow-opacity: 0.15;
-  shadow-radius: 4px;
-  elevation: 4;
+  shadow-offset: 0px 4px;
+  shadow-opacity: 0.1;
+  shadow-radius: 8px;
+  elevation: 3;
   position: relative;
 `;
 
@@ -167,17 +193,19 @@ const LoadingOverlay = styled.View`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: ${colors.surfaceLight};
+  background-color: ${colors.surfaceLight || colors.surface};
   justify-content: center;
   align-items: center;
   z-index: 1;
-  border-radius: 12px;
+  border-radius: 16px;
 `;
 
 const LoadingText = styled.Text`
-  font-size: 16px;
+  font-size: 14px;
   color: ${colors.textSecondary || colors.textPrimary};
   font-weight: 500;
+  margin-top: 12px;
+  opacity: 0.7;
 `;
 
 export default VideosScreen;
