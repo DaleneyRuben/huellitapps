@@ -83,6 +83,59 @@ const convertPetToStorageFormat = pet => {
 
 // Initial hardcoded pets data
 const INITIAL_PETS = [
+  // Test pets near default location (Universidad Privada del Valle Sede La Paz)
+  {
+    id: 23,
+    petName: 'Max',
+    timeLost: '2 días',
+    type: 'dog',
+    zone: 'Cerca de Universidad Privada del Valle, La Paz',
+    characteristics:
+      'Perro labrador dorado, muy amigable. Usa collar rojo con placa de identificación.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1552053831-71594a27632d?w=400&h=400&fit=crop&crop=face',
+    latitude: -16.5045,
+    longitude: -68.12,
+  },
+  {
+    id: 24,
+    petName: 'Bella',
+    timeLost: 'Hoy',
+    type: 'dog',
+    zone: 'Universidad Privada del Valle, La Paz',
+    characteristics:
+      'Perrita pequeña blanca con manchas marrones. Muy juguetona y cariñosa.',
+    imageUrl:
+      'https://content.dogagingproject.org/wp-content/uploads/2020/11/helena-lopes-S3TPJCOIRoo-unsplash-scaled.jpg',
+    latitude: -16.5015,
+    longitude: -68.125,
+  },
+  {
+    id: 25,
+    petName: 'Whiskers',
+    timeLost: '3 días',
+    type: 'cat',
+    zone: 'Zona Universidad, La Paz',
+    characteristics:
+      'Gato atigrado gris y negro, ojos verdes. Muy tranquilo y amigable.',
+    imageUrl:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6d87zy2l97Gbuz1xheO71Fzw31vhLFurSyg&s',
+    latitude: -16.5055,
+    longitude: -68.118,
+  },
+  {
+    id: 26,
+    petName: 'Charlie',
+    timeLost: '1 día',
+    type: 'dog',
+    zone: 'Universidad Privada del Valle, La Paz',
+    characteristics:
+      'Perro pequeño, color marrón con patas blancas. Muy energético y le gusta correr.',
+    imageUrl:
+      'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=400&h=400&fit=crop&q=60',
+    latitude: -16.5005,
+    longitude: -68.122,
+  },
   {
     id: 1,
     petName: 'Michito',
@@ -375,7 +428,27 @@ export const initializeStorage = async () => {
   try {
     const initialized = await AsyncStorage.getItem(STORAGE_KEYS.INITIALIZED);
     if (initialized === 'true') {
-      return; // Already initialized
+      // Storage already initialized, but check if we need to add new test pets
+      const petsJson = await AsyncStorage.getItem(STORAGE_KEYS.LOST_PETS);
+      const existingPets = petsJson ? JSON.parse(petsJson) : [];
+      const testPetIds = [23, 24, 25, 26]; // IDs of test pets near default location
+      const hasTestPets = testPetIds.some(id =>
+        existingPets.some(pet => pet.id === id)
+      );
+
+      // If test pets don't exist, add them
+      if (!hasTestPets) {
+        const testPets = INITIAL_PETS.filter(pet =>
+          testPetIds.includes(pet.id)
+        );
+        const convertedTestPets = testPets.map(convertPetToStorageFormat);
+        const updatedPets = [...existingPets, ...convertedTestPets];
+        await AsyncStorage.setItem(
+          STORAGE_KEYS.LOST_PETS,
+          JSON.stringify(updatedPets)
+        );
+      }
+      return;
     }
 
     // Convert and save initial pets
