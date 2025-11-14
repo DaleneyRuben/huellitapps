@@ -207,13 +207,13 @@ const FormContainer = styled.View`
 const Title = styled.Text`
   font-size: 20px;
   font-weight: 600;
-  color: ${colors.info};
+  color: ${colors.secondaryLight};
   margin-bottom: 12px;
   text-align: center;
 `;
 
 const HighlightedText = styled.Text`
-  color: ${colors.info};
+  color: ${colors.secondaryLight};
 `;
 
 const Instructions = styled.Text`
@@ -328,7 +328,7 @@ const ButtonsRow = styled.View`
 
 const SubmitButton = styled.TouchableOpacity`
   flex: 1;
-  background-color: ${colors.orange};
+  background-color: ${colors.primary};
   border-radius: 12px;
   padding: 16px;
   align-items: center;
@@ -337,7 +337,7 @@ const SubmitButton = styled.TouchableOpacity`
 
 const CancelButton = styled.TouchableOpacity`
   flex: 1;
-  background-color: ${colors.orangeLight};
+  background-color: ${colors.primaryLight};
   border-radius: 12px;
   padding: 16px;
   align-items: center;

@@ -53,7 +53,11 @@ const LostPetCarousel = ({ pets = [], onPetPress }) => {
       <CarouselWrapper onLayout={handleLayout}>
         {canScrollLeft && (
           <LeftArrow onPress={scrollToLeft}>
-            <MaterialIcons name="chevron-left" size={20} color={colors.info} />
+            <MaterialIcons
+              name="chevron-left"
+              size={20}
+              color={colors.secondaryLight}
+            />
           </LeftArrow>
         )}
 
@@ -94,7 +98,11 @@ const LostPetCarousel = ({ pets = [], onPetPress }) => {
 
         {canScrollRight && (
           <RightArrow onPress={scrollToRight}>
-            <MaterialIcons name="chevron-right" size={20} color={colors.info} />
+            <MaterialIcons
+              name="chevron-right"
+              size={20}
+              color={colors.secondaryLight}
+            />
           </RightArrow>
         )}
       </CarouselWrapper>
@@ -114,7 +122,7 @@ const HeaderText = styled.Text`
 `;
 
 const OrangeText = styled.Text`
-  color: ${colors.orange};
+  color: ${colors.primary};
   font-weight: 600;
 `;
 
@@ -143,7 +151,7 @@ const PetCard = styled.TouchableOpacity`
 const PetName = styled.Text`
   font-size: 11px;
   font-weight: 600;
-  color: ${colors.orange};
+  color: ${colors.primary};
   font-weight: 600;
   margin-bottom: 2px;
 `;

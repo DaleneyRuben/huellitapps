@@ -98,14 +98,14 @@ const Container = styled.View`
 const QuestionText = styled.Text`
   font-size: 18px;
   font-weight: 600;
-  color: ${colors.info};
+  color: ${colors.secondaryLight};
   margin-bottom: 16px;
 `;
 
 const PhotoUploadContainer = styled.TouchableOpacity`
   width: 100%;
   height: 300px;
-  background-color: ${colors.secondaryLight};
+  background-color: ${colors.primaryLight};
   border-radius: 16px;
   margin-bottom: 24px;
   overflow: hidden;
@@ -197,7 +197,7 @@ const QRCodeContainer = styled.View`
 const QRCodePlaceholder = styled.View`
   width: 200px;
   height: 200px;
-  background-color: ${colors.secondaryLight};
+  background-color: ${colors.primaryLight};
   border-radius: 16px;
   padding: 16px;
   justify-content: center;

@@ -1,28 +1,12 @@
 export const colors = {
   // Primary Colors
-  primary: '#8B9D83', // Sage Green - Main brand color
-  primaryLight: '#A8B89E', // Lighter sage for backgrounds
-  primaryDark: '#6B7A63', // Darker sage for text
+  primary: '#FAA35F', // Sage Green - Main brand color
+  primaryLight: '#FFC99A', // Lighter beige
 
   // Secondary Colors
-  secondary: '#D4A574', // Warm Beige - Secondary elements
-  secondaryLight: '#E5C495', // Lighter beige
-  secondaryDark: '#B8945A', // Darker beige
-
-  // Accent Colors
-  accent: '#E8B4A0', // Dusty Rose - Highlights and CTAs
-  accentLight: '#F2C9B8', // Lighter dusty rose
-  accentDark: '#D19A82', // Darker dusty rose
-
-  // Orange Colors
-  orange: '#FAA35F', // Orange - Active states, highlights
-  orangeLight: '#FFC99A', // Lighter orange
-  orangeDark: '#D8893F', // Darker orange
-
-  // Green Colors
-  green: '#6E8B3D', // Dark Olive Green - Labels, accents
-  greenLight: '#8FBC8F', // Lighter green
-  greenDark: '#556B2F', // Darker green
+  // make the secondary color more dark
+  secondary: '#5A80B2',
+  secondaryLight: '#6B9AC4',
 
   // Background Colors
   background: '#FAFAFA', // Off-White - Main background
@@ -35,20 +19,14 @@ export const colors = {
   textLight: '#9B9B9B', // Light gray - Placeholder text
 
   // Status Colors
-  success: '#7FB069', // Green - Success states
-  warning: '#F4A261', // Orange - Warning states
-  error: '#E76F51', // Red - Error states
   info: '#6B9AC4', // Blue - Info states
 
   // Border Colors
   border: '#E0E0E0', // Light gray - Subtle borders
   borderMedium: '#D0D0D0', // Medium gray - Card borders
-  borderDark: '#B0B0B0', // Dark gray - Strong borders
 
   // Shadow Colors
   shadow: 'rgba(0, 0, 0, 0.1)', // Subtle shadows
-  shadowMedium: 'rgba(0, 0, 0, 0.15)', // Medium shadows
-  shadowDark: 'rgba(0, 0, 0, 0.2)', // Strong shadows
 };
 
 // Semantic color mappings for specific use cases
@@ -57,27 +35,9 @@ export const semanticColors = {
   cardBackground: colors.surface,
   cardBorder: colors.borderMedium,
 
-  // Button Colors
-  buttonPrimary: colors.primary,
-  buttonSecondary: colors.secondary,
-  buttonAccent: colors.accent,
-  buttonBrown: colors.brown,
-
-  // Tab Colors
-  tabActive: colors.brown,
-  tabInactive: colors.textSecondary,
-
   // Text Colors
-  labelText: colors.green,
+  labelText: colors.secondary,
   valueText: colors.textPrimary,
-  titleText: colors.green,
-
-  // Image Section
-  imageBorder: colors.borderMedium,
-
-  // Header Colors
-  headerBackground: colors.primary,
-  headerText: colors.surface,
 };
 
 export default colors;

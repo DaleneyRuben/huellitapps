@@ -140,7 +140,7 @@ const QuestionRow = styled.View`
 const QuestionText = styled.Text`
   font-size: 18px;
   font-weight: 600;
-  color: ${colors.info};
+  color: ${colors.secondaryLight};
   flex: 1;
   margin-right: 12px;
 `;
@@ -155,9 +155,10 @@ const PetTypeButton = styled.TouchableOpacity`
   height: 50px;
   border-radius: 8px;
   background-color: ${props =>
-    props.isSelected ? colors.info : colors.surface};
+    props.isSelected ? colors.secondaryLight : colors.surface};
   border-width: 1px;
-  border-color: ${props => (props.isSelected ? colors.info : colors.border)};
+  border-color: ${props =>
+    props.isSelected ? colors.secondaryLight : colors.border};
   justify-content: center;
   align-items: center;
   shadow-color: ${colors.shadow};

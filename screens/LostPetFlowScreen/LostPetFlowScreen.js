@@ -238,7 +238,11 @@ const LostPetFlowScreen = () => {
         <HeaderRow>
           <ProgressIndicator currentStep={currentStep} totalSteps={4} />
           <CloseButton onPress={handleCancel}>
-            <MaterialIcons name="close" size={24} color={colors.info} />
+            <MaterialIcons
+              name="close"
+              size={24}
+              color={colors.secondaryLight}
+            />
           </CloseButton>
         </HeaderRow>
         <ScrollView
@@ -318,12 +322,12 @@ const BackButton = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   border-width: 1.5px;
-  border-color: ${colors.orange};
+  border-color: ${colors.primary};
 `;
 
 const NextButton = styled.TouchableOpacity`
   flex: ${props => (props.hasBack ? 2 : 1)};
-  background-color: ${colors.orange};
+  background-color: ${colors.primary};
   border-radius: 12px;
   padding: 16px;
   align-items: center;
@@ -344,7 +348,7 @@ const ButtonText = styled.Text`
 const BackButtonText = styled.Text`
   font-size: 16px;
   font-weight: 600;
-  color: ${colors.orange};
+  color: ${colors.primary};
 `;
 
 export default LostPetFlowScreen;

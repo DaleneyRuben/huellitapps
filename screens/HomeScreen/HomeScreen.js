@@ -125,7 +125,7 @@ const HomeScreen = () => {
     return (
       <Container>
         <LoadingContainer>
-          <ActivityIndicator size="large" color={colors.orange} />
+          <ActivityIndicator size="large" color={colors.primary} />
         </LoadingContainer>
       </Container>
     );
@@ -180,7 +180,7 @@ const StyledScrollView = styled.ScrollView`
 const MapTitle = styled.Text`
   font-size: 18px;
   font-weight: 600;
-  color: ${colors.orange};
+  color: ${colors.primary};
   margin-bottom: 8px;
 `;
 
@@ -188,7 +188,7 @@ const RegisterButton = styled.TouchableOpacity`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  background-color: ${colors.orange};
+  background-color: ${colors.primary};
   border-radius: 12px;
   padding: 12px;
   margin-top: 0px;

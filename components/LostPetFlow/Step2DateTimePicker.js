@@ -125,7 +125,7 @@ const Step2DateTimePicker = ({ formData, onFormDataChange, petType }) => {
         >
           {isSelected ? (
             <PawIcon>
-              <MaterialIcons name="pets" size={20} color={colors.orange} />
+              <MaterialIcons name="pets" size={20} color={colors.primary} />
             </PawIcon>
           ) : (
             <DayText isSelected={isSelected}>{day}</DayText>
@@ -158,7 +158,7 @@ const Step2DateTimePicker = ({ formData, onFormDataChange, petType }) => {
               <MaterialIcons
                 name="chevron-left"
                 size={24}
-                color={colors.info}
+                color={colors.secondaryLight}
               />
             </MonthNavButton>
             <MonthText>
@@ -168,7 +168,7 @@ const Step2DateTimePicker = ({ formData, onFormDataChange, petType }) => {
               <MaterialIcons
                 name="chevron-right"
                 size={24}
-                color={colors.info}
+                color={colors.secondaryLight}
               />
             </MonthNavButton>
           </MonthHeader>
@@ -192,7 +192,7 @@ const Step2DateTimePicker = ({ formData, onFormDataChange, petType }) => {
               <MaterialIcons
                 name="keyboard-arrow-up"
                 size={24}
-                color={colors.info}
+                color={colors.secondaryLight}
               />
             </TimePickerButton>
             <TimeDisplay>
@@ -202,7 +202,7 @@ const Step2DateTimePicker = ({ formData, onFormDataChange, petType }) => {
               <MaterialIcons
                 name="keyboard-arrow-down"
                 size={24}
-                color={colors.info}
+                color={colors.secondaryLight}
               />
             </TimePickerButton>
           </TimePickerColumn>
@@ -214,7 +214,7 @@ const Step2DateTimePicker = ({ formData, onFormDataChange, petType }) => {
               <MaterialIcons
                 name="keyboard-arrow-up"
                 size={24}
-                color={colors.info}
+                color={colors.secondaryLight}
               />
             </TimePickerButton>
             <TimeDisplay>
@@ -224,7 +224,7 @@ const Step2DateTimePicker = ({ formData, onFormDataChange, petType }) => {
               <MaterialIcons
                 name="keyboard-arrow-down"
                 size={24}
-                color={colors.info}
+                color={colors.secondaryLight}
               />
             </TimePickerButton>
           </TimePickerColumn>
@@ -234,7 +234,7 @@ const Step2DateTimePicker = ({ formData, onFormDataChange, petType }) => {
               <MaterialIcons
                 name="keyboard-arrow-up"
                 size={24}
-                color={colors.info}
+                color={colors.secondaryLight}
               />
             </TimePickerButton>
             <TimeDisplay>
@@ -244,7 +244,7 @@ const Step2DateTimePicker = ({ formData, onFormDataChange, petType }) => {
               <MaterialIcons
                 name="keyboard-arrow-down"
                 size={24}
-                color={colors.info}
+                color={colors.secondaryLight}
               />
             </TimePickerButton>
           </TimePickerColumn>
@@ -262,7 +262,7 @@ const Container = styled.View`
 const QuestionText = styled.Text`
   font-size: 18px;
   font-weight: 600;
-  color: ${colors.info};
+  color: ${colors.secondaryLight};
   margin-bottom: 16px;
 `;
 
@@ -286,7 +286,7 @@ const MonthNavButton = styled.TouchableOpacity`
 const MonthText = styled.Text`
   font-size: 18px;
   font-weight: 600;
-  color: ${colors.info};
+  color: ${colors.secondaryLight};
 `;
 
 const DaysOfWeek = styled.View`
@@ -298,7 +298,7 @@ const DaysOfWeek = styled.View`
 const DayOfWeek = styled.Text`
   font-size: 14px;
   font-weight: 500;
-  color: ${colors.info};
+  color: ${colors.secondaryLight};
   width: 40px;
   text-align: center;
 `;
@@ -327,8 +327,8 @@ const DayText = styled.Text`
     props.isOtherMonth
       ? colors.textLight
       : props.isSelected
-        ? colors.info
-        : colors.info};
+        ? colors.secondaryLight
+        : colors.secondaryLight};
 `;
 
 const PawIcon = styled.View`
@@ -337,7 +337,7 @@ const PawIcon = styled.View`
 `;
 
 const TimePickerContainer = styled.View`
-  background-color: ${colors.orangeLight};
+  background-color: ${colors.primaryLight};
   border-radius: 16px;
   padding: 24px;
   flex-direction: row;
@@ -372,7 +372,7 @@ const TimeText = styled.Text`
 const TimeSeparator = styled.Text`
   font-size: 24px;
   font-weight: 600;
-  color: ${colors.info};
+  color: ${colors.secondaryLight};
   margin-bottom: 20px;
 `;
 

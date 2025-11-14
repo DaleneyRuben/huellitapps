@@ -54,11 +54,11 @@ const Map = ({ pets = [], height, initialRegion, onAddPetPress }) => {
               title={`${pet.petName} (${pet.zone?.split(',')[0] || 'Perdido'})`}
             >
               <View style={styles.markerContainer}>
-                <MaterialIcons name="pets" size={24} color={colors.orange} />
+                <MaterialIcons name="pets" size={24} color={colors.primary} />
                 <MaterialIcons
                   name="schedule"
                   size={12}
-                  color={colors.orange}
+                  color={colors.primary}
                   style={styles.clockIcon}
                 />
               </View>
@@ -108,7 +108,7 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: colors.info,
+    backgroundColor: colors.secondaryLight,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: colors.shadow,

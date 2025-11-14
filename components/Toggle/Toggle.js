@@ -71,7 +71,7 @@ const ToggleSegment = styled.TouchableOpacity`
   padding-vertical: 5px;
   padding-horizontal: 12px;
   background-color: ${props =>
-    props.isActive ? colors.primary : 'transparent'};
+    props.isActive ? colors.secondary : 'transparent'};
   border-radius: ${props => {
     if (props.isFirst) return '8px 0px 0px 8px';
     if (props.isLast) return '0px 8px 8px 0px';

@@ -187,7 +187,7 @@ const Step2MapPicker = ({ formData, onFormDataChange, petType }) => {
                     <MaterialIcons
                       name="place"
                       size={40}
-                      color={colors.orange}
+                      color={colors.primary}
                     />
                   </MarkerContainer>
                 </Marker>
@@ -202,14 +202,14 @@ const Step2MapPicker = ({ formData, onFormDataChange, petType }) => {
               <MaterialIcons
                 name="check-circle"
                 size={24}
-                color={colors.orange}
+                color={colors.primary}
               />
             </LocationIcon>
             <LocationTextContainer>
               <LocationText>Ubicación seleccionada</LocationText>
               {loadingAddress ? (
                 <LoadingContainer>
-                  <ActivityIndicator size="small" color={colors.orange} />
+                  <ActivityIndicator size="small" color={colors.primary} />
                   <LoadingText>Obteniendo dirección...</LoadingText>
                 </LoadingContainer>
               ) : (
@@ -242,7 +242,7 @@ const Container = styled.View`
 const QuestionText = styled.Text`
   font-size: 18px;
   font-weight: 600;
-  color: ${colors.info};
+  color: ${colors.secondaryLight};
   margin-bottom: 8px;
 `;
 
@@ -269,7 +269,7 @@ const MapContainer = styled.View`
 const LocationInfo = styled.View`
   flex-direction: row;
   align-items: center;
-  background-color: ${colors.orangeLight};
+  background-color: ${colors.primaryLight};
   border-radius: 12px;
   padding: 12px 16px;
   margin-bottom: 16px;
@@ -321,7 +321,7 @@ const UseCurrentLocationButton = styled.TouchableOpacity`
 
 const UseCurrentLocationText = styled.Text`
   font-size: 14px;
-  color: ${colors.orange};
+  color: ${colors.primary};
   font-weight: 500;
   margin-left: 8px;
 `;

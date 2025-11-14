@@ -31,17 +31,18 @@ const StepCircle = styled.View`
   height: 40px;
   border-radius: 20px;
   background-color: ${props =>
-    props.isActive ? colors.info : 'rgba(107, 154, 196, 0.2)'};
+    props.isActive ? colors.secondaryLight : 'rgba(107, 154, 196, 0.2)'};
   justify-content: center;
   align-items: center;
   border-width: 2px;
-  border-color: ${props => (props.isActive ? colors.info : 'transparent')};
+  border-color: ${props =>
+    props.isActive ? colors.secondaryLight : 'transparent'};
 `;
 
 const StepNumber = styled.Text`
   font-size: 16px;
   font-weight: 600;
-  color: ${props => (props.isActive ? colors.surface : colors.info)};
+  color: ${props => (props.isActive ? colors.surface : colors.secondaryLight)};
 `;
 
 export default ProgressIndicator;

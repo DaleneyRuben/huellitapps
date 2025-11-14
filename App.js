@@ -54,7 +54,7 @@ function TabNavigator() {
           paddingTop: 2,
           height: 80,
         },
-        tabBarActiveTintColor: colors.orange,
+        tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.textSecondary,
         tabBarLabelStyle: {
           fontSize: 10,

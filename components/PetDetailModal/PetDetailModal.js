@@ -66,7 +66,11 @@ const PetDetailModal = ({ visible, onClose, pet }) => {
               <HeaderRow>
                 <PetName>Nombre: {pet.petName}</PetName>
                 <CloseButton onPress={onClose}>
-                  <MaterialIcons name="close" size={24} color={colors.info} />
+                  <MaterialIcons
+                    name="close"
+                    size={24}
+                    color={colors.secondaryLight}
+                  />
                 </CloseButton>
               </HeaderRow>
 
@@ -172,7 +176,7 @@ const HeaderRow = styled.View`
 const PetName = styled.Text`
   font-size: 16px;
   font-weight: 600;
-  color: ${colors.info};
+  color: ${colors.secondaryLight};
   flex: 1;
 `;
 
@@ -231,7 +235,7 @@ const ActionButtonsRow = styled.View`
 
 const ActionButton = styled.TouchableOpacity`
   flex: 1;
-  background-color: ${colors.orange};
+  background-color: ${colors.primary};
   border-radius: 8px;
   padding: 12px;
   align-items: center;

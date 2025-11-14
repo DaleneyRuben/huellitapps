@@ -19,7 +19,7 @@ const Header = ({ topInset = 0 }) => {
         {/* Left: Film Strip Icon */}
         <LeftIconContainer>
           <IconButton onPress={handleVideoIconPress}>
-            <MaterialIcons name="movie" size={24} color={colors.orange} />
+            <MaterialIcons name="movie" size={24} color={colors.primary} />
           </IconButton>
         </LeftIconContainer>
 
@@ -35,7 +35,11 @@ const Header = ({ topInset = 0 }) => {
 
         {/* Right: Bell Icon */}
         <RightIconContainer>
-          <MaterialIcons name="notifications" size={24} color={colors.orange} />
+          <MaterialIcons
+            name="notifications"
+            size={24}
+            color={colors.primary}
+          />
         </RightIconContainer>
       </MainContentRow>
     </HeaderContainer>

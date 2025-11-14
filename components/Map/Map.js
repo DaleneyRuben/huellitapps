@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
   },
   petsCount: {
     fontSize: 14,
-    color: colors.info,
+    color: colors.secondaryLight,
     fontWeight: '600',
     marginTop: 8,
   },
@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: colors.info,
+    backgroundColor: colors.secondaryLight,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: colors.shadow,

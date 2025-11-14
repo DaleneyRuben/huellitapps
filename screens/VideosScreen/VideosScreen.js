@@ -72,7 +72,7 @@ const VideosScreen = () => {
       <HeaderContainer topInset={insets.top}>
         <MainContentRow>
           <BackButton onPress={() => navigation.goBack()}>
-            <MaterialIcons name="arrow-back" size={24} color={colors.orange} />
+            <MaterialIcons name="arrow-back" size={24} color={colors.primary} />
           </BackButton>
           <HeaderTitle>Videos</HeaderTitle>
           <PlaceholderView />
@@ -183,7 +183,7 @@ const SectionContainer = styled.View`
 const SectionTitle = styled.Text`
   font-size: 22px;
   font-weight: 600;
-  color: ${colors.orange};
+  color: ${colors.primary};
   margin-bottom: 16px;
 `;
 

@@ -24,7 +24,7 @@ const Account = () => {
             <MaterialIcons name="pets" size={60} color="#FFFFFF" />
           </ProfilePicture>
           <EditProfileButton>
-            <MaterialIcons name="edit" size={20} color={colors.orange} />
+            <MaterialIcons name="edit" size={20} color={colors.primary} />
           </EditProfileButton>
         </ProfilePictureContainer>
 
@@ -158,7 +158,7 @@ const ProfilePicture = styled.View`
   width: 120px;
   height: 120px;
   border-radius: 60px;
-  background-color: ${colors.orange};
+  background-color: ${colors.primary};
   justify-content: center;
   align-items: center;
   shadow-color: ${colors.shadow};
@@ -192,11 +192,11 @@ const Section = styled.View`
 const SectionTitle = styled.Text`
   font-size: 18px;
   font-weight: bold;
-  color: ${colors.orange};
+  color: ${colors.primary};
   margin-bottom: 15px;
   padding-bottom: 5px;
   border-bottom-width: 1px;
-  border-bottom-color: ${colors.orange};
+  border-bottom-color: ${colors.primary};
 `;
 
 const InputContainer = styled.View`

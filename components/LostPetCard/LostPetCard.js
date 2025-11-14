@@ -59,7 +59,7 @@ const RightSection = styled.View`
 
 const PetName = styled.Text`
   font-size: 12px;
-  color: ${colors.info};
+  color: ${colors.secondaryLight};
   margin-bottom: 4px;
 `;
 
