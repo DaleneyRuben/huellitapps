@@ -12,6 +12,7 @@ import { colors } from '../../theme';
 import Map from '../Map';
 import FoundPetFormModal from '../FoundPetFormModal';
 import SeenPetFormModal from '../SeenPetFormModal';
+import { DEFAULT_MAP_LOCATION, DEFAULT_MAP_ZOOM } from '../../utils/constants';
 
 const PetDetailModal = ({ visible, onClose, pet }) => {
   const [foundFormVisible, setFoundFormVisible] = useState(false);
@@ -37,16 +38,15 @@ const PetDetailModal = ({ visible, onClose, pet }) => {
 
   // Use pet's actual lost location coordinates if available, otherwise use default
   const petCoordinates = {
-    latitude: pet.latitude || -16.5,
-    longitude: pet.longitude || -68.15,
+    latitude: pet.latitude || DEFAULT_MAP_LOCATION.latitude,
+    longitude: pet.longitude || DEFAULT_MAP_LOCATION.longitude,
   };
 
   // Create region to center map on pet's lost location
   const mapRegion = {
     latitude: petCoordinates.latitude,
     longitude: petCoordinates.longitude,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.015,
+    ...DEFAULT_MAP_ZOOM,
   };
 
   // Use pet image as main photo, duplicate for gallery

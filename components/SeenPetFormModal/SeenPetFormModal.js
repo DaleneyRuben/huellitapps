@@ -12,6 +12,7 @@ import styled from 'styled-components/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../theme';
 import Map from '../Map';
+import { DEFAULT_MAP_LOCATION } from '../../utils/constants';
 
 const SeenPetFormModal = ({ visible, onClose, pet }) => {
   const [description, setDescription] = useState('');
@@ -67,10 +68,7 @@ const SeenPetFormModal = ({ visible, onClose, pet }) => {
   };
 
   // Generate coordinates for the map (mock data for now)
-  const petCoordinates = {
-    latitude: -16.5,
-    longitude: -68.12,
-  };
+  const petCoordinates = DEFAULT_MAP_LOCATION;
 
   return (
     <Modal

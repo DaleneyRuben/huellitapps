@@ -3,29 +3,25 @@ import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../theme';
+import {
+  DEFAULT_MAP_REGION,
+  DEFAULT_MAP_LOCATION,
+} from '../../utils/constants';
 
 const Map = ({ pets = [], height, initialRegion, onAddPetPress }) => {
-  // La Paz, Bolivia coordinates
-  const defaultRegion = {
-    latitude: -16.5,
-    longitude: -68.15,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.015,
-  };
-
   // Use provided initialRegion or default
-  const mapRegion = initialRegion || defaultRegion;
+  const mapRegion = initialRegion || DEFAULT_MAP_REGION;
 
   // Generate mock coordinates for pets if not provided
   const getPetCoordinates = (pet, index) => {
     if (pet.latitude && pet.longitude) {
       return { latitude: pet.latitude, longitude: pet.longitude };
     }
-    // Generate coordinates around La Paz area
+    // Generate coordinates around default area
     const offset = index * 0.01;
     return {
-      latitude: -16.5 + offset,
-      longitude: -68.15 + offset,
+      latitude: DEFAULT_MAP_LOCATION.latitude + offset,
+      longitude: DEFAULT_MAP_LOCATION.longitude + offset,
     };
   };
 
@@ -40,6 +36,7 @@ const Map = ({ pets = [], height, initialRegion, onAddPetPress }) => {
         style={styles.map}
         provider={PROVIDER_GOOGLE}
         initialRegion={mapRegion}
+        region={mapRegion}
         showsUserLocation={true}
         showsMyLocationButton={false}
         showsCompass={true}

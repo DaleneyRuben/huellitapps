@@ -9,6 +9,10 @@ import Map from '../../components/Map';
 import LostPetCarousel from '../../components/LostPetCarousel';
 import PetDetailModal from '../../components/PetDetailModal';
 import { loadLostPets, convertPetToDisplayFormat } from '../../utils/storage';
+import {
+  DEFAULT_MAP_LOCATION,
+  DEFAULT_MAP_REGION,
+} from '../../utils/constants';
 
 // Calculate distance between two coordinates using Haversine formula (in kilometers)
 const calculateDistance = (lat1, lon1, lat2, lon2) => {
@@ -59,17 +63,11 @@ const HomeScreen = () => {
         } catch (locationError) {
           console.error('Error getting location:', locationError);
           // Use default location if getting position fails
-          currentLocation = {
-            latitude: -16.5,
-            longitude: -68.15,
-          };
+          currentLocation = DEFAULT_MAP_LOCATION;
         }
       } else {
-        // Use default location (La Paz, Bolivia) if permission denied
-        currentLocation = {
-          latitude: -16.5,
-          longitude: -68.15,
-        };
+        // Use default location if permission denied
+        currentLocation = DEFAULT_MAP_LOCATION;
         Alert.alert(
           'Permisos de ubicación',
           'Se necesitan permisos de ubicación para mostrar mascotas cercanas.'
@@ -131,20 +129,8 @@ const HomeScreen = () => {
     );
   }
 
-  // Prepare initial region for map (center on user location or default)
-  const mapInitialRegion = userLocation
-    ? {
-        latitude: userLocation.latitude,
-        longitude: userLocation.longitude,
-        latitudeDelta: 0.05,
-        longitudeDelta: 0.05,
-      }
-    : {
-        latitude: -16.5,
-        longitude: -68.15,
-        latitudeDelta: 0.05,
-        longitudeDelta: 0.05,
-      };
+  // Always center map on default location
+  const mapInitialRegion = DEFAULT_MAP_REGION;
 
   return (
     <Container>

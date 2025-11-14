@@ -11,6 +11,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import * as Location from 'expo-location';
 import { colors } from '../../theme';
 import Map from '../Map';
+import { DEFAULT_MAP_REGION } from '../../utils/constants';
 
 // Import MapView and Marker for native platforms
 let MapView, PROVIDER_GOOGLE, Marker;
@@ -123,13 +124,8 @@ const Step2MapPicker = ({ formData, onFormDataChange, petType }) => {
     }
   }, [selectedLocation, formData.latitude, formData.longitude]);
 
-  // La Paz, Bolivia default coordinates
-  const defaultRegion = {
-    latitude: -16.5,
-    longitude: -68.15,
-    latitudeDelta: 0.05,
-    longitudeDelta: 0.05,
-  };
+  // Use default map region
+  const defaultRegion = DEFAULT_MAP_REGION;
 
   const handleMapPress = event => {
     if (Platform.OS === 'web') {
