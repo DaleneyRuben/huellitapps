@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -8,9 +8,37 @@ import {
   DEFAULT_MAP_LOCATION,
 } from '../../utils/constants';
 
-const Map = ({ pets = [], height, initialRegion, onAddPetPress }) => {
-  // Use provided initialRegion or default
-  const mapRegion = initialRegion || DEFAULT_MAP_REGION;
+// Check if a coordinate is within the visible map bounds
+const isCoordinateInMapBounds = (latitude, longitude, mapRegion) => {
+  const northBound = mapRegion.latitude + mapRegion.latitudeDelta / 2;
+  const southBound = mapRegion.latitude - mapRegion.latitudeDelta / 2;
+  const eastBound = mapRegion.longitude + mapRegion.longitudeDelta / 2;
+  const westBound = mapRegion.longitude - mapRegion.longitudeDelta / 2;
+
+  return (
+    latitude >= southBound &&
+    latitude <= northBound &&
+    longitude >= westBound &&
+    longitude <= eastBound
+  );
+};
+
+const Map = ({
+  pets = [],
+  height,
+  initialRegion,
+  onAddPetPress,
+  onPetPress,
+}) => {
+  const [currentRegion, setCurrentRegion] = useState(
+    initialRegion || DEFAULT_MAP_REGION
+  );
+
+  // Filter pets that are within the current visible map bounds
+  const visiblePets = pets.filter(pet => {
+    if (!pet.latitude || !pet.longitude) return false;
+    return isCoordinateInMapBounds(pet.latitude, pet.longitude, currentRegion);
+  });
 
   // Generate mock coordinates for pets if not provided
   const getPetCoordinates = (pet, index) => {
@@ -25,30 +53,36 @@ const Map = ({ pets = [], height, initialRegion, onAddPetPress }) => {
     };
   };
 
+  const handleRegionChangeComplete = region => {
+    setCurrentRegion(region);
+  };
+
+  const handleMarkerPress = pet => {
+    if (onPetPress) {
+      onPetPress(pet);
+    }
+  };
+
   return (
     <View style={[styles.container, { height }]}>
       <MapView
-        key={
-          initialRegion
-            ? `${initialRegion.latitude}-${initialRegion.longitude}`
-            : 'default'
-        }
         style={styles.map}
         provider={PROVIDER_GOOGLE}
-        initialRegion={mapRegion}
-        region={mapRegion}
+        initialRegion={initialRegion || DEFAULT_MAP_REGION}
+        onRegionChangeComplete={handleRegionChangeComplete}
         showsUserLocation={true}
         showsMyLocationButton={false}
         showsCompass={true}
         showsScale={true}
       >
-        {pets.map((pet, index) => {
+        {visiblePets.map((pet, index) => {
           const coordinates = getPetCoordinates(pet, index);
           return (
             <Marker
               key={pet.id || index}
               coordinate={coordinates}
               title={`${pet.petName} (${pet.zone?.split(',')[0] || 'Perdido'})`}
+              onPress={() => handleMarkerPress(pet)}
             >
               <View style={styles.markerContainer}>
                 <MaterialIcons name="pets" size={24} color={colors.primary} />

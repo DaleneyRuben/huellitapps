@@ -213,7 +213,12 @@ const HomeScreen = () => {
     <Container>
       <StyledScrollView showsVerticalScrollIndicator={false}>
         <MapTitle>Mapa</MapTitle>
-        <Map pets={lostPets} height={300} initialRegion={mapInitialRegion} />
+        <Map
+          pets={lostPets}
+          height={300}
+          initialRegion={mapInitialRegion}
+          onPetPress={handlePetPress}
+        />
         <LostPetCarousel pets={lostPets} onPetPress={handlePetPress} />
         <RegisterButton onPress={handleRegisterPet}>
           <MaterialIcons name="pets" size={20} color={colors.surface} />
