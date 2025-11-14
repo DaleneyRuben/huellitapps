@@ -93,8 +93,8 @@ const INITIAL_PETS = [
       'Gato naranja, con chompa roja. Es malo, no le gustan las personas, es muy asustadizo.',
     imageUrl:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6d87zy2l97Gbuz1xheO71Fzw31vhLFurSyg&s',
-    latitude: -16.503,
-    longitude: -68.152,
+    latitude: -16.504,
+    longitude: -68.123,
   },
   {
     id: 2,
@@ -106,8 +106,8 @@ const INITIAL_PETS = [
       'Perrita blanca con manchas negras, muy cariñosa y juguetona. Usa collar azul con cascabel.',
     imageUrl:
       'https://images.unsplash.com/photo-1552053831-71594a27632d?w=400&h=400&fit=crop&crop=face',
-    latitude: -16.499,
-    longitude: -68.153,
+    latitude: -16.502,
+    longitude: -68.12,
   },
   {
     id: 3,
@@ -119,8 +119,8 @@ const INITIAL_PETS = [
       'Perro golden retriever, pelo dorado, muy amigable. Responde al nombre Toby y le gustan las galletas.',
     imageUrl:
       'https://content.dogagingproject.org/wp-content/uploads/2020/11/helena-lopes-S3TPJCOIRoo-unsplash-scaled.jpg',
-    latitude: -16.501,
-    longitude: -68.147,
+    latitude: -16.505,
+    longitude: -68.125,
   },
   {
     id: 4,

@@ -3,7 +3,7 @@ import { ScrollView, ActivityIndicator, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import { MaterialIcons } from '@expo/vector-icons';
-import * as Location from 'expo-location';
+// import * as Location from 'expo-location'; // Old: Used for getting user location
 import { colors } from '../../theme';
 import Map from '../../components/Map';
 import LostPetCarousel from '../../components/LostPetCarousel';
@@ -32,47 +32,41 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
 // Maximum distance in kilometers to consider a pet "nearby"
 const MAX_DISTANCE_KM = 10;
 
+// Check if a coordinate is within the visible map bounds
+const isCoordinateInMapBounds = (latitude, longitude, mapRegion) => {
+  const northBound = mapRegion.latitude + mapRegion.latitudeDelta / 2;
+  const southBound = mapRegion.latitude - mapRegion.latitudeDelta / 2;
+  const eastBound = mapRegion.longitude + mapRegion.longitudeDelta / 2;
+  const westBound = mapRegion.longitude - mapRegion.longitudeDelta / 2;
+
+  return (
+    latitude >= southBound &&
+    latitude <= northBound &&
+    longitude >= westBound &&
+    longitude <= eastBound
+  );
+};
+
 const HomeScreen = () => {
   const navigation = useNavigation();
   const [lostPets, setLostPets] = useState([]);
-  const [userLocation, setUserLocation] = useState(null);
+  // const [userLocation, setUserLocation] = useState(null); // Old: Used to store user's actual location
   const [loading, setLoading] = useState(true);
   const [selectedPet, setSelectedPet] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
-    loadPetsNearUser();
+    loadPetsNearDefaultLocation();
   }, []);
 
-  const loadPetsNearUser = async () => {
+  // New: Always use default map location for finding nearby pets
+  const loadPetsNearDefaultLocation = async () => {
     try {
       setLoading(true);
 
-      // Get user location first
-      let currentLocation = null;
-      let { status } = await Location.requestForegroundPermissionsAsync();
-
-      if (status === 'granted') {
-        try {
-          const location = await Location.getCurrentPositionAsync({});
-          currentLocation = {
-            latitude: location.coords.latitude,
-            longitude: location.coords.longitude,
-          };
-          setUserLocation(currentLocation);
-        } catch (locationError) {
-          console.error('Error getting location:', locationError);
-          // Use default location if getting position fails
-          currentLocation = DEFAULT_MAP_LOCATION;
-        }
-      } else {
-        // Use default location if permission denied
-        currentLocation = DEFAULT_MAP_LOCATION;
-        Alert.alert(
-          'Permisos de ubicación',
-          'Se necesitan permisos de ubicación para mostrar mascotas cercanas.'
-        );
-      }
+      // Always use default map location for finding nearby pets
+      const currentLocation = DEFAULT_MAP_LOCATION;
+      const mapRegion = DEFAULT_MAP_REGION;
 
       // Load pets from storage
       const pets = await loadLostPets();
@@ -80,9 +74,16 @@ const HomeScreen = () => {
       // Convert to display format
       const displayPets = pets.map(convertPetToDisplayFormat);
 
-      // Filter and sort by proximity
-      const petsWithDistance = displayPets
-        .filter(pet => pet.latitude && pet.longitude)
+      // Filter pets that are within the visible map bounds
+      const visiblePets = displayPets.filter(
+        pet =>
+          pet.latitude &&
+          pet.longitude &&
+          isCoordinateInMapBounds(pet.latitude, pet.longitude, mapRegion)
+      );
+
+      // Calculate distance and sort by proximity to default location
+      const petsWithDistance = visiblePets
         .map(pet => ({
           ...pet,
           distance: calculateDistance(
@@ -92,7 +93,6 @@ const HomeScreen = () => {
             pet.longitude
           ),
         }))
-        .filter(pet => pet.distance <= MAX_DISTANCE_KM)
         .sort((a, b) => a.distance - b.distance);
 
       setLostPets(petsWithDistance);
@@ -104,6 +104,68 @@ const HomeScreen = () => {
       setLoading(false);
     }
   };
+
+  // Old: Used to load pets near user's actual location
+  // const loadPetsNearUser = async () => {
+  //   try {
+  //     setLoading(true);
+  //
+  //     // Get user location first
+  //     let currentLocation = null;
+  //     let { status } = await Location.requestForegroundPermissionsAsync();
+  //
+  //     if (status === 'granted') {
+  //       try {
+  //         const location = await Location.getCurrentPositionAsync({});
+  //         currentLocation = {
+  //           latitude: location.coords.latitude,
+  //           longitude: location.coords.longitude,
+  //         };
+  //         setUserLocation(currentLocation);
+  //       } catch (locationError) {
+  //         console.error('Error getting location:', locationError);
+  //         // Use default location if getting position fails
+  //         currentLocation = DEFAULT_MAP_LOCATION;
+  //       }
+  //     } else {
+  //       // Use default location if permission denied
+  //       currentLocation = DEFAULT_MAP_LOCATION;
+  //       Alert.alert(
+  //         'Permisos de ubicación',
+  //         'Se necesitan permisos de ubicación para mostrar mascotas cercanas.'
+  //       );
+  //     }
+  //
+  //     // Load pets from storage
+  //     const pets = await loadLostPets();
+  //
+  //     // Convert to display format
+  //     const displayPets = pets.map(convertPetToDisplayFormat);
+  //
+  //     // Filter and sort by proximity
+  //     const petsWithDistance = displayPets
+  //       .filter(pet => pet.latitude && pet.longitude)
+  //       .map(pet => ({
+  //         ...pet,
+  //         distance: calculateDistance(
+  //           currentLocation.latitude,
+  //           currentLocation.longitude,
+  //           pet.latitude,
+  //           pet.longitude
+  //         ),
+  //       }))
+  //       .filter(pet => pet.distance <= MAX_DISTANCE_KM)
+  //       .sort((a, b) => a.distance - b.distance);
+  //
+  //     setLostPets(petsWithDistance);
+  //   } catch (error) {
+  //     console.error('Error loading pets:', error);
+  //     Alert.alert('Error', 'No se pudieron cargar las mascotas perdidas.');
+  //     setLostPets([]);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const handleRegisterPet = () => {
     navigation.navigate('LostPetFlow');
@@ -129,8 +191,23 @@ const HomeScreen = () => {
     );
   }
 
-  // Always center map on default location
+  // New: Always center map on default location
   const mapInitialRegion = DEFAULT_MAP_REGION;
+
+  // Old: Used to center map on user location or default
+  // const mapInitialRegion = userLocation
+  //   ? {
+  //       latitude: userLocation.latitude,
+  //       longitude: userLocation.longitude,
+  //       latitudeDelta: 0.01,
+  //       longitudeDelta: 0.015,
+  //     }
+  //   : {
+  //       latitude: -16.5035295,
+  //       longitude: -68.1226286,
+  //       latitudeDelta: 0.01,
+  //       longitudeDelta: 0.015,
+  //     };
 
   return (
     <Container>
