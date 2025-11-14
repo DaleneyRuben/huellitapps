@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Modal,
   ScrollView,
   TouchableOpacity,
   Image,
   Alert,
+  Dimensions,
 } from 'react-native';
 import styled from 'styled-components/native';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -14,11 +15,26 @@ import FoundPetFormModal from '../FoundPetFormModal';
 import SeenPetFormModal from '../SeenPetFormModal';
 import { DEFAULT_MAP_LOCATION, DEFAULT_MAP_ZOOM } from '../../utils/constants';
 
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get('window');
+
 const PetDetailModal = ({ visible, onClose, pet }) => {
   const [foundFormVisible, setFoundFormVisible] = useState(false);
   const [seenFormVisible, setSeenFormVisible] = useState(false);
+  const [fullImageVisible, setFullImageVisible] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const fullImageScrollRef = useRef(null);
 
-  if (!pet) return null;
+  // Scroll to selected image when modal opens
+  useEffect(() => {
+    if (fullImageVisible && fullImageScrollRef.current) {
+      setTimeout(() => {
+        fullImageScrollRef.current?.scrollTo({
+          x: selectedImageIndex * SCREEN_WIDTH,
+          animated: false,
+        });
+      }, 100);
+    }
+  }, [fullImageVisible, selectedImageIndex]);
 
   const handleFound = () => {
     setFoundFormVisible(true);
@@ -35,6 +51,17 @@ const PetDetailModal = ({ visible, onClose, pet }) => {
   const handleCloseSeenForm = () => {
     setSeenFormVisible(false);
   };
+
+  const handleImagePress = index => {
+    setSelectedImageIndex(index);
+    setFullImageVisible(true);
+  };
+
+  const handleCloseFullImage = () => {
+    setFullImageVisible(false);
+  };
+
+  if (!pet) return null;
 
   // Use pet's actual lost location coordinates if available, otherwise use default
   const petCoordinates = {
@@ -113,12 +140,17 @@ const PetDetailModal = ({ visible, onClose, pet }) => {
                     contentContainerStyle={{ paddingRight: 8 }}
                   >
                     {petImages.map((imageUrl, index) => (
-                      <PetPhoto
+                      <PhotoTouchable
                         key={index}
-                        source={{ uri: imageUrl }}
-                        resizeMode="cover"
-                        style={index > 0 && { marginLeft: 8 }}
-                      />
+                        onPress={() => handleImagePress(index)}
+                        activeOpacity={0.8}
+                      >
+                        <PetPhoto
+                          source={{ uri: imageUrl }}
+                          resizeMode="cover"
+                          style={index > 0 && { marginLeft: 8 }}
+                        />
+                      </PhotoTouchable>
                     ))}
                   </PhotosScrollView>
                 </PhotosSection>
@@ -148,6 +180,45 @@ const PetDetailModal = ({ visible, onClose, pet }) => {
         onClose={handleCloseSeenForm}
         pet={pet}
       />
+
+      {/* Full-size image viewer modal */}
+      <Modal
+        visible={fullImageVisible}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={handleCloseFullImage}
+      >
+        <FullImageOverlay>
+          <FullImageCloseButton onPress={handleCloseFullImage}>
+            <MaterialIcons name="close" size={32} color={colors.surface} />
+          </FullImageCloseButton>
+          <FullImageScrollView
+            ref={fullImageScrollRef}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            onMomentumScrollEnd={event => {
+              const index = Math.round(
+                event.nativeEvent.contentOffset.x / SCREEN_WIDTH
+              );
+              setSelectedImageIndex(index);
+            }}
+          >
+            {petImages.map((imageUrl, index) => (
+              <FullImageContainer key={index}>
+                <FullImage source={{ uri: imageUrl }} resizeMode="contain" />
+              </FullImageContainer>
+            ))}
+          </FullImageScrollView>
+          {petImages.length > 1 && (
+            <ImageCounter>
+              <ImageCounterText>
+                {selectedImageIndex + 1} / {petImages.length}
+              </ImageCounterText>
+            </ImageCounter>
+          )}
+        </FullImageOverlay>
+      </Modal>
     </Modal>
   );
 };
@@ -226,6 +297,8 @@ const PhotosScrollView = styled.ScrollView`
   flex-direction: row;
 `;
 
+const PhotoTouchable = styled.TouchableOpacity``;
+
 const PetPhoto = styled.Image`
   width: 120px;
   height: 120px;
@@ -252,6 +325,58 @@ const ActionButtonText = styled.Text`
   font-size: 14px;
   font-weight: 600;
   color: ${colors.surface};
+`;
+
+const FullImageOverlay = styled.View`
+  flex: 1;
+  background-color: rgba(0, 0, 0, 0.95);
+  justify-content: center;
+  align-items: center;
+`;
+
+const FullImageCloseButton = styled.TouchableOpacity`
+  position: absolute;
+  top: 40px;
+  right: 20px;
+  z-index: 10;
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+`;
+
+const FullImageScrollView = styled.ScrollView`
+  flex: 1;
+  width: 100%;
+`;
+
+const FullImageContainer = styled.View`
+  width: ${SCREEN_WIDTH}px;
+  height: ${SCREEN_HEIGHT}px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const FullImage = styled.Image`
+  width: ${SCREEN_WIDTH}px;
+  height: ${SCREEN_HEIGHT}px;
+`;
+
+const ImageCounter = styled.View`
+  position: absolute;
+  bottom: 40px;
+  align-self: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 8px 16px;
+  border-radius: 20px;
+`;
+
+const ImageCounterText = styled.Text`
+  color: ${colors.surface};
+  font-size: 14px;
+  font-weight: 600;
 `;
 
 export default PetDetailModal;
