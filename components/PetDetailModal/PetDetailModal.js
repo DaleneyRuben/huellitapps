@@ -49,8 +49,8 @@ const PetDetailModal = ({ visible, onClose, pet }) => {
     ...DEFAULT_MAP_ZOOM,
   };
 
-  // Use pet image as main photo, duplicate for gallery
-  const petImages = [pet.imageUrl, pet.imageUrl];
+  // Get all pet images - support both new format (imageUrls array) and old format (imageUrl single)
+  const petImages = pet.imageUrls || (pet.imageUrl ? [pet.imageUrl] : []);
 
   return (
     <Modal
@@ -105,18 +105,24 @@ const PetDetailModal = ({ visible, onClose, pet }) => {
                 />
               </MapSection>
 
-              <PhotosSection>
-                <PhotosRow>
-                  {petImages.map((imageUrl, index) => (
-                    <PetPhoto
-                      key={index}
-                      source={{ uri: imageUrl }}
-                      resizeMode="cover"
-                      style={index > 0 && { marginLeft: 8 }}
-                    />
-                  ))}
-                </PhotosRow>
-              </PhotosSection>
+              {petImages.length > 0 && (
+                <PhotosSection>
+                  <PhotosScrollView
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={{ paddingRight: 8 }}
+                  >
+                    {petImages.map((imageUrl, index) => (
+                      <PetPhoto
+                        key={index}
+                        source={{ uri: imageUrl }}
+                        resizeMode="cover"
+                        style={index > 0 && { marginLeft: 8 }}
+                      />
+                    ))}
+                  </PhotosScrollView>
+                </PhotosSection>
+              )}
 
               <ActionButtonsRow>
                 <ActionButton onPress={handleFound} style={{ marginRight: 8 }}>
@@ -216,13 +222,13 @@ const PhotosSection = styled.View`
   margin-bottom: 16px;
 `;
 
-const PhotosRow = styled.View`
+const PhotosScrollView = styled.ScrollView`
   flex-direction: row;
 `;
 
 const PetPhoto = styled.Image`
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 8px;
   background-color: ${colors.surface};
 `;

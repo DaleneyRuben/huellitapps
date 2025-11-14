@@ -529,6 +529,12 @@ export const convertPetToDisplayFormat = pet => {
     pet.location ||
     generateAddressFromCoordinates(pet.latitude, pet.longitude);
 
+  // Support both new format (imageUris array) and old format (imageUri single)
+  const imageUrls = pet.imageUris || (pet.imageUri ? [pet.imageUri] : []);
+  const imageUrl =
+    pet.imageUri ||
+    (pet.imageUris && pet.imageUris.length > 0 ? pet.imageUris[0] : null);
+
   return {
     id: pet.id,
     petName: pet.name,
@@ -536,7 +542,8 @@ export const convertPetToDisplayFormat = pet => {
     type: pet.petType,
     zone: address, // Keep "zone" for SearchScreen compatibility
     characteristics: pet.characteristics,
-    imageUrl: pet.imageUri,
+    imageUrl: imageUrl, // Keep for backward compatibility
+    imageUrls: imageUrls, // Array of all images
     latitude: pet.latitude,
     longitude: pet.longitude,
   };
