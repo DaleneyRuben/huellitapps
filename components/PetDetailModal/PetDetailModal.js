@@ -129,6 +129,13 @@ const PetDetailModal = ({ visible, onClose, pet }) => {
                   ]}
                   height={250}
                   initialRegion={mapRegion}
+                  scrollEnabled={false}
+                  zoomEnabled={false}
+                  pitchEnabled={false}
+                  rotateEnabled={false}
+                  showsUserLocation={false}
+                  showsCompass={false}
+                  showsScale={false}
                 />
               </MapSection>
 

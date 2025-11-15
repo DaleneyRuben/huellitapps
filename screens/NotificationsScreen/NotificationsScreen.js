@@ -119,7 +119,8 @@ const NotificationsScreen = () => {
       case 'lost_pet_registered':
         return `Se registró la pérdida de ${notification.petName}.`;
       case 'pet_seen':
-        return `Vieron a tu ${petTypeText} ${notification.petName} en ${notification.location || 'una ubicación'}`;
+        const location = notification.location || 'una ubicación';
+        return `Vieron a tu ${petTypeText} ${notification.petName} en ${location}`;
       case 'pet_found':
         return `¡Se registro el Encuentro de ${notification.petName}!`;
       default:
@@ -129,26 +130,15 @@ const NotificationsScreen = () => {
 
   const getNotificationDescription = notification => {
     const petTypeText = getPetTypeText(notification.petType || 'cat');
-    const capitalizedPetType =
-      notification.petType === 'cat' ? 'Gatito' : 'Perrito';
     switch (notification.type) {
       case 'lost_pet_registered':
-        return (
-          notification.description ||
-          `Se publicó correctamente la pérdida de tu ${petTypeText}. Mantén la calma; recibirás una notificación en cuanto alguien lo vea o lo encuentre.`
-        );
+        return `Mantén la calma, recibirás una notificación en cuanto alguien lo vea o lo encuentre.`;
       case 'pet_seen':
-        return (
-          notification.description ||
-          `Se registró una vista de un ${petTypeText} similar al tuyo en ${notification.location || 'una ubicación'}. Haz clic aquí para obtener más detalles.`
-        );
+        return 'Haz click aqui para ver mas detalles';
       case 'pet_found':
-        return (
-          notification.description ||
-          `El albergue mis patitas amores encontro a tu ${capitalizedPetType} ${notification.petName}, haz clic aquí para ver el estado de tu ${capitalizedPetType}.`
-        );
+        return 'Haz click aqui para ver mas detalles';
       default:
-        return notification.description || '';
+        return '';
     }
   };
 
@@ -203,7 +193,12 @@ const NotificationsScreen = () => {
             {notifications.map(notification => (
               <NotificationCard key={notification.id}>
                 <NotificationContent
-                  onPress={() => handleNotificationPress(notification)}
+                  onPress={
+                    notification.type === 'lost_pet_registered'
+                      ? undefined
+                      : () => handleNotificationPress(notification)
+                  }
+                  disabled={notification.type === 'lost_pet_registered'}
                 >
                   {notification.imageUri ? (
                     <NotificationImage
@@ -311,7 +306,7 @@ const NotificationCard = styled.View`
   border-radius: 12px;
   border-width: 2px;
   border-color: ${colors.primary};
-  padding: 16px;
+  padding: 14px;
   margin-bottom: 12px;
   flex-direction: row;
   align-items: flex-start;
@@ -327,50 +322,62 @@ const NotificationContent = styled.TouchableOpacity`
   flex: 1;
   flex-direction: row;
   align-items: flex-start;
+  margin-right: 32px;
 `;
 
 const NotificationImage = styled.Image`
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   border-radius: 8px;
   margin-right: 12px;
   background-color: ${colors.surfaceLight};
+  flex-shrink: 0;
 `;
 
 const NotificationImagePlaceholder = styled.View`
-  width: 80px;
-  height: 80px;
+  width: 70px;
+  height: 70px;
   border-radius: 8px;
   margin-right: 12px;
   background-color: ${colors.surfaceLight};
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
 `;
 
 const NotificationTextContainer = styled.View`
   flex: 1;
+  min-width: 0;
+  padding-right: 4px;
 `;
 
 const NotificationTitle = styled.Text`
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 600;
   color: ${colors.textPrimary};
-  margin-bottom: 6px;
-  line-height: 22px;
+  margin-bottom: 4px;
+  line-height: 20px;
+  flex-wrap: wrap;
 `;
 
 const NotificationDescription = styled.Text`
-  font-size: 14px;
+  font-size: 13px;
   color: ${colors.textSecondary};
-  line-height: 20px;
+  line-height: 18px;
 `;
 
 const DeleteButton = styled.TouchableOpacity`
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 10px;
+  right: 10px;
   padding: 4px;
   z-index: 10;
+  width: 28px;
+  height: 28px;
+  justify-content: center;
+  align-items: center;
+  background-color: ${colors.surface};
+  border-radius: 14px;
 `;
 
 const EmptyContainer = styled.View`

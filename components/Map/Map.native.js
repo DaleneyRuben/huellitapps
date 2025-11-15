@@ -29,6 +29,13 @@ const Map = ({
   initialRegion,
   onAddPetPress,
   onPetPress,
+  scrollEnabled = true,
+  zoomEnabled = true,
+  pitchEnabled = true,
+  rotateEnabled = true,
+  showsUserLocation = true,
+  showsCompass = true,
+  showsScale = true,
 }) => {
   const [currentRegion, setCurrentRegion] = useState(
     initialRegion || DEFAULT_MAP_REGION
@@ -70,10 +77,14 @@ const Map = ({
         provider={PROVIDER_GOOGLE}
         initialRegion={initialRegion || DEFAULT_MAP_REGION}
         onRegionChangeComplete={handleRegionChangeComplete}
-        showsUserLocation={true}
+        scrollEnabled={scrollEnabled}
+        zoomEnabled={zoomEnabled}
+        pitchEnabled={pitchEnabled}
+        rotateEnabled={rotateEnabled}
+        showsUserLocation={showsUserLocation}
         showsMyLocationButton={false}
-        showsCompass={true}
-        showsScale={true}
+        showsCompass={showsCompass}
+        showsScale={showsScale}
       >
         {visiblePets.map((pet, index) => {
           const coordinates = getPetCoordinates(pet, index);
