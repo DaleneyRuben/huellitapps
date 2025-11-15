@@ -12,6 +12,10 @@ const Header = ({ topInset = 0 }) => {
     navigation.navigate('Videos');
   };
 
+  const handleNotificationsPress = () => {
+    navigation.navigate('Notifications');
+  };
+
   return (
     <HeaderContainer topInset={topInset}>
       {/* Main Content Row */}
@@ -35,11 +39,13 @@ const Header = ({ topInset = 0 }) => {
 
         {/* Right: Bell Icon */}
         <RightIconContainer>
-          <MaterialIcons
-            name="notifications"
-            size={24}
-            color={colors.primary}
-          />
+          <IconButton onPress={handleNotificationsPress}>
+            <MaterialIcons
+              name="notifications"
+              size={24}
+              color={colors.primary}
+            />
+          </IconButton>
         </RightIconContainer>
       </MainContentRow>
     </HeaderContainer>

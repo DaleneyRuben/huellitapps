@@ -16,6 +16,7 @@ import MapScreen from './screens/MapScreen';
 import AccountScreen from './screens/AccountScreen';
 import LostPetFlowScreen from './screens/LostPetFlowScreen';
 import VideosScreen from './screens/VideosScreen';
+import NotificationsScreen from './screens/NotificationsScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -178,6 +179,14 @@ function RootStackNavigator() {
         }}
       >
         {() => <LostPetFlowScreen />}
+      </Stack.Screen>
+      <Stack.Screen
+        name="Notifications"
+        options={{
+          presentation: 'card',
+        }}
+      >
+        {() => <NotificationsScreen />}
       </Stack.Screen>
     </Stack.Navigator>
   );
