@@ -13,6 +13,8 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../theme';
 import { loadNotifications, deleteNotification } from '../../utils/storage';
 import PetDetailModal from '../../components/PetDetailModal';
+import SeenPetDetailModal from '../../components/SeenPetDetailModal';
+import FoundPetDetailModal from '../../components/FoundPetDetailModal';
 import { loadLostPets, convertPetToDisplayFormat } from '../../utils/storage';
 
 const NotificationsScreen = () => {
@@ -23,6 +25,9 @@ const NotificationsScreen = () => {
   const [refreshing, setRefreshing] = useState(false);
   const [selectedPet, setSelectedPet] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
+  const [selectedNotification, setSelectedNotification] = useState(null);
+  const [seenPetModalVisible, setSeenPetModalVisible] = useState(false);
+  const [foundPetModalVisible, setFoundPetModalVisible] = useState(false);
 
   const loadNotificationsData = async () => {
     try {
@@ -62,6 +67,21 @@ const NotificationsScreen = () => {
   };
 
   const handleNotificationPress = async notification => {
+    // For "pet_seen" notifications, show the seen pet detail modal
+    if (notification.type === 'pet_seen') {
+      setSelectedNotification(notification);
+      setSeenPetModalVisible(true);
+      return;
+    }
+
+    // For "pet_found" notifications, show the found pet detail modal
+    if (notification.type === 'pet_found') {
+      setSelectedNotification(notification);
+      setFoundPetModalVisible(true);
+      return;
+    }
+
+    // For other notification types (like "lost_pet_registered"), show the pet detail modal
     if (notification.petId) {
       // Load the pet details
       const pets = await loadLostPets();
@@ -77,6 +97,16 @@ const NotificationsScreen = () => {
   const handleCloseModal = () => {
     setModalVisible(false);
     setSelectedPet(null);
+  };
+
+  const handleCloseSeenPetModal = () => {
+    setSeenPetModalVisible(false);
+    setSelectedNotification(null);
+  };
+
+  const handleCloseFoundPetModal = () => {
+    setFoundPetModalVisible(false);
+    setSelectedNotification(null);
   };
 
   const getPetTypeText = petType => {
@@ -213,6 +243,16 @@ const NotificationsScreen = () => {
         visible={modalVisible}
         onClose={handleCloseModal}
         pet={selectedPet}
+      />
+      <SeenPetDetailModal
+        visible={seenPetModalVisible}
+        onClose={handleCloseSeenPetModal}
+        notification={selectedNotification}
+      />
+      <FoundPetDetailModal
+        visible={foundPetModalVisible}
+        onClose={handleCloseFoundPetModal}
+        notification={selectedNotification}
       />
     </Container>
   );
