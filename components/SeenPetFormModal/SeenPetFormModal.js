@@ -13,6 +13,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../theme';
 import Map from '../Map';
 import { DEFAULT_MAP_LOCATION } from '../../utils/constants';
+import { addNotification } from '../../utils/storage';
 
 const SeenPetFormModal = ({ visible, onClose, pet }) => {
   const [description, setDescription] = useState('');
@@ -42,25 +43,6 @@ const SeenPetFormModal = ({ visible, onClose, pet }) => {
     }
   };
 
-  const handleSubmit = () => {
-    if (!description.trim()) {
-      Alert.alert('Error', 'Por favor, ingresa una descripción.');
-      return;
-    }
-
-    // Here you would typically send the data to your backend
-    Alert.alert('¡Gracias!', 'Tu reporte ha sido enviado exitosamente.', [
-      {
-        text: 'OK',
-        onPress: () => {
-          setDescription('');
-          setSelectedImage(null);
-          onClose();
-        },
-      },
-    ]);
-  };
-
   const handleCancel = () => {
     setDescription('');
     setSelectedImage(null);
@@ -69,6 +51,45 @@ const SeenPetFormModal = ({ visible, onClose, pet }) => {
 
   // Generate coordinates for the map (mock data for now)
   const petCoordinates = DEFAULT_MAP_LOCATION;
+
+  const handleSubmit = async () => {
+    if (!description.trim()) {
+      Alert.alert('Error', 'Por favor, ingresa una descripción.');
+      return;
+    }
+
+    try {
+      // Save notification
+      await addNotification({
+        type: 'pet_seen',
+        petId: pet.id,
+        petName: pet.petName,
+        petType: pet.type || 'cat', // Default to cat if not specified
+        description: description.trim(),
+        imageUri: selectedImage,
+        location: pet.zone || 'Ubicación no especificada',
+        latitude: petCoordinates.latitude,
+        longitude: petCoordinates.longitude,
+      });
+
+      Alert.alert('¡Gracias!', 'Tu reporte ha sido enviado exitosamente.', [
+        {
+          text: 'OK',
+          onPress: () => {
+            setDescription('');
+            setSelectedImage(null);
+            onClose();
+          },
+        },
+      ]);
+    } catch (error) {
+      console.error('Error saving notification:', error);
+      Alert.alert(
+        'Error',
+        'Hubo un problema al guardar el reporte. Por favor, intenta nuevamente.'
+      );
+    }
+  };
 
   return (
     <Modal

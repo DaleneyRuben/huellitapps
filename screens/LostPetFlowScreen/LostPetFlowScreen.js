@@ -9,7 +9,7 @@ import Step1PetInfoForm from '../../components/LostPetFlow/Step1PetInfoForm';
 import Step2MapPicker from '../../components/LostPetFlow/Step2MapPicker';
 import Step3DateTimePicker from '../../components/LostPetFlow/Step2DateTimePicker';
 import Step4PhotoUpload from '../../components/LostPetFlow/Step3PhotoUpload';
-import { addLostPet } from '../../utils/storage';
+import { addLostPet, addNotification } from '../../utils/storage';
 
 const PET_TYPES = {
   DOG: 'dog',
@@ -169,8 +169,31 @@ const LostPetFlowScreen = () => {
             : null),
       };
 
-      await addLostPet(petData);
+      const newPet = await addLostPet(petData);
       console.log('Pet saved to storage:', petData);
+
+      // Save notification for new lost pet registration
+      try {
+        const petTypeText = petType === PET_TYPES.CAT ? 'gatito' : 'perrito';
+        await addNotification({
+          type: 'lost_pet_registered',
+          petId: newPet.id,
+          petName: formData.name,
+          petType: petType,
+          description: `Se publicó correctamente la pérdida de tu ${petTypeText}. Mantén la calma; recibirás una notificación en cuanto alguien lo vea o lo encuentre.`,
+          imageUri:
+            petData.imageUri ||
+            (petData.imageUris && petData.imageUris.length > 0
+              ? petData.imageUris[0]
+              : null),
+          location: petData.address || 'Ubicación no especificada',
+          latitude: petData.latitude,
+          longitude: petData.longitude,
+        });
+      } catch (notificationError) {
+        console.error('Error saving notification:', notificationError);
+        // Don't block the flow if notification fails
+      }
 
       // Show confirmation message
       Alert.alert(

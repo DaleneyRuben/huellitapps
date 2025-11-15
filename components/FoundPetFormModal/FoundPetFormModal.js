@@ -11,6 +11,7 @@ import * as ImagePicker from 'expo-image-picker';
 import styled from 'styled-components/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../theme';
+import { addNotification } from '../../utils/storage';
 
 const FoundPetFormModal = ({ visible, onClose, pet }) => {
   const [description, setDescription] = useState('');
@@ -40,23 +41,43 @@ const FoundPetFormModal = ({ visible, onClose, pet }) => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!description.trim()) {
       Alert.alert('Error', 'Por favor, ingresa una descripción.');
       return;
     }
 
-    // Here you would typically send the data to your backend
-    Alert.alert('¡Gracias!', 'Tu reporte ha sido enviado exitosamente.', [
-      {
-        text: 'OK',
-        onPress: () => {
-          setDescription('');
-          setSelectedImage(null);
-          onClose();
+    try {
+      // Save notification
+      await addNotification({
+        type: 'pet_found',
+        petId: pet.id,
+        petName: pet.petName,
+        petType: pet.type || 'cat', // Default to cat if not specified
+        description: description.trim(),
+        imageUri: selectedImage,
+        location: pet.zone || 'Ubicación no especificada',
+        latitude: pet.latitude || null,
+        longitude: pet.longitude || null,
+      });
+
+      Alert.alert('¡Gracias!', 'Tu reporte ha sido enviado exitosamente.', [
+        {
+          text: 'OK',
+          onPress: () => {
+            setDescription('');
+            setSelectedImage(null);
+            onClose();
+          },
         },
-      },
-    ]);
+      ]);
+    } catch (error) {
+      console.error('Error saving notification:', error);
+      Alert.alert(
+        'Error',
+        'Hubo un problema al guardar el reporte. Por favor, intenta nuevamente.'
+      );
+    }
   };
 
   const handleCancel = () => {
