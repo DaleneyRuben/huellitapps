@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const STORAGE_KEYS = {
   LOST_PETS: 'lostPets',
   INITIALIZED: 'storageInitialized',
+  NOTIFICATIONS: 'notifications',
 };
 
 // Helper function to calculate time lost string from date
@@ -547,4 +548,71 @@ export const convertPetToDisplayFormat = pet => {
     latitude: pet.latitude,
     longitude: pet.longitude,
   };
+};
+
+// Notification storage functions
+// Load all notifications from storage
+export const loadNotifications = async () => {
+  try {
+    const notificationsJson = await AsyncStorage.getItem(
+      STORAGE_KEYS.NOTIFICATIONS
+    );
+    if (!notificationsJson) {
+      return [];
+    }
+    const notifications = JSON.parse(notificationsJson);
+    // Sort by createdAt descending (newest first)
+    return notifications.sort((a, b) => {
+      const dateA = new Date(a.createdAt);
+      const dateB = new Date(b.createdAt);
+      return dateB - dateA;
+    });
+  } catch (error) {
+    console.error('Error loading notifications:', error);
+    return [];
+  }
+};
+
+// Save all notifications to storage
+export const saveNotifications = async notifications => {
+  try {
+    await AsyncStorage.setItem(
+      STORAGE_KEYS.NOTIFICATIONS,
+      JSON.stringify(notifications)
+    );
+  } catch (error) {
+    console.error('Error saving notifications:', error);
+  }
+};
+
+// Add a new notification
+export const addNotification = async notificationData => {
+  try {
+    const notifications = await loadNotifications();
+    const newNotification = {
+      id: Date.now(), // Simple ID generation
+      ...notificationData,
+      createdAt: new Date().toISOString(),
+    };
+    notifications.unshift(newNotification); // Add to beginning
+    await saveNotifications(notifications);
+    return newNotification;
+  } catch (error) {
+    console.error('Error adding notification:', error);
+    throw error;
+  }
+};
+
+// Delete a notification by ID
+export const deleteNotification = async notificationId => {
+  try {
+    const notifications = await loadNotifications();
+    const filteredNotifications = notifications.filter(
+      notification => notification.id !== notificationId
+    );
+    await saveNotifications(filteredNotifications);
+  } catch (error) {
+    console.error('Error deleting notification:', error);
+    throw error;
+  }
 };
