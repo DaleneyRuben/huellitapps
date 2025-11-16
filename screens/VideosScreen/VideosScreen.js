@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, ActivityIndicator, Animated } from 'react-native';
+import { ScrollView, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
@@ -11,10 +11,14 @@ const VideosScreen = () => {
   const navigation = useNavigation();
   const insets = useSafeAreaInsets();
 
-  const educativeVideoId = 'pvWoB4XNZMo';
+  const educativeVideoIds = ['pvWoB4XNZMo', 'cGndFehov9Q', 'glXIVw4-HgQ'];
   const testimoniosVideoIds = ['ZgQWyiZMDj8', 'Xspaw5KVYFk', 'Bw9Dnqw0fPI'];
 
-  const [educativeLoaded, setEducativeLoaded] = useState(false);
+  const [educativeLoaded, setEducativeLoaded] = useState({
+    0: false,
+    1: false,
+    2: false,
+  });
   const [testimoniosLoaded, setTestimoniosLoaded] = useState({
     0: false,
     1: false,
@@ -44,27 +48,31 @@ const VideosScreen = () => {
               Aprende sobre el cuidado y bienestar de las mascotas
             </SectionDescription>
           </SectionHeader>
-          <VideoContainer>
-            {!educativeLoaded && (
-              <LoadingOverlay>
-                <ActivityIndicator size="large" color={colors.primary} />
-                <LoadingText>Cargando video...</LoadingText>
-              </LoadingOverlay>
-            )}
-            <YoutubeIframe
-              videoId={educativeVideoId}
-              height={200}
-              webViewStyle={{ backgroundColor: colors.surfaceLight }}
-              onReady={() => setEducativeLoaded(true)}
-              initialPlayerParams={{
-                modestbranding: true,
-                rel: false,
-                controls: true,
-                iv_load_policy: 3,
-                showClosedCaptions: false,
-              }}
-            />
-          </VideoContainer>
+          {educativeVideoIds.map((videoId, index) => (
+            <VideoContainer key={index}>
+              {!educativeLoaded[index] && (
+                <LoadingOverlay>
+                  <ActivityIndicator size="large" color={colors.primary} />
+                  <LoadingText>Cargando video...</LoadingText>
+                </LoadingOverlay>
+              )}
+              <YoutubeIframe
+                videoId={videoId}
+                height={200}
+                webViewStyle={{ backgroundColor: colors.surfaceLight }}
+                onReady={() =>
+                  setEducativeLoaded(prev => ({ ...prev, [index]: true }))
+                }
+                initialPlayerParams={{
+                  modestbranding: true,
+                  rel: false,
+                  controls: true,
+                  iv_load_policy: 3,
+                  showClosedCaptions: false,
+                }}
+              />
+            </VideoContainer>
+          ))}
         </SectionContainer>
 
         {/* Testimonios Section */}
