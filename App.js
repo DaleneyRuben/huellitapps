@@ -17,6 +17,10 @@ import AccountScreen from './screens/AccountScreen';
 import LostPetFlowScreen from './screens/LostPetFlowScreen';
 import VideosScreen from './screens/VideosScreen';
 import NotificationsScreen from './screens/NotificationsScreen';
+import LoginScreen from './screens/LoginScreen';
+import RegisterScreen from './screens/RegisterScreen';
+import VerificationScreen from './screens/VerificationScreen';
+import AlbergueRegisterStep2Screen from './screens/AlbergueRegisterStep2Screen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -135,6 +139,10 @@ const linking = {
   prefixes: ['/'],
   config: {
     screens: {
+      Login: '/login',
+      Register: '/register',
+      AlbergueRegisterStep2: '/albergue-register-step2',
+      Verification: '/verification',
       Tabs: {
         screens: {
           Inicio: {
@@ -158,10 +166,18 @@ const linking = {
 function RootStackNavigator() {
   return (
     <Stack.Navigator
+      initialRouteName="Login"
       screenOptions={{
         headerShown: false,
       }}
     >
+      <Stack.Screen name="Login" component={LoginScreen} />
+      <Stack.Screen name="Register" component={RegisterScreen} />
+      <Stack.Screen
+        name="AlbergueRegisterStep2"
+        component={AlbergueRegisterStep2Screen}
+      />
+      <Stack.Screen name="Verification" component={VerificationScreen} />
       <Stack.Screen name="Tabs" component={TabNavigator} />
       <Stack.Screen
         name="Videos"

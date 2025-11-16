@@ -127,7 +127,11 @@ const Account = () => {
           </ConfigItem>
           <Separator />
 
-          <ConfigItem>
+          <ConfigItem
+            onPress={() => {
+              navigation.navigate('Login');
+            }}
+          >
             <ConfigIcon>
               <MaterialIcons name="logout" size={24} color="#6B9AC4" />
             </ConfigIcon>
