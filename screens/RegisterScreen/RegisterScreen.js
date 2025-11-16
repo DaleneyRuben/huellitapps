@@ -28,11 +28,208 @@ const RegisterScreen = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  // Validation errors
+  const [errors, setErrors] = useState({});
+
   const toggleUserType = () => {
     setUserType(prev => (prev === 'Usuario' ? 'Albergue' : 'Usuario'));
+    // Clear errors when switching user type
+    setErrors({});
+  };
+
+  // Validation functions
+  const validateEmail = email => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhone = phone => {
+    // Remove spaces, dashes, and parentheses for validation
+    const cleanedPhone = phone.replace(/[\s\-\(\)]/g, '');
+    // Check if it's all digits and has reasonable length (7-15 digits)
+    return (
+      /^\d+$/.test(cleanedPhone) &&
+      cleanedPhone.length >= 7 &&
+      cleanedPhone.length <= 15
+    );
+  };
+
+  const validatePassword = password => {
+    // At least 6 characters
+    return password.length >= 6;
+  };
+
+  const validateField = (fieldName, value, userType) => {
+    const newErrors = { ...errors };
+
+    switch (fieldName) {
+      case 'firstName':
+        if (!value.trim()) {
+          newErrors.firstName = 'El nombre es requerido';
+        } else if (value.trim().length < 2) {
+          newErrors.firstName = 'El nombre debe tener al menos 2 caracteres';
+        } else {
+          delete newErrors.firstName;
+        }
+        break;
+
+      case 'lastName':
+        if (!value.trim()) {
+          newErrors.lastName = 'El apellido es requerido';
+        } else if (value.trim().length < 2) {
+          newErrors.lastName = 'El apellido debe tener al menos 2 caracteres';
+        } else {
+          delete newErrors.lastName;
+        }
+        break;
+
+      case 'phone':
+        if (!value.trim()) {
+          newErrors.phone = 'El número de celular es requerido';
+        } else if (!validatePhone(value)) {
+          newErrors.phone = 'Ingresa un número de celular válido';
+        } else {
+          delete newErrors.phone;
+        }
+        break;
+
+      case 'email':
+        if (!value.trim()) {
+          newErrors.email = 'El correo electrónico es requerido';
+        } else if (!validateEmail(value)) {
+          newErrors.email = 'Ingresa un correo electrónico válido';
+        } else {
+          delete newErrors.email;
+        }
+        break;
+
+      case 'password':
+        if (!value.trim()) {
+          newErrors.password = 'La contraseña es requerida';
+        } else if (!validatePassword(value)) {
+          newErrors.password = 'La contraseña debe tener al menos 6 caracteres';
+        } else {
+          delete newErrors.password;
+        }
+        break;
+
+      case 'confirmPassword':
+        if (!value.trim()) {
+          newErrors.confirmPassword = 'Confirma tu contraseña';
+        } else if (userType === 'Usuario' && value !== password) {
+          newErrors.confirmPassword = 'Las contraseñas no coinciden';
+        } else {
+          delete newErrors.confirmPassword;
+        }
+        break;
+
+      case 'shelterName':
+        if (!value.trim()) {
+          newErrors.shelterName = 'El nombre del albergue es requerido';
+        } else {
+          delete newErrors.shelterName;
+        }
+        break;
+
+      case 'managerFirstName':
+        if (!value.trim()) {
+          newErrors.managerFirstName = 'El nombre del encargado es requerido';
+        } else {
+          delete newErrors.managerFirstName;
+        }
+        break;
+
+      case 'managerLastName':
+        if (!value.trim()) {
+          newErrors.managerLastName = 'El apellido del encargado es requerido';
+        } else {
+          delete newErrors.managerLastName;
+        }
+        break;
+
+      case 'referenceNumber':
+        if (!value.trim()) {
+          newErrors.referenceNumber = 'El número de referencia es requerido';
+        } else if (!validatePhone(value)) {
+          newErrors.referenceNumber = 'Ingresa un número de celular válido';
+        } else {
+          delete newErrors.referenceNumber;
+        }
+        break;
+
+      case 'referenceEmail':
+        if (!value.trim()) {
+          newErrors.referenceEmail = 'El correo de referencia es requerido';
+        } else if (!validateEmail(value)) {
+          newErrors.referenceEmail = 'Ingresa un correo electrónico válido';
+        } else {
+          delete newErrors.referenceEmail;
+        }
+        break;
+
+      case 'shelterLocation':
+        if (!value.trim()) {
+          newErrors.shelterLocation = 'La ubicación del albergue es requerida';
+        } else {
+          delete newErrors.shelterLocation;
+        }
+        break;
+
+      default:
+        break;
+    }
+
+    setErrors(newErrors);
+  };
+
+  const validateAllFields = () => {
+    if (userType === 'Usuario') {
+      validateField('firstName', firstName, userType);
+      validateField('lastName', lastName, userType);
+      validateField('phone', phone, userType);
+      validateField('email', email, userType);
+      validateField('password', password, userType);
+      validateField('confirmPassword', confirmPassword, userType);
+    } else {
+      validateField('shelterName', shelterName, userType);
+      validateField('managerFirstName', managerFirstName, userType);
+      validateField('managerLastName', managerLastName, userType);
+      validateField('referenceNumber', referenceNumber, userType);
+      validateField('referenceEmail', referenceEmail, userType);
+      validateField('shelterLocation', shelterLocation, userType);
+    }
   };
 
   const handleRegister = () => {
+    // Validate all fields before proceeding
+    validateAllFields();
+
+    // Check if form is valid (using the same logic as isFormValid)
+    const isValid =
+      userType === 'Usuario'
+        ? firstName.trim() &&
+          lastName.trim() &&
+          phone.trim() &&
+          email.trim() &&
+          validateEmail(email) &&
+          validatePhone(phone) &&
+          password.trim() &&
+          validatePassword(password) &&
+          confirmPassword.trim() &&
+          passwordsMatch
+        : shelterName.trim() &&
+          managerFirstName.trim() &&
+          managerLastName.trim() &&
+          referenceNumber.trim() &&
+          validatePhone(referenceNumber) &&
+          referenceEmail.trim() &&
+          validateEmail(referenceEmail) &&
+          shelterLocation.trim();
+
+    if (!isValid) {
+      return;
+    }
+
     // TODO: Implement registration logic
     if (userType === 'Usuario') {
       console.log('Registration attempt:', {
@@ -68,21 +265,29 @@ const RegisterScreen = () => {
     confirmPassword.trim() &&
     !passwordsMatch;
 
-  const isRegisterDisabled =
+  // Check if form is valid
+  const isFormValid =
     userType === 'Usuario'
-      ? !firstName.trim() ||
-        !lastName.trim() ||
-        !phone.trim() ||
-        !email.trim() ||
-        !password.trim() ||
-        !confirmPassword.trim() ||
-        !passwordsMatch
-      : !shelterName.trim() ||
-        !managerFirstName.trim() ||
-        !managerLastName.trim() ||
-        !referenceNumber.trim() ||
-        !referenceEmail.trim() ||
-        !shelterLocation.trim();
+      ? firstName.trim() &&
+        lastName.trim() &&
+        phone.trim() &&
+        email.trim() &&
+        validateEmail(email) &&
+        validatePhone(phone) &&
+        password.trim() &&
+        validatePassword(password) &&
+        confirmPassword.trim() &&
+        passwordsMatch
+      : shelterName.trim() &&
+        managerFirstName.trim() &&
+        managerLastName.trim() &&
+        referenceNumber.trim() &&
+        validatePhone(referenceNumber) &&
+        referenceEmail.trim() &&
+        validateEmail(referenceEmail) &&
+        shelterLocation.trim();
+
+  const isRegisterDisabled = !isFormValid;
 
   return (
     <Container>
@@ -133,7 +338,13 @@ const RegisterScreen = () => {
               {userType === 'Usuario' ? (
                 <>
                   {/* First Name Input */}
-                  <InputWrapper>
+                  <InputWrapper
+                    style={
+                      errors.firstName
+                        ? { borderColor: '#E53E3E', borderWidth: 2 }
+                        : {}
+                    }
+                  >
                     <InputIcon>
                       <MaterialIcons
                         name="person-outline"
@@ -143,15 +354,32 @@ const RegisterScreen = () => {
                     </InputIcon>
                     <StyledTextInput
                       value={firstName}
-                      onChangeText={setFirstName}
+                      onChangeText={value => {
+                        setFirstName(value);
+                        if (errors.firstName) {
+                          validateField('firstName', value, userType);
+                        }
+                      }}
+                      onBlur={() =>
+                        validateField('firstName', firstName, userType)
+                      }
                       placeholder="Nombre(s)*"
                       placeholderTextColor={colors.textLight}
                       autoCapitalize="words"
                     />
                   </InputWrapper>
+                  {errors.firstName && (
+                    <ErrorMessage>{errors.firstName}</ErrorMessage>
+                  )}
 
                   {/* Last Name Input */}
-                  <InputWrapper>
+                  <InputWrapper
+                    style={
+                      errors.lastName
+                        ? { borderColor: '#E53E3E', borderWidth: 2 }
+                        : {}
+                    }
+                  >
                     <InputIcon>
                       <MaterialIcons
                         name="person-outline"
@@ -161,15 +389,32 @@ const RegisterScreen = () => {
                     </InputIcon>
                     <StyledTextInput
                       value={lastName}
-                      onChangeText={setLastName}
+                      onChangeText={value => {
+                        setLastName(value);
+                        if (errors.lastName) {
+                          validateField('lastName', value, userType);
+                        }
+                      }}
+                      onBlur={() =>
+                        validateField('lastName', lastName, userType)
+                      }
                       placeholder="Apellido(s)*"
                       placeholderTextColor={colors.textLight}
                       autoCapitalize="words"
                     />
                   </InputWrapper>
+                  {errors.lastName && (
+                    <ErrorMessage>{errors.lastName}</ErrorMessage>
+                  )}
 
                   {/* Phone Input */}
-                  <InputWrapper>
+                  <InputWrapper
+                    style={
+                      errors.phone
+                        ? { borderColor: '#E53E3E', borderWidth: 2 }
+                        : {}
+                    }
+                  >
                     <InputIcon>
                       <MaterialIcons
                         name="phone"
@@ -179,15 +424,28 @@ const RegisterScreen = () => {
                     </InputIcon>
                     <StyledTextInput
                       value={phone}
-                      onChangeText={setPhone}
+                      onChangeText={value => {
+                        setPhone(value);
+                        if (errors.phone) {
+                          validateField('phone', value, userType);
+                        }
+                      }}
+                      onBlur={() => validateField('phone', phone, userType)}
                       placeholder="Número de celular."
                       placeholderTextColor={colors.textLight}
                       keyboardType="phone-pad"
                     />
                   </InputWrapper>
+                  {errors.phone && <ErrorMessage>{errors.phone}</ErrorMessage>}
 
                   {/* Email Input */}
-                  <InputWrapper>
+                  <InputWrapper
+                    style={
+                      errors.email
+                        ? { borderColor: '#E53E3E', borderWidth: 2 }
+                        : {}
+                    }
+                  >
                     <InputIcon>
                       <MaterialIcons
                         name="email"
@@ -197,7 +455,13 @@ const RegisterScreen = () => {
                     </InputIcon>
                     <StyledTextInput
                       value={email}
-                      onChangeText={setEmail}
+                      onChangeText={value => {
+                        setEmail(value);
+                        if (errors.email) {
+                          validateField('email', value, userType);
+                        }
+                      }}
+                      onBlur={() => validateField('email', email, userType)}
                       placeholder="Correo electrónico."
                       placeholderTextColor={colors.textLight}
                       autoCapitalize="none"
@@ -205,9 +469,16 @@ const RegisterScreen = () => {
                       autoComplete="email"
                     />
                   </InputWrapper>
+                  {errors.email && <ErrorMessage>{errors.email}</ErrorMessage>}
 
                   {/* Password Input */}
-                  <InputWrapper>
+                  <InputWrapper
+                    style={
+                      errors.password
+                        ? { borderColor: '#E53E3E', borderWidth: 2 }
+                        : {}
+                    }
+                  >
                     <InputIcon>
                       <MaterialIcons
                         name="lock"
@@ -217,7 +488,23 @@ const RegisterScreen = () => {
                     </InputIcon>
                     <PasswordInput
                       value={password}
-                      onChangeText={setPassword}
+                      onChangeText={value => {
+                        setPassword(value);
+                        if (errors.password) {
+                          validateField('password', value, userType);
+                        }
+                        // Re-validate confirm password if it has a value
+                        if (confirmPassword) {
+                          validateField(
+                            'confirmPassword',
+                            confirmPassword,
+                            userType
+                          );
+                        }
+                      }}
+                      onBlur={() =>
+                        validateField('password', password, userType)
+                      }
                       placeholder="Contraseña."
                       placeholderTextColor={colors.textLight}
                       secureTextEntry={!showPassword}
@@ -234,11 +521,14 @@ const RegisterScreen = () => {
                       />
                     </PasswordToggle>
                   </InputWrapper>
+                  {errors.password && (
+                    <ErrorMessage>{errors.password}</ErrorMessage>
+                  )}
 
                   {/* Confirm Password Input */}
                   <InputWrapper
                     style={
-                      hasPasswordMismatch
+                      errors.confirmPassword || hasPasswordMismatch
                         ? { borderColor: '#E53E3E', borderWidth: 2 }
                         : {}
                     }
@@ -252,7 +542,19 @@ const RegisterScreen = () => {
                     </InputIcon>
                     <PasswordInput
                       value={confirmPassword}
-                      onChangeText={setConfirmPassword}
+                      onChangeText={value => {
+                        setConfirmPassword(value);
+                        if (errors.confirmPassword || hasPasswordMismatch) {
+                          validateField('confirmPassword', value, userType);
+                        }
+                      }}
+                      onBlur={() =>
+                        validateField(
+                          'confirmPassword',
+                          confirmPassword,
+                          userType
+                        )
+                      }
                       placeholder="Ingresa tu contraseña nuevamente."
                       placeholderTextColor={colors.textLight}
                       secureTextEntry={!showConfirmPassword}
@@ -273,14 +575,22 @@ const RegisterScreen = () => {
                       />
                     </PasswordToggle>
                   </InputWrapper>
-                  {hasPasswordMismatch && (
-                    <ErrorMessage>Las contraseñas no coinciden</ErrorMessage>
+                  {(errors.confirmPassword || hasPasswordMismatch) && (
+                    <ErrorMessage>
+                      {errors.confirmPassword || 'Las contraseñas no coinciden'}
+                    </ErrorMessage>
                   )}
                 </>
               ) : (
                 <>
                   {/* Shelter Name Input */}
-                  <InputWrapper>
+                  <InputWrapper
+                    style={
+                      errors.shelterName
+                        ? { borderColor: '#E53E3E', borderWidth: 2 }
+                        : {}
+                    }
+                  >
                     <InputIcon>
                       <MaterialIcons
                         name="home"
@@ -290,15 +600,32 @@ const RegisterScreen = () => {
                     </InputIcon>
                     <StyledTextInput
                       value={shelterName}
-                      onChangeText={setShelterName}
+                      onChangeText={value => {
+                        setShelterName(value);
+                        if (errors.shelterName) {
+                          validateField('shelterName', value, userType);
+                        }
+                      }}
+                      onBlur={() =>
+                        validateField('shelterName', shelterName, userType)
+                      }
                       placeholder="Nombre del albergue"
                       placeholderTextColor={colors.textLight}
                       autoCapitalize="words"
                     />
                   </InputWrapper>
+                  {errors.shelterName && (
+                    <ErrorMessage>{errors.shelterName}</ErrorMessage>
+                  )}
 
                   {/* Manager First Name Input */}
-                  <InputWrapper>
+                  <InputWrapper
+                    style={
+                      errors.managerFirstName
+                        ? { borderColor: '#E53E3E', borderWidth: 2 }
+                        : {}
+                    }
+                  >
                     <InputIcon>
                       <MaterialIcons
                         name="person-outline"
@@ -308,15 +635,36 @@ const RegisterScreen = () => {
                     </InputIcon>
                     <StyledTextInput
                       value={managerFirstName}
-                      onChangeText={setManagerFirstName}
+                      onChangeText={value => {
+                        setManagerFirstName(value);
+                        if (errors.managerFirstName) {
+                          validateField('managerFirstName', value, userType);
+                        }
+                      }}
+                      onBlur={() =>
+                        validateField(
+                          'managerFirstName',
+                          managerFirstName,
+                          userType
+                        )
+                      }
                       placeholder="Nombre(s)* del Encargado"
                       placeholderTextColor={colors.textLight}
                       autoCapitalize="words"
                     />
                   </InputWrapper>
+                  {errors.managerFirstName && (
+                    <ErrorMessage>{errors.managerFirstName}</ErrorMessage>
+                  )}
 
                   {/* Manager Last Name Input */}
-                  <InputWrapper>
+                  <InputWrapper
+                    style={
+                      errors.managerLastName
+                        ? { borderColor: '#E53E3E', borderWidth: 2 }
+                        : {}
+                    }
+                  >
                     <InputIcon>
                       <MaterialIcons
                         name="person-outline"
@@ -326,32 +674,75 @@ const RegisterScreen = () => {
                     </InputIcon>
                     <StyledTextInput
                       value={managerLastName}
-                      onChangeText={setManagerLastName}
+                      onChangeText={value => {
+                        setManagerLastName(value);
+                        if (errors.managerLastName) {
+                          validateField('managerLastName', value, userType);
+                        }
+                      }}
+                      onBlur={() =>
+                        validateField(
+                          'managerLastName',
+                          managerLastName,
+                          userType
+                        )
+                      }
                       placeholder="Apellido(s)* del Encargado"
                       placeholderTextColor={colors.textLight}
                       autoCapitalize="words"
                     />
                   </InputWrapper>
+                  {errors.managerLastName && (
+                    <ErrorMessage>{errors.managerLastName}</ErrorMessage>
+                  )}
 
                   {/* Reference Number Input */}
-                  <InputWrapper>
+                  <InputWrapper
+                    style={
+                      errors.referenceNumber
+                        ? { borderColor: '#E53E3E', borderWidth: 2 }
+                        : {}
+                    }
+                  >
                     <InputIcon>
                       <MaterialIcons
-                        name="description"
+                        name="phone"
                         size={20}
                         color={colors.textSecondary}
                       />
                     </InputIcon>
                     <StyledTextInput
                       value={referenceNumber}
-                      onChangeText={setReferenceNumber}
+                      onChangeText={value => {
+                        setReferenceNumber(value);
+                        if (errors.referenceNumber) {
+                          validateField('referenceNumber', value, userType);
+                        }
+                      }}
+                      onBlur={() =>
+                        validateField(
+                          'referenceNumber',
+                          referenceNumber,
+                          userType
+                        )
+                      }
                       placeholder="Numero de Referencia."
                       placeholderTextColor={colors.textLight}
+                      keyboardType="phone-pad"
                     />
                   </InputWrapper>
+                  {errors.referenceNumber && (
+                    <ErrorMessage>{errors.referenceNumber}</ErrorMessage>
+                  )}
 
                   {/* Reference Email Input */}
-                  <InputWrapper>
+                  <InputWrapper
+                    style={
+                      errors.referenceEmail
+                        ? { borderColor: '#E53E3E', borderWidth: 2 }
+                        : {}
+                    }
+                  >
                     <InputIcon>
                       <MaterialIcons
                         name="email"
@@ -361,7 +752,19 @@ const RegisterScreen = () => {
                     </InputIcon>
                     <StyledTextInput
                       value={referenceEmail}
-                      onChangeText={setReferenceEmail}
+                      onChangeText={value => {
+                        setReferenceEmail(value);
+                        if (errors.referenceEmail) {
+                          validateField('referenceEmail', value, userType);
+                        }
+                      }}
+                      onBlur={() =>
+                        validateField(
+                          'referenceEmail',
+                          referenceEmail,
+                          userType
+                        )
+                      }
                       placeholder="Correo Electronico de Referencia."
                       placeholderTextColor={colors.textLight}
                       autoCapitalize="none"
@@ -369,9 +772,18 @@ const RegisterScreen = () => {
                       autoComplete="email"
                     />
                   </InputWrapper>
+                  {errors.referenceEmail && (
+                    <ErrorMessage>{errors.referenceEmail}</ErrorMessage>
+                  )}
 
                   {/* Shelter Location Input */}
-                  <InputWrapper>
+                  <InputWrapper
+                    style={
+                      errors.shelterLocation
+                        ? { borderColor: '#E53E3E', borderWidth: 2 }
+                        : {}
+                    }
+                  >
                     <InputIcon>
                       <MaterialIcons
                         name="location-on"
@@ -381,12 +793,27 @@ const RegisterScreen = () => {
                     </InputIcon>
                     <StyledTextInput
                       value={shelterLocation}
-                      onChangeText={setShelterLocation}
+                      onChangeText={value => {
+                        setShelterLocation(value);
+                        if (errors.shelterLocation) {
+                          validateField('shelterLocation', value, userType);
+                        }
+                      }}
+                      onBlur={() =>
+                        validateField(
+                          'shelterLocation',
+                          shelterLocation,
+                          userType
+                        )
+                      }
                       placeholder="Ubicacion del Albergue"
                       placeholderTextColor={colors.textLight}
                       autoCapitalize="words"
                     />
                   </InputWrapper>
+                  {errors.shelterLocation && (
+                    <ErrorMessage>{errors.shelterLocation}</ErrorMessage>
+                  )}
                 </>
               )}
 
