@@ -1,12 +1,20 @@
 import React, { useState, useRef } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Alert,
+} from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../theme';
+import { verifyCode } from '../../utils/emailService';
 
 const VerificationScreen = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const email = route.params?.email || '';
   const [code, setCode] = useState(['', '', '', '']);
   const inputRefs = useRef([]);
 
@@ -31,13 +39,21 @@ const VerificationScreen = () => {
     }
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     const verificationCode = code.join('');
     if (verificationCode.length === 4) {
-      // TODO: Implement verification logic
-      console.log('Verification code:', verificationCode);
-      // Navigate to main app after successful verification
-      navigation.navigate('Tabs');
+      // Verify the code
+      const result = await verifyCode(verificationCode, email);
+
+      if (result.valid) {
+        // Navigate to main app after successful verification
+        navigation.navigate('Tabs');
+      } else {
+        Alert.alert('Error', result.error || 'Código de verificación inválido');
+        // Clear the code inputs
+        setCode(['', '', '', '']);
+        inputRefs.current[0]?.focus();
+      }
     }
   };
 
@@ -85,8 +101,8 @@ const VerificationScreen = () => {
 
               {/* Instruction Text */}
               <InstructionText>
-                Ingresa el código de verificación que enviamos a tu número de
-                celular.
+                Ingresa el código de verificación que enviamos a tu correo
+                electrónico.
               </InstructionText>
 
               {/* Code Input Fields */}

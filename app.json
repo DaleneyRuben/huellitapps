@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "huellitapps",
+    "name": "huellitapp",
     "slug": "huellitapps",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -17,18 +17,34 @@
       "infoPlist": {
         "NSLocationWhenInUseUsageDescription": "This app uses location to show your position on the map and help find lost pets."
       },
-      "bundleIdentifier": "com.anonymous.huellitapps"
+      "bundleIdentifier": "com.anonymous.huellitapp"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"]
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ]
     },
     "web": {
       "favicon": "./assets/logo.png"
     },
-    "plugins": ["expo-font"]
+    "plugins": ["expo-font"],
+    "extra": {
+      "eas": {
+        "projectId": "e90b3eab-d62d-46f3-b63f-c4979aabf8de"
+      }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/e90b3eab-d62d-46f3-b63f-c4979aabf8de"
+    }
   }
 }

@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Alert,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../theme';
+import {
+  sendVerificationEmail,
+  generateVerificationCode,
+} from '../../utils/emailService';
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
@@ -200,36 +209,7 @@ const RegisterScreen = () => {
     }
   };
 
-  const handleRegister = () => {
-    // Validate all fields before proceeding
-    validateAllFields();
-
-    // Check if form is valid (using the same logic as isFormValid)
-    const isValid =
-      userType === 'Usuario'
-        ? firstName.trim() &&
-          lastName.trim() &&
-          phone.trim() &&
-          email.trim() &&
-          validateEmail(email) &&
-          validatePhone(phone) &&
-          password.trim() &&
-          validatePassword(password) &&
-          confirmPassword.trim() &&
-          passwordsMatch
-        : shelterName.trim() &&
-          managerFirstName.trim() &&
-          managerLastName.trim() &&
-          referenceNumber.trim() &&
-          validatePhone(referenceNumber) &&
-          referenceEmail.trim() &&
-          validateEmail(referenceEmail) &&
-          shelterLocation.trim();
-
-    if (!isValid) {
-      return;
-    }
-
+  const handleRegister = async () => {
     // TODO: Implement registration logic
     if (userType === 'Usuario') {
       console.log('Registration attempt:', {
@@ -241,8 +221,21 @@ const RegisterScreen = () => {
         password,
         confirmPassword,
       });
-      // Navigate to verification screen for Usuario
-      navigation.navigate('Verification');
+
+      // Generate and send verification code
+      const verificationCode = generateVerificationCode();
+      const result = await sendVerificationEmail(email, verificationCode);
+
+      if (result.success) {
+        // Navigate to verification screen for Usuario
+        navigation.navigate('Verification', { email });
+      } else {
+        const errorMessage =
+          result.error ||
+          'No se pudo enviar el código de verificación. Por favor, intenta nuevamente.';
+        console.error('Email sending failed:', result);
+        Alert.alert('Error al enviar correo', errorMessage);
+      }
     } else {
       console.log('Registration attempt:', {
         userType,
@@ -254,7 +247,7 @@ const RegisterScreen = () => {
         shelterLocation,
       });
       // Navigate to step 2 for Albergue (QR code and password)
-      navigation.navigate('AlbergueRegisterStep2');
+      navigation.navigate('AlbergueRegisterStep2', { email: referenceEmail });
     }
   };
 

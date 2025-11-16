@@ -4,15 +4,22 @@ import {
   Platform,
   ScrollView,
   Image,
+  Alert,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { colors } from '../../theme';
+import {
+  sendVerificationEmail,
+  generateVerificationCode,
+} from '../../utils/emailService';
 
 const AlbergueRegisterStep2Screen = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const email = route.params?.email || '';
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -42,15 +49,29 @@ const AlbergueRegisterStep2Screen = () => {
     navigation.goBack();
   };
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     // TODO: Implement registration logic
     console.log('Albergue registration step 2:', {
       password,
       confirmPassword,
       qrCodeImage,
+      email,
     });
-    // Navigate to verification screen after successful registration
-    navigation.navigate('Verification');
+
+    // Generate and send verification code
+    const verificationCode = generateVerificationCode();
+    const result = await sendVerificationEmail(email, verificationCode);
+
+    if (result.success) {
+      // Navigate to verification screen after successful registration
+      navigation.navigate('Verification', { email });
+    } else {
+      const errorMessage =
+        result.error ||
+        'No se pudo enviar el código de verificación. Por favor, intenta nuevamente.';
+      console.error('Email sending failed:', result);
+      Alert.alert('Error al enviar correo', errorMessage);
+    }
   };
 
   const passwordsMatch = password === confirmPassword;
