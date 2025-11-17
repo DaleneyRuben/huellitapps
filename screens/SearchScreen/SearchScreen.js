@@ -124,12 +124,14 @@ const SearchScreen = () => {
               selectedPetType === 0 ? ANIMAL_TYPES.DOG : ANIMAL_TYPES.CAT;
             const matchesType = pet.type === targetType;
 
-            // Filter by pet name (case-insensitive partial match)
+            // Filter by pet name, characteristics, or zone (case-insensitive partial match)
+            const searchTerm = searchQuery.toLowerCase().trim();
             const matchesSearch =
-              !searchQuery.trim() ||
-              pet.petName
-                .toLowerCase()
-                .includes(searchQuery.toLowerCase().trim());
+              !searchTerm ||
+              pet.petName.toLowerCase().includes(searchTerm) ||
+              (pet.characteristics &&
+                pet.characteristics.toLowerCase().includes(searchTerm)) ||
+              (pet.zone && pet.zone.toLowerCase().includes(searchTerm));
 
             return matchesType && matchesSearch;
           })
