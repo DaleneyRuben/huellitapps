@@ -15,6 +15,39 @@ const ANIMAL_TYPES = {
   CAT: 'cat',
 };
 
+// Convert timeLost string to days for sorting (most recent = fewer days)
+const parseTimeLostToDays = timeLost => {
+  if (!timeLost) return Infinity; // Put missing data at the end
+
+  const lower = timeLost.toLowerCase().trim();
+
+  // "Hoy" = today = 0 days
+  if (lower === 'hoy') return 0;
+
+  // Parse "X días"
+  const diasMatch = lower.match(/(\d+)\s*d[ií]a/);
+  if (diasMatch) {
+    return parseInt(diasMatch[1], 10);
+  }
+
+  // Parse "X semanas"
+  const semanasMatch = lower.match(/(\d+)\s*semana/);
+  if (semanasMatch) {
+    return parseInt(semanasMatch[1], 10) * 7;
+  }
+
+  // Parse "X mes" or "X meses" (with optional days)
+  const mesMatch = lower.match(/(\d+)\s*mes(?:es)?(?:\s*y\s*(\d+)\s*d[ií]a)?/);
+  if (mesMatch) {
+    const meses = parseInt(mesMatch[1], 10);
+    const dias = mesMatch[2] ? parseInt(mesMatch[2], 10) : 0;
+    return meses * 30 + dias; // Approximate 30 days per month
+  }
+
+  // If we can't parse it, put it at the end
+  return Infinity;
+};
+
 const SearchScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPetType, setSelectedPetType] = useState(0);
@@ -99,6 +132,12 @@ const SearchScreen = () => {
                 .includes(searchQuery.toLowerCase().trim());
 
             return matchesType && matchesSearch;
+          })
+          .sort((a, b) => {
+            // Sort by timeLost: most recent first (fewer days = first)
+            const daysA = parseTimeLostToDays(a.timeLost);
+            const daysB = parseTimeLostToDays(b.timeLost);
+            return daysA - daysB;
           })
           .map(pet => (
             <LostPetCard
