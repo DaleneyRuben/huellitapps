@@ -1,26 +1,29 @@
 import React from 'react';
+import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import { colors, semanticColors } from '../../theme';
 import Card from '../Card';
 
-const FoundPetCard = ({ description, place, details, imageUrl }) => {
+const FoundPetCard = ({ description, place, details, imageUrl, onPress }) => {
   return (
-    <Card>
-      <LeftSection>
-        <Image source={{ uri: imageUrl }} />
-      </LeftSection>
+    <TouchableOpacity onPress={onPress} activeOpacity={0.7}>
+      <Card>
+        <LeftSection>
+          <Image source={{ uri: imageUrl }} />
+        </LeftSection>
 
-      <RightSection>
-        <Label>Descripcion:</Label>
-        <Value>{description}</Value>
+        <RightSection>
+          <Label>Descripcion:</Label>
+          <Value>{description}</Value>
 
-        <Label>Zona o lugar de encuentro:</Label>
-        <Value>{place}</Value>
+          <Label>Zona o lugar de encuentro:</Label>
+          <Value>{place}</Value>
 
-        <Label>Características:</Label>
-        <Value>{details}</Value>
-      </RightSection>
-    </Card>
+          <Label>Características:</Label>
+          <Value>{details}</Value>
+        </RightSection>
+      </Card>
+    </TouchableOpacity>
   );
 };
 

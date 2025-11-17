@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
+import { Modal, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import styled from 'styled-components/native';
 import FoundPetCard from '../../components/FoundPetCard';
 import Search from '../../components/Search';
 import Toggle from '../../components/Toggle';
+import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../theme';
+
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const SCREEN_HEIGHT = Dimensions.get('window').height;
 
 const ANIMAL_TYPES = {
   DOG: 'dog',
@@ -150,6 +155,8 @@ const allPets = [...catData, ...dogData];
 const ShelterScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedPetType, setSelectedPetType] = useState(0);
+  const [fullImageVisible, setFullImageVisible] = useState(false);
+  const [selectedPetImage, setSelectedPetImage] = useState(null);
 
   const petTypeOptions = [
     { icon: 'pets', iconLibrary: 'MaterialIcons' },
@@ -162,6 +169,16 @@ const ShelterScreen = () => {
 
   const handlePetTypeChange = index => {
     setSelectedPetType(index);
+  };
+
+  const handlePetCardPress = pet => {
+    setSelectedPetImage(pet.imageUrl);
+    setFullImageVisible(true);
+  };
+
+  const handleCloseFullImage = () => {
+    setFullImageVisible(false);
+    setSelectedPetImage(null);
   };
 
   return (
@@ -209,9 +226,32 @@ const ShelterScreen = () => {
               place={pet.place}
               details={pet.details}
               imageUrl={pet.imageUrl}
+              onPress={() => handlePetCardPress(pet)}
             />
           ))}
       </StyledScrollView>
+
+      {/* Fullscreen Image Modal */}
+      <Modal
+        visible={fullImageVisible}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={handleCloseFullImage}
+      >
+        <FullImageOverlay>
+          <FullImageCloseButton onPress={handleCloseFullImage}>
+            <MaterialIcons name="close" size={32} color={colors.surface} />
+          </FullImageCloseButton>
+          {selectedPetImage && (
+            <FullImageContainer>
+              <FullImage
+                source={{ uri: selectedPetImage }}
+                resizeMode="contain"
+              />
+            </FullImageContainer>
+          )}
+        </FullImageOverlay>
+      </Modal>
     </Container>
   );
 };
@@ -240,6 +280,38 @@ const SearchWrapper = styled.View`
 
 const ToggleWrapper = styled.View`
   flex-shrink: 0;
+`;
+
+const FullImageOverlay = styled.View`
+  flex: 1;
+  background-color: rgba(0, 0, 0, 0.95);
+  justify-content: center;
+  align-items: center;
+`;
+
+const FullImageCloseButton = styled.TouchableOpacity`
+  position: absolute;
+  top: 40px;
+  right: 20px;
+  z-index: 10;
+  width: 44px;
+  height: 44px;
+  border-radius: 22px;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+`;
+
+const FullImageContainer = styled.View`
+  width: ${SCREEN_WIDTH}px;
+  height: ${SCREEN_HEIGHT}px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const FullImage = styled.Image`
+  width: ${SCREEN_WIDTH}px;
+  height: ${SCREEN_HEIGHT}px;
 `;
 
 export default ShelterScreen;
