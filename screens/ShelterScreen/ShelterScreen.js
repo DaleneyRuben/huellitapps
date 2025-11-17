@@ -37,8 +37,7 @@ const catData = [
     place: 'calacoto calle 15 cerca del ketal',
     details:
       'Gato plomo atigrado, esta asutado, no sabe andar por la calle, se encuentra lastimando, cicatriz cerca del hocico.',
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBfRaIl1GKY743VUdBOrL04K4gbgqvDZp3iw&s',
+    imageUrl: 'https://huellitapps.netlify.app/assets/cats/cat_1.jpeg',
     type: ANIMAL_TYPES.CAT,
   },
   {
@@ -56,8 +55,7 @@ const catData = [
     place: 'Zona Sur, Calle 21',
     details:
       'Gatito atigrado joven, ojos azules muy llamativos, muy cariñoso y sociable.',
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX4EbLlkmCJhmk4LI_PxiTc7OrHEkFE_wjeA&s',
+    imageUrl: 'https://huellitapps.netlify.app/assets/cats/cat_2.jpeg',
     type: ANIMAL_TYPES.CAT,
   },
   {
@@ -66,8 +64,7 @@ const catData = [
     place: 'calacoto calle 15 cerca del ketal',
     details:
       'Gato plomo atigrado, esta asutado, no sabe andar por la calle, se encuentra lastimando, cicatriz cerca del hocico.',
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBfRaIl1GKY743VUdBOrL04K4gbgqvDZp3iw&s',
+    imageUrl: 'https://huellitapps.netlify.app/assets/cats/cat_3.jpeg',
     type: ANIMAL_TYPES.CAT,
   },
   {
@@ -76,8 +73,7 @@ const catData = [
     place: 'Prado av 16 de Julio cerca a Dumbo',
     details:
       'Gato blanco con manchas plomas, asustado, tiene un collar morado pero no tiene datos.',
-    imageUrl:
-      'https://images.squarespace-cdn.com/content/v1/607f89e638219e13eee71b1e/1684821560422-SD5V37BAG28BURTLIXUQ/michael-sum-LEpfefQf4rU-unsplash.jpg',
+    imageUrl: 'https://huellitapps.netlify.app/assets/cats/cat_5.jpeg',
     type: ANIMAL_TYPES.CAT,
   },
   {
@@ -86,8 +82,7 @@ const catData = [
     place: 'Zona Sur, Calle 21',
     details:
       'Gatito atigrado joven, ojos azules muy llamativos, muy cariñoso y sociable.',
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX4EbLlkmCJhmk4LI_PxiTc7OrHEkFE_wjeA&s',
+    imageUrl: 'https://huellitapps.netlify.app/assets/cats/cat_4.jpeg',
     type: ANIMAL_TYPES.CAT,
   },
 ];
@@ -99,8 +94,7 @@ const dogData = [
     place: 'Miraflores, Calle 21 de Calacoto',
     details:
       'Perro labrador dorado, muy amigable, tiene collar pero sin placa. Responde al nombre Max.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1552053831-71594a27632d?w=400&h=400&fit=crop&crop=face',
+    imageUrl: 'https://huellitapps.netlify.app/assets/dogs/dog_a_1.jpeg',
     type: ANIMAL_TYPES.DOG,
   },
   {
@@ -109,8 +103,7 @@ const dogData = [
     place: 'San Pedro, Plaza España',
     details:
       'Perro pequeño, color marrón, muy asustado. Tiene una pata lastimada.',
-    imageUrl:
-      'https://content.dogagingproject.org/wp-content/uploads/2020/11/helena-lopes-S3TPJCOIRoo-unsplash-scaled.jpg',
+    imageUrl: 'https://huellitapps.netlify.app/assets/dogs/dog_a_5.jpeg',
     type: ANIMAL_TYPES.DOG,
   },
   {
@@ -129,8 +122,7 @@ const dogData = [
     place: 'Zona Sur, Calacoto',
     details:
       'Perro beagle, tricolor, muy juguetón. Tiene collar azul con cascabel.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1551717743-49959800b1f6?w=400&h=400&fit=crop&q=60',
+    imageUrl: 'https://huellitapps.netlify.app/assets/dogs/dog_a_4.jpeg',
     type: ANIMAL_TYPES.DOG,
   },
   {
@@ -139,8 +131,7 @@ const dogData = [
     place: 'Obrajes, Av. 14 de Septiembre',
     details:
       'Perro pastor alemán, color negro y marrón. Muy inteligente, responde a comandos básicos.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?w=400&h=400&fit=crop&q=60',
+    imageUrl: 'https://huellitapps.netlify.app/assets/dogs/dog_a_3.jpeg',
     type: ANIMAL_TYPES.DOG,
   },
   {
@@ -149,8 +140,7 @@ const dogData = [
     place: 'Irpavi, Calle 1',
     details:
       'Perro pequeño, completamente blanco, muy dulce. Parece perdido, busca a su dueño.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1517849845537-4d257902454a?w=400&h=400&fit=crop&q=60',
+    imageUrl: 'https://huellitapps.netlify.app/assets/dogs/dog_a_2.jpeg',
     type: ANIMAL_TYPES.DOG,
   },
 ];

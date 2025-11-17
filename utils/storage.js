@@ -93,8 +93,7 @@ const INITIAL_PETS = [
     zone: 'Cerca de Universidad Privada del Valle, La Paz',
     characteristics:
       'Perro labrador dorado, muy amigable. Usa collar rojo con placa de identificación.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1552053831-71594a27632d?w=400&h=400&fit=crop&crop=face',
+    imageUrl: 'https://huellitapps.netlify.app/assets/dogs/dog1.jpeg',
     latitude: -16.5045,
     longitude: -68.12,
   },
@@ -106,8 +105,7 @@ const INITIAL_PETS = [
     zone: 'Universidad Privada del Valle, La Paz',
     characteristics:
       'Perrita pequeña blanca con manchas marrones. Muy juguetona y cariñosa.',
-    imageUrl:
-      'https://content.dogagingproject.org/wp-content/uploads/2020/11/helena-lopes-S3TPJCOIRoo-unsplash-scaled.jpg',
+    imageUrl: 'https://huellitapps.netlify.app/assets/dogs/dog2.jpeg',
     latitude: -16.5015,
     longitude: -68.125,
   },
@@ -119,8 +117,7 @@ const INITIAL_PETS = [
     zone: 'Zona Universidad, La Paz',
     characteristics:
       'Gato atigrado gris y negro, ojos verdes. Muy tranquilo y amigable.',
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6d87zy2l97Gbuz1xheO71Fzw31vhLFurSyg&s',
+    imageUrl: 'https://huellitapps.netlify.app/assets/cats/figaro.jpeg',
     latitude: -16.5055,
     longitude: -68.118,
   },
@@ -132,8 +129,7 @@ const INITIAL_PETS = [
     zone: 'Universidad Privada del Valle, La Paz',
     characteristics:
       'Perro pequeño, color marrón con patas blancas. Muy energético y le gusta correr.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=400&h=400&fit=crop&q=60',
+    imageUrl: 'https://huellitapps.netlify.app/assets/dogs/dog3.jpeg',
     latitude: -16.5005,
     longitude: -68.122,
   },
@@ -145,8 +141,7 @@ const INITIAL_PETS = [
     zone: 'Sopocachi, Av. Arce y Belisario Salinas',
     characteristics:
       'Gato naranja, con chompa roja. Es malo, no le gustan las personas, es muy asustadizo.',
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6d87zy2l97Gbuz1xheO71Fzw31vhLFurSyg&s',
+    imageUrl: 'https://huellitapps.netlify.app/assets/cats/oreo.jpeg',
     latitude: -16.504,
     longitude: -68.123,
   },
@@ -158,8 +153,7 @@ const INITIAL_PETS = [
     zone: 'Miraflores, Calle 21 de Calacoto',
     characteristics:
       'Perrita blanca con manchas negras, muy cariñosa y juguetona. Usa collar azul con cascabel.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1552053831-71594a27632d?w=400&h=400&fit=crop&crop=face',
+    imageUrl: 'https://huellitapps.netlify.app/assets/dogs/dog4.jpeg',
     latitude: -16.502,
     longitude: -68.12,
   },
@@ -171,8 +165,7 @@ const INITIAL_PETS = [
     zone: 'San Pedro, Plaza España',
     characteristics:
       'Perro golden retriever, pelo dorado, muy amigable. Responde al nombre Toby y le gustan las galletas.',
-    imageUrl:
-      'https://content.dogagingproject.org/wp-content/uploads/2020/11/helena-lopes-S3TPJCOIRoo-unsplash-scaled.jpg',
+    imageUrl: 'https://huellitapps.netlify.app/assets/dogs/dog5.jpeg',
     latitude: -16.505,
     longitude: -68.125,
   },
@@ -184,8 +177,7 @@ const INITIAL_PETS = [
     zone: 'Centro, Plaza Murillo',
     characteristics:
       'Gato gris con patas blancas, ojos verdes. Muy tímido pero cariñoso una vez que confía.',
-    imageUrl:
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1200px-Cat_August_2010-4.jpg',
+    imageUrl: 'https://huellitapps.netlify.app/assets/cats/pelusa.jpeg',
     latitude: -16.5,
     longitude: -68.15,
   },
@@ -197,8 +189,7 @@ const INITIAL_PETS = [
     zone: 'Centro, Plaza Murillo',
     characteristics:
       'Gato gris con patas blancas, ojos verdes. Muy tímido pero cariñoso una vez que confía.',
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvDjheMimCJ9F7ijyF295zUUA4UCAXgIF4cw&s',
+    imageUrl: 'https://huellitapps.netlify.app/assets/cats/princesa.jpeg',
     latitude: -16.5,
     longitude: -68.15,
   },
@@ -210,8 +201,7 @@ const INITIAL_PETS = [
     zone: 'Zona Sur, Calacoto',
     characteristics:
       'Gato blanco con manchas negras, muy peludo. Le gusta dormir en el sol y maúlla mucho.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400&h=400&fit=crop&q=60',
+    imageUrl: 'https://huellitapps.netlify.app/assets/cats/simba.jpeg',
     latitude: -16.505,
     longitude: -68.155,
   },
@@ -223,8 +213,7 @@ const INITIAL_PETS = [
     zone: 'Obrajes, Av. 14 de Septiembre',
     characteristics:
       'Gato naranja pequeño, muy juguetón. Tiene una mancha blanca en el pecho.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1574158622682-e40e69881006?w=400&h=400&fit=crop&q=60',
+    imageUrl: 'https://huellitapps.netlify.app/assets/cats/tokio.jpeg',
     latitude: -16.507,
     longitude: -68.154,
   },
@@ -236,8 +225,7 @@ const INITIAL_PETS = [
     zone: 'San Miguel, Calle Linares',
     characteristics:
       'Gato completamente negro, ojos amarillos. Es muy independiente y le gusta salir de noche.',
-    imageUrl:
-      'https://cdn0.uncomo.com/es/posts/6/2/3/como_preparar_la_casa_para_mi_nuevo_gato_21326_600.jpg',
+    imageUrl: 'https://huellitapps.netlify.app/assets/cats/tomi.jpeg',
     latitude: -16.498,
     longitude: -68.149,
   },
@@ -250,7 +238,7 @@ const INITIAL_PETS = [
     characteristics:
       'Gata tricolor (blanco, negro y naranja), muy cariñosa. Responde al nombre Manchitas.',
     imageUrl:
-      'https://pxcdn.reduno.com.bo/reduno/012023/1673038537687.webp?cw=400&ch=225&extw=jpg',
+      'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=400&h=400&fit=crop&q=60',
     latitude: -16.508,
     longitude: -68.156,
   },
@@ -339,8 +327,7 @@ const INITIAL_PETS = [
     zone: 'Zona Sur, Calacoto',
     characteristics:
       'Perro labrador negro, muy juguetón. Le encanta jugar con pelotas y es muy amigable con los niños.',
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_yp4siNnAGNGCMXjFrcVz5vjrg4wSXkey-g&s',
+    imageUrl: 'https://huellitapps.netlify.app/assets/dogs/dog6.jpeg',
     latitude: -16.505,
     longitude: -68.155,
   },
@@ -352,8 +339,7 @@ const INITIAL_PETS = [
     zone: 'Obrajes, Av. 14 de Septiembre',
     characteristics:
       'Perro pequeño, color marrón claro. Tiene una mancha blanca en el pecho y es muy activo.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=400&h=400&fit=crop&q=60',
+    imageUrl: 'https://huellitapps.netlify.app/assets/dogs/dog7.jpeg',
     latitude: -16.507,
     longitude: -68.154,
   },
@@ -365,8 +351,7 @@ const INITIAL_PETS = [
     zone: 'San Miguel, Calle Linares',
     characteristics:
       'Perrita beagle, tricolor (blanco, negro y marrón). Muy curiosa y le gusta seguir olores.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1551717743-49959800b1f6?w=400&h=400&fit=crop&q=60',
+    imageUrl: 'https://huellitapps.netlify.app/assets/dogs/dog8.jpeg',
     latitude: -16.498,
     longitude: -68.149,
   },
