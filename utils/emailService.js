@@ -106,23 +106,16 @@ export const sendVerificationEmail = async (email, code) => {
                             <!-- Code Label -->
                             <p style="margin: 0 0 16px 0; font-size: 12px; color: #999999; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 500;">Tu código de verificación</p>
                             
-                            <!-- Code Boxes -->
+                            <!-- Code Box -->
                             <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" style="margin: 0 auto 40px auto;">
                               <tr>
-                                ${code
-                                  .split('')
-                                  .map(
-                                    digit => `
-                                  <td style="padding: 0 6px;">
-                                    <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="70" height="80" style="background-color: #ffffff; border: 3px solid #FAA35F; border-radius: 10px; box-shadow: 0 4px 12px rgba(250,163,95,0.25);">
-                                      <tr>
-                                        <td align="center" valign="middle" style="font-size: 36px; font-weight: 700; color: #5A80B2; line-height: 1;">${digit}</td>
-                                      </tr>
-                                    </table>
-                                  </td>
-                                `
-                                  )
-                                  .join('')}
+                                <td align="center" valign="middle">
+                                  <table role="presentation" cellspacing="0" cellpadding="0" border="0" style="background-color: #ffffff; border: 3px solid #FAA35F; border-radius: 10px; box-shadow: 0 4px 12px rgba(250,163,95,0.25); padding: 24px 48px; min-width: 200px;">
+                                    <tr>
+                                      <td align="center" valign="middle" style="text-align: center; font-size: 48px; font-weight: 700; color: #5A80B2; letter-spacing: 8px; line-height: 1.2; padding: 0;">${code}</td>
+                                    </tr>
+                                  </table>
+                                </td>
                               </tr>
                             </table>
                             
