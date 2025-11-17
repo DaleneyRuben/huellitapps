@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import styled from 'styled-components/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { colors } from '../../theme';
+// import { resetStorage } from '../../utils/storage';
 
 const Account = () => {
   const navigation = useNavigation();
@@ -126,6 +127,41 @@ const Account = () => {
             <ConfigText>Videos y Tutoriales</ConfigText>
           </ConfigItem>
           <Separator />
+
+          {/* <ConfigItem
+            onPress={async () => {
+              Alert.alert(
+                'Resetear Datos',
+                '¿Estás seguro de que deseas resetear todos los datos? Esto eliminará todas las mascotas guardadas y las reemplazará con los datos iniciales.',
+                [
+                  { text: 'Cancelar', style: 'cancel' },
+                  {
+                    text: 'Resetear',
+                    style: 'destructive',
+                    onPress: async () => {
+                      const success = await resetStorage();
+                      Alert.alert(
+                        success ? 'Éxito' : 'Error',
+                        success
+                          ? 'Los datos se han reseteado correctamente. Las imágenes actualizadas ahora están disponibles.'
+                          : 'Hubo un error al resetear. Por favor intenta de nuevo.'
+                      );
+                    },
+                  },
+                ]
+              );
+            }}
+          >
+            <ConfigIcon>
+              <MaterialIcons
+                name="refresh"
+                size={24}
+                color={colors.textSecondary}
+              />
+            </ConfigIcon>
+            <ConfigText>Resetear Datos</ConfigText>
+          </ConfigItem>
+          <Separator /> */}
 
           <ConfigItem
             onPress={() => {

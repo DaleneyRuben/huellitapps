@@ -104,7 +104,7 @@ const INITIAL_PETS = [
     type: 'dog',
     zone: 'Universidad Privada del Valle, La Paz',
     characteristics:
-      'Perrita pequeña blanca con manchas marrones. Muy juguetona y cariñosa.',
+      'Perrita bulldog francés negra con mancha blanca en el pecho. Muy juguetona y cariñosa.',
     imageUrl: 'https://huellitapps.netlify.app/assets/dogs/dog2.jpeg',
     latitude: -16.5015,
     longitude: -68.125,
@@ -116,7 +116,7 @@ const INITIAL_PETS = [
     type: 'cat',
     zone: 'Zona Universidad, La Paz',
     characteristics:
-      'Gato atigrado gris y negro, ojos verdes. Muy tranquilo y amigable.',
+      'Gato negro y blanco, pelo largo y esponjoso, ojos verdes. Muy tranquilo y amigable.',
     imageUrl: 'https://huellitapps.netlify.app/assets/cats/figaro.jpeg',
     latitude: -16.5055,
     longitude: -68.118,
@@ -128,7 +128,7 @@ const INITIAL_PETS = [
     type: 'dog',
     zone: 'Universidad Privada del Valle, La Paz',
     characteristics:
-      'Perro pequeño, color marrón con patas blancas. Muy energético y le gusta correr.',
+      'Perro pequeño, color crema con máscara negra en ojos y hocico. Muy energético y le gusta correr.',
     imageUrl: 'https://huellitapps.netlify.app/assets/dogs/dog3.jpeg',
     latitude: -16.5005,
     longitude: -68.122,
@@ -140,7 +140,7 @@ const INITIAL_PETS = [
     type: 'cat',
     zone: 'Sopocachi, Av. Arce y Belisario Salinas',
     characteristics:
-      'Gato naranja, con chompa roja. Es malo, no le gustan las personas, es muy asustadizo.',
+      'Gato naranja atigrado, pelo corto, ojos verdes. Es malo, no le gustan las personas, es muy asustadizo.',
     imageUrl: 'https://huellitapps.netlify.app/assets/cats/oreo.jpeg',
     latitude: -16.504,
     longitude: -68.123,
@@ -152,7 +152,7 @@ const INITIAL_PETS = [
     type: 'dog',
     zone: 'Miraflores, Calle 21 de Calacoto',
     characteristics:
-      'Perrita blanca con manchas negras, muy cariñosa y juguetona. Usa collar azul con cascabel.',
+      'Perrita chihuahua pequeña, color claro (blanco o crema claro), muy cariñosa y juguetona. Usa suéter azul claro.',
     imageUrl: 'https://huellitapps.netlify.app/assets/dogs/dog4.jpeg',
     latitude: -16.502,
     longitude: -68.12,
@@ -164,7 +164,7 @@ const INITIAL_PETS = [
     type: 'dog',
     zone: 'San Pedro, Plaza España',
     characteristics:
-      'Perro golden retriever, pelo dorado, muy amigable. Responde al nombre Toby y le gustan las galletas.',
+      'Perro labrador negro, muy amigable. Responde al nombre Toby y le gustan las galletas. Usa collar rosa.',
     imageUrl: 'https://huellitapps.netlify.app/assets/dogs/dog5.jpeg',
     latitude: -16.505,
     longitude: -68.125,
@@ -176,7 +176,7 @@ const INITIAL_PETS = [
     type: 'cat',
     zone: 'Centro, Plaza Murillo',
     characteristics:
-      'Gato gris con patas blancas, ojos verdes. Muy tímido pero cariñoso una vez que confía.',
+      'Gato pequeño marrón, cachorro, ojos claros. Muy tímido pero cariñoso una vez que confía.',
     imageUrl: 'https://huellitapps.netlify.app/assets/cats/pelusa.jpeg',
     latitude: -16.5,
     longitude: -68.15,
@@ -188,7 +188,7 @@ const INITIAL_PETS = [
     type: 'cat',
     zone: 'Centro, Plaza Murillo',
     characteristics:
-      'Gato gris con patas blancas, ojos verdes. Muy tímido pero cariñoso una vez que confía.',
+      'Gato naranja atigrado, cachorro, ojos verdes. Muy tímido pero cariñoso una vez que confía.',
     imageUrl: 'https://huellitapps.netlify.app/assets/cats/princesa.jpeg',
     latitude: -16.5,
     longitude: -68.15,
@@ -200,19 +200,19 @@ const INITIAL_PETS = [
     type: 'cat',
     zone: 'Zona Sur, Calacoto',
     characteristics:
-      'Gato blanco con manchas negras, muy peludo. Le gusta dormir en el sol y maúlla mucho.',
+      'Gato de color claro (crema o gris claro) con puntos oscuros en orejas, cara y cola, posiblemente siamés, ojos azules. Le gusta dormir en el sol y maúlla mucho.',
     imageUrl: 'https://huellitapps.netlify.app/assets/cats/simba.jpeg',
     latitude: -16.505,
     longitude: -68.155,
   },
   {
     id: 7,
-    petName: 'Naranjito',
+    petName: 'Tokio',
     timeLost: '4 días',
     type: 'cat',
     zone: 'Obrajes, Av. 14 de Septiembre',
     characteristics:
-      'Gato naranja pequeño, muy juguetón. Tiene una mancha blanca en el pecho.',
+      'Gato blanco con manchas negras prominentes alrededor de los ojos y en la frente, muy juguetón.',
     imageUrl: 'https://huellitapps.netlify.app/assets/cats/tokio.jpeg',
     latitude: -16.507,
     longitude: -68.154,
@@ -224,7 +224,7 @@ const INITIAL_PETS = [
     type: 'cat',
     zone: 'San Miguel, Calle Linares',
     characteristics:
-      'Gato completamente negro, ojos amarillos. Es muy independiente y le gusta salir de noche.',
+      'Gato negro y blanco tipo esmoquin, con pecho blanco, patas blancas y manchas blancas en la cara, ojos amarillos o verdes. Es muy independiente y le gusta salir de noche.',
     imageUrl: 'https://huellitapps.netlify.app/assets/cats/tomi.jpeg',
     latitude: -16.498,
     longitude: -68.149,
@@ -249,24 +249,11 @@ const INITIAL_PETS = [
     type: 'cat',
     zone: 'Achumani, Av. Ballivián',
     characteristics:
-      'Gato atigrado gris y negro, patrón rayado. Es muy activo y le gusta cazar pájaros.',
+      'Gato atigrado naranja con rayas oscuras, patrón rayado. Es muy activo y le gusta cazar pájaros.',
     imageUrl:
       'https://media.ambito.com/p/e8153b7df7239d4fdea8d90675b3114c/adjuntos/239/imagenes/040/296/0040296921/375x211/smart/gatos-maceta-1jpg.jpg',
     latitude: -16.51,
     longitude: -68.157,
-  },
-  {
-    id: 11,
-    petName: 'Blanquito',
-    timeLost: '3 días',
-    type: 'cat',
-    zone: 'Cota Cota, Calle 11',
-    characteristics:
-      'Gato blanco con ojos azules, sordo. Muy tranquilo y amigable, le gusta estar en casa.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1543852786-1cf6624b9987?w=400&h=400&fit=crop&q=60',
-    latitude: -16.512,
-    longitude: -68.158,
   },
   {
     id: 12,
@@ -275,7 +262,7 @@ const INITIAL_PETS = [
     type: 'cat',
     zone: 'Villa Fátima, Av. Naciones Unidas',
     characteristics:
-      'Gato gris claro, pelo corto. Tiene una cicatriz pequeña en la oreja izquierda.',
+      'Gato negro y blanco, pelo corto. Usa suéter verde camuflado. Tiene una cicatriz pequeña en la oreja izquierda.',
     imageUrl: 'https://lapatria.bo/wp-content/uploads/2020/09/FOTO-1-GATO.png',
     latitude: -16.495,
     longitude: -68.145,
@@ -287,24 +274,11 @@ const INITIAL_PETS = [
     type: 'cat',
     zone: 'La Paz Centro, Calle Comercio',
     characteristics:
-      'Gato pequeño, color crema con manchas marrones. Es joven, aproximadamente 1 año.',
+      'Gato pequeño, atigrado marrón y negro, ojos verdes. Es joven, aproximadamente 1 año.',
     imageUrl:
       'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?w=400&h=400&fit=crop&q=60',
     latitude: -16.5,
     longitude: -68.15,
-  },
-  {
-    id: 14,
-    petName: 'Bigotes',
-    timeLost: '5 días',
-    type: 'cat',
-    zone: 'El Alto, Zona 16 de Julio',
-    characteristics:
-      'Gato negro con bigotes largos y blancos, muy característicos. Es curioso y amigable.',
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZNA-6jR1t-ESYon5NtRZf6L3Qw7IUouUMdw&s',
-    latitude: -16.48,
-    longitude: -68.14,
   },
   {
     id: 15,
@@ -313,7 +287,7 @@ const INITIAL_PETS = [
     type: 'cat',
     zone: 'Zona Norte, Av. Juan Pablo II',
     characteristics:
-      'Gata siamesa, color crema con puntos oscuros en orejas, patas y cola. Muy vocal.',
+      'Gata naranja, muy vocal. Le gusta estirarse y mostrar las patas.',
     imageUrl:
       'https://images.unsplash.com/photo-1571566882372-1598d88abd90?w=400&h=400&fit=crop&q=60',
     latitude: -16.493,
@@ -326,7 +300,7 @@ const INITIAL_PETS = [
     type: 'dog',
     zone: 'Zona Sur, Calacoto',
     characteristics:
-      'Perro labrador negro, muy juguetón. Le encanta jugar con pelotas y es muy amigable con los niños.',
+      'Perro labrador dorado o amarillo, cachorro, muy juguetón. Le encanta jugar con pelotas y es muy amigable con los niños. Usa collar rojo.',
     imageUrl: 'https://huellitapps.netlify.app/assets/dogs/dog6.jpeg',
     latitude: -16.505,
     longitude: -68.155,
@@ -338,7 +312,7 @@ const INITIAL_PETS = [
     type: 'dog',
     zone: 'Obrajes, Av. 14 de Septiembre',
     characteristics:
-      'Perro pequeño, color marrón claro. Tiene una mancha blanca en el pecho y es muy activo.',
+      'Perro pequeño, completamente blanco, posiblemente maltés o shih tzu. Tiene un lazo rosa en la cabeza y arnés rosa. Es muy activo.',
     imageUrl: 'https://huellitapps.netlify.app/assets/dogs/dog7.jpeg',
     latitude: -16.507,
     longitude: -68.154,
@@ -356,56 +330,17 @@ const INITIAL_PETS = [
     longitude: -68.149,
   },
   {
-    id: 19,
-    petName: 'Choco',
-    timeLost: '5 días',
-    type: 'dog',
-    zone: 'Irpavi, Calle 1',
-    characteristics:
-      'Perro chocolate, pelo corto y brillante. Muy cariñoso y le gusta estar cerca de las personas.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=400&h=400&fit=crop&q=60',
-    latitude: -16.508,
-    longitude: -68.156,
-  },
-  {
     id: 20,
     petName: 'Lucky',
     timeLost: '10 días',
     type: 'dog',
     zone: 'Achumani, Av. Ballivián',
     characteristics:
-      'Perro mestizo, color crema con manchas marrones. Tiene una pata delantera con una cicatriz pequeña.',
+      'Perro mestizo, color oscuro (negro o marrón muy oscuro), posiblemente pitbull o mezcla similar. Tiene una pata delantera con una cicatriz pequeña.',
     imageUrl:
       'https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=400&h=400&fit=crop&q=60',
     latitude: -16.51,
     longitude: -68.157,
-  },
-  {
-    id: 21,
-    petName: 'Rex',
-    timeLost: '4 días',
-    type: 'dog',
-    zone: 'Cota Cota, Calle 11',
-    characteristics:
-      'Perro pastor alemán, color negro y marrón. Muy inteligente y leal, responde bien a comandos.',
-    imageUrl:
-      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWAeQh3LdidSVcYwyfS7CikxDkGekmKwV-ew&s',
-    latitude: -16.512,
-    longitude: -68.158,
-  },
-  {
-    id: 22,
-    petName: 'Daisy',
-    timeLost: '6 días',
-    type: 'dog',
-    zone: 'Villa Fátima, Av. Naciones Unidas',
-    characteristics:
-      'Perrita pequeña, blanca con manchas grises. Muy dulce y tranquila, le gusta dormir mucho.',
-    imageUrl:
-      'https://images.unsplash.com/photo-1517849845537-4d257902454a?w=400&h=400&fit=crop&q=60',
-    latitude: -16.495,
-    longitude: -68.145,
   },
 ];
 
@@ -448,6 +383,20 @@ export const initializeStorage = async () => {
     console.error('Error initializing storage:', error);
   }
 };
+
+// Reset storage completely - clears and reinitializes
+// export const resetStorage = async () => {
+//   try {
+//     await AsyncStorage.removeItem(STORAGE_KEYS.LOST_PETS);
+//     await AsyncStorage.removeItem(STORAGE_KEYS.INITIALIZED);
+//     await initializeStorage();
+//     console.log('Storage reset successfully');
+//     return true;
+//   } catch (error) {
+//     console.error('Error resetting storage:', error);
+//     return false;
+//   }
+// };
 
 // Load all lost pets from storage
 export const loadLostPets = async () => {
