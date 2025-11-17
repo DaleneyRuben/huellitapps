@@ -19,74 +19,75 @@ const ANIMAL_TYPES = {
 const catData = [
   {
     id: 1,
-    description: 'Gatito blanco con negro',
+    description: 'Gatito atigrado encontrado',
     place: 'Av Arce. V centenario',
-    details: 'Gatito blanco con negro, tienen 3 meses, se encontraba asustado.',
+    details:
+      'Gato atigrado gris y negro, tienen 3 meses, se encontraba asustado.',
     imageUrl:
       'https://upload.wikimedia.org/wikipedia/commons/thumb/1/15/Cat_August_2010-4.jpg/1200px-Cat_August_2010-4.jpg',
     type: ANIMAL_TYPES.CAT,
   },
   {
     id: 2,
-    description: 'Gatito blanco con manchas plomas',
+    description: 'Gatito atigrado naranja encontrado',
     place: 'Prado av 16 de Julio cerca a Dumbo',
     details:
-      'Gato blanco con manchas plomas, asustado, tiene un collar morado pero no tiene datos.',
+      'Gato atigrado naranja, asustado, tiene un collar morado pero no tiene datos.',
     imageUrl:
       'https://images.squarespace-cdn.com/content/v1/607f89e638219e13eee71b1e/1684821560422-SD5V37BAG28BURTLIXUQ/michael-sum-LEpfefQf4rU-unsplash.jpg',
     type: ANIMAL_TYPES.CAT,
   },
   {
     id: 3,
-    description: 'Gatito plomo atigrado con ojos verdes',
+    description: 'Gatito atigrado encontrado',
     place: 'calacoto calle 15 cerca del ketal',
     details:
-      'Gato plomo atigrado, esta asutado, no sabe andar por la calle, se encuentra lastimando, cicatriz cerca del hocico.',
+      'Gato atigrado de pelo largo, color marrón y gris, esta asutado, no sabe andar por la calle, se encuentra lastimando, cicatriz cerca del hocico.',
     imageUrl: 'https://huellitapps.netlify.app/assets/cats/cat_1.jpeg',
     type: ANIMAL_TYPES.CAT,
   },
   {
     id: 4,
-    description: 'Tiene collar con su nombre, Katia, no tiene numero',
+    description: 'Gato con collar encontrado',
     place: 'Bella Vista',
     details:
-      'Gatito con collar, nombre Katia, viejito, es malo con las personas, malas cerca de las patitas.',
+      'Gato atigrado marrón, tiene collar con su nombre Katia, no tiene numero. Es adulto, es malo con las personas, malas cerca de las patitas.',
     imageUrl: 'https://d2zp5xs5cp8zlg.cloudfront.net/image-79322-800.jpg',
     type: ANIMAL_TYPES.CAT,
   },
   {
     id: 5,
-    description: 'Gatito atigrado con ojos azules brillantes',
+    description: 'Gatito blanco con ojos azules encontrado',
     place: 'Zona Sur, Calle 21',
     details:
-      'Gatito atigrado joven, ojos azules muy llamativos, muy cariñoso y sociable.',
+      'Gatito blanco con manchas grises y negras en la cabeza y cola, ojos azules muy llamativos, muy cariñoso y sociable.',
     imageUrl: 'https://huellitapps.netlify.app/assets/cats/cat_2.jpeg',
     type: ANIMAL_TYPES.CAT,
   },
   {
     id: 6,
-    description: 'Gatito plomo atigrado con ojos verdes',
+    description: 'Gatito naranja encontrado',
     place: 'calacoto calle 15 cerca del ketal',
     details:
-      'Gato plomo atigrado, esta asutado, no sabe andar por la calle, se encuentra lastimando, cicatriz cerca del hocico.',
+      'Gato atigrado naranja con ojos verdes, esta asutado, no sabe andar por la calle, se encuentra lastimando, cicatriz cerca del hocico.',
     imageUrl: 'https://huellitapps.netlify.app/assets/cats/cat_3.jpeg',
     type: ANIMAL_TYPES.CAT,
   },
   {
     id: 7,
-    description: 'Gatito blanco con manchas plomas',
+    description: 'Gato negro y blanco encontrado',
     place: 'Prado av 16 de Julio cerca a Dumbo',
     details:
-      'Gato blanco con manchas plomas, asustado, tiene un collar morado pero no tiene datos.',
+      'Gato negro y blanco, asustado, tiene un collar morado pero no tiene datos.',
     imageUrl: 'https://huellitapps.netlify.app/assets/cats/cat_5.jpeg',
     type: ANIMAL_TYPES.CAT,
   },
   {
     id: 8,
-    description: 'Gatito blanco con manchas plomas',
+    description: 'Gatito atigrado encontrado',
     place: 'Zona Sur, Calle 21',
     details:
-      'Gatito atigrado joven, ojos azules muy llamativos, muy cariñoso y sociable.',
+      'Gato atigrado gris y negro con pecho y patas blancas, muy cariñoso y sociable.',
     imageUrl: 'https://huellitapps.netlify.app/assets/cats/cat_4.jpeg',
     type: ANIMAL_TYPES.CAT,
   },
@@ -95,10 +96,10 @@ const catData = [
 const dogData = [
   {
     id: 9,
-    description: 'Perrito labrador encontrado',
+    description: 'Perro mediano encontrado',
     place: 'Miraflores, Calle 21 de Calacoto',
     details:
-      'Perro labrador dorado, muy amigable, tiene collar pero sin placa. Responde al nombre Max.',
+      'Perro mediano, color beige y gris, acostado. Muy amigable, tiene collar pero sin placa. Responde al nombre Max.',
     imageUrl: 'https://huellitapps.netlify.app/assets/dogs/dog_a_1.jpeg',
     type: ANIMAL_TYPES.DOG,
   },
@@ -107,7 +108,7 @@ const dogData = [
     description: 'Perrito pequeño encontrado',
     place: 'San Pedro, Plaza España',
     details:
-      'Perro pequeño, color marrón, muy asustado. Tiene una pata lastimada.',
+      'Perro pequeño, color negro y blanco, muy asustado. Tiene una pata lastimada.',
     imageUrl: 'https://huellitapps.netlify.app/assets/dogs/dog_a_5.jpeg',
     type: ANIMAL_TYPES.DOG,
   },
@@ -116,35 +117,35 @@ const dogData = [
     description: 'Perro mestizo encontrado',
     place: 'Centro, Plaza Murillo',
     details:
-      'Perro mestizo mediano, color negro con manchas blancas. Muy tranquilo y amigable.',
+      'Perro mestizo mediano, color beige claro. Muy tranquilo y amigable.',
     imageUrl:
       'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWAeQh3LdidSVcYwyfS7CikxDkGekmKwV-ew&s',
     type: ANIMAL_TYPES.DOG,
   },
   {
     id: 12,
-    description: 'Perrito beagle encontrado',
+    description: 'Perro dorado encontrado',
     place: 'Zona Sur, Calacoto',
     details:
-      'Perro beagle, tricolor, muy juguetón. Tiene collar azul con cascabel.',
+      'Perro dorado, posiblemente golden retriever, muy juguetón. Tiene collar azul con cascabel.',
     imageUrl: 'https://huellitapps.netlify.app/assets/dogs/dog_a_4.jpeg',
     type: ANIMAL_TYPES.DOG,
   },
   {
     id: 13,
-    description: 'Perro pastor alemán encontrado',
+    description: 'Perro mediano encontrado',
     place: 'Obrajes, Av. 14 de Septiembre',
     details:
-      'Perro pastor alemán, color negro y marrón. Muy inteligente, responde a comandos básicos.',
+      'Perro mediano, color marrón y blanco, posiblemente corgi o pastor alemán. Muy inteligente, responde a comandos básicos.',
     imageUrl: 'https://huellitapps.netlify.app/assets/dogs/dog_a_3.jpeg',
     type: ANIMAL_TYPES.DOG,
   },
   {
     id: 14,
-    description: 'Perrito pequeño blanco encontrado',
+    description: 'Perrito pequeño encontrado',
     place: 'Irpavi, Calle 1',
     details:
-      'Perro pequeño, completamente blanco, muy dulce. Parece perdido, busca a su dueño.',
+      'Perro pequeño, color blanco con manchas marrones y negras, muy dulce. Parece perdido, busca a su dueño.',
     imageUrl: 'https://huellitapps.netlify.app/assets/dogs/dog_a_2.jpeg',
     type: ANIMAL_TYPES.DOG,
   },
